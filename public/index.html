@@ -9,7 +9,7 @@
     <title>Mercadia</title>
     <link
       rel="icon"
-      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%231e293b%22/><text y=%22.9em%22 font-size=%2280%22 x=%2250%22 text-anchor=%22middle%22 fill=%22%238b5cf6%22 font-family=%22serif%22 font-weight=%22bold%22>M</text></svg>"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%230f172a%22/><text y=%22.9em%22 font-size=%2275%22 x=%2250%22 text-anchor=%22middle%22 fill=%22%23818cf8%22 font-family=%22serif%22 font-weight=%22bold%22>M</text></svg>"
     />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
@@ -23,98 +23,164 @@
 
     <style>
       :root {
-        --bg-app: #121212;
-        --bg-panel: #1e1e1e;
-        --border-color: #333333;
+        --bg-body: #0f1014; /* Fundo mais profundo */
+        --bg-panel: #18191e; /* Painel levemente mais claro */
+        --bg-input: #23242a;
+        --border-color: #2a2b32;
         --accent-primary: #6366f1;
-        --text-main: #e0e0e0;
-        --text-muted: #a0a0a0;
-        --profit: #10b981;
-        --loss: #ef4444;
+        --accent-glow: rgba(99, 102, 241, 0.3);
+        --text-main: #e2e8f0;
+        --text-muted: #94a3b8;
+        --profit: #34d399;
+        --loss: #f87171;
+        --font-main: 'Inter', sans-serif;
       }
 
       body {
-        background-color: var(--bg-app);
+        background-color: var(--bg-body);
         color: var(--text-main);
-        font-family: 'Inter', sans-serif;
+        font-family: var(--font-main);
         padding-bottom: 60px;
         -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
       }
 
+      /* Scrollbar Customizada (Webkit) */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--bg-body);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #333;
+        border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #444;
+      }
+
+      /* Navbar com Glassmorphism */
       .navbar {
-        background-color: var(--bg-panel);
+        background-color: rgba(24, 25, 30, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
         border-bottom: 1px solid var(--border-color);
         padding: 0.8rem 0;
-      }
-      .navbar-brand {
-        font-weight: 700;
-        font-size: 1.1rem;
-        color: #fff;
+        z-index: 1030;
       }
 
-      .search-container {
+      .navbar-brand {
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        font-size: 1.2rem;
+        color: #fff;
+        background: linear-gradient(90deg, #fff, #a5b4fc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      /* Search Input Refinado */
+      .search-wrapper {
         position: relative;
         width: 100%;
-        max-width: 300px;
+        max-width: 380px;
+      }
+      .search-icon {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+        pointer-events: none;
+        width: 16px;
+        height: 16px;
       }
       .form-control-dark {
-        background-color: #2d2d2d;
-        border: 1px solid #444;
+        background-color: var(--bg-input);
+        border: 1px solid transparent;
         color: #fff;
-        font-size: 0.85rem;
-        border-radius: 6px;
+        font-size: 0.9rem;
+        border-radius: 8px;
+        padding: 8px 12px 8px 38px; /* Espaço para o ícone */
+        transition: all 0.2s ease;
       }
       .form-control-dark:focus {
-        background-color: #333;
+        background-color: var(--bg-input);
         border-color: var(--accent-primary);
-        box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
         color: #fff;
       }
+      .form-control-dark::placeholder {
+        color: #555;
+      }
 
+      /* Painéis Modernos */
       .ui-panel {
         background-color: var(--bg-panel);
         border: 1px solid var(--border-color);
-        border-radius: 8px;
+        border-radius: 12px; /* Cantos mais arredondados */
         height: 100%;
-        overflow: hidden;
         display: flex;
         flex-direction: column;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        transition: transform 0.2s ease, border-color 0.2s;
+      }
+      .ui-panel:hover {
+        border-color: #3f4048;
       }
 
       .panel-header {
-        padding: 12px 15px;
+        padding: 14px 18px;
         border-bottom: 1px solid var(--border-color);
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        justify-content: space-between;
       }
       .panel-title {
-        font-size: 0.75rem;
-        font-weight: 600;
+        font-size: 0.7rem;
+        font-weight: 700;
         text-transform: uppercase;
         color: var(--text-muted);
-        margin: 0;
+        letter-spacing: 0.8px;
       }
       .panel-body {
-        padding: 15px;
+        padding: 18px;
         flex-grow: 1;
+        position: relative;
       }
 
+      /* KPIs com destaque */
       .big-number {
         font-size: 1.5rem;
         font-weight: 700;
         color: #fff;
         letter-spacing: -0.5px;
+        line-height: 1.1;
       }
+      /* Gradiente apenas no número principal */
+      .highlight-value {
+        font-size: 1.8rem;
+        background: linear-gradient(135deg, #e0e7ff 0%, #818cf8 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
       @media (min-width: 768px) {
         .big-number {
-          font-size: 2.2rem;
+          font-size: 2rem;
+        }
+        .highlight-value {
+          font-size: 2.4rem;
         }
       }
 
+      /* Tabelas Limpas */
       .table {
         margin-bottom: 0;
         --bs-table-bg: transparent;
+        --bs-table-hover-bg: rgba(255, 255, 255, 0.03);
       }
       .table th {
         border-bottom: 1px solid var(--border-color);
@@ -122,11 +188,12 @@
         text-transform: uppercase;
         color: var(--text-muted);
         font-weight: 600;
-        padding: 10px 15px;
+        padding: 12px 16px;
+        white-space: nowrap;
       }
       .table td {
-        border-bottom: 1px solid #2a2a2a;
-        padding: 10px 15px;
+        border-bottom: 1px solid var(--border-color);
+        padding: 14px 16px;
         vertical-align: middle;
         font-size: 0.85rem;
         color: var(--text-main);
@@ -136,37 +203,48 @@
       }
 
       .col-card-name {
-        max-width: 130px;
+        max-width: 45vw;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         font-weight: 600;
-        color: #fff;
+        color: #f1f5f9;
       }
-      @media (min-width: 768px) {
+      @media (min-width: 576px) {
         .col-card-name {
-          max-width: 250px;
+          max-width: 220px;
+        }
+      }
+      @media (min-width: 992px) {
+        .col-card-name {
+          max-width: 300px;
         }
       }
 
+      /* Badges Refinados */
       .badge-tech {
-        background: #2d2d2d;
-        border: 1px solid #444;
-        color: #ccc;
+        background: #23242a;
+        border: 1px solid #333;
+        color: #cbd5e1;
         font-weight: 500;
         font-size: 0.65rem;
-        padding: 2px 6px;
-        border-radius: 4px;
+        padding: 3px 8px;
+        border-radius: 6px;
+        white-space: nowrap;
+        letter-spacing: 0.3px;
       }
       .badge-extra {
-        background: linear-gradient(135deg, #3730a3, #4f46e5);
-        border: 1px solid #6366f1;
-        color: #fff;
+        background: rgba(99, 102, 241, 0.15);
+        border: 1px solid rgba(99, 102, 241, 0.4);
+        color: #a5b4fc;
         font-size: 0.6rem;
+        font-weight: 600;
         text-transform: uppercase;
-        padding: 2px 5px;
+        padding: 3px 6px;
         border-radius: 4px;
+        white-space: nowrap;
       }
+
       .var-up {
         color: var(--profit);
         font-weight: 600;
@@ -175,70 +253,123 @@
         color: var(--loss);
         font-weight: 600;
       }
+
       .text-dim {
         color: var(--text-muted);
         font-size: 0.75rem;
       }
 
+      /* Chart Container */
       .chart-container-main {
         position: relative;
-        height: 250px;
+        height: 240px;
         width: 100%;
       }
       @media (min-width: 768px) {
         .chart-container-main {
-          height: 300px;
+          height: 320px;
         }
       }
 
+      /* Modal Styling */
       .modal-content {
         background-color: var(--bg-panel);
         border: 1px solid var(--border-color);
+        border-radius: 12px;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
       }
       .modal-header {
         border-bottom: 1px solid var(--border-color);
-      }
-      .modal-footer {
-        border-top: 1px solid var(--border-color);
+        padding: 16px 24px;
       }
       .btn-close {
         filter: invert(1) grayscale(100%) brightness(200%);
+        opacity: 0.5;
+        transition: opacity 0.2s;
+      }
+      .btn-close:hover {
+        opacity: 1;
+      }
+
+      /* Animação Fade In */
+      .fade-in {
+        animation: fadeIn 0.5s ease-out forwards;
+        opacity: 0;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
     </style>
   </head>
   <body>
     <nav class="navbar sticky-top">
       <div class="container px-3">
-        <div class="d-flex align-items-center flex-grow-1">
-          <span class="navbar-brand me-3 d-none d-sm-block">MERCADIA</span>
-          <span class="navbar-brand me-3 d-block d-sm-none">MERCADIA</span>
+        <div class="d-flex align-items-center w-100 justify-content-between">
+          <div class="d-flex align-items-center flex-grow-1">
+            <span class="navbar-brand d-none d-sm-block">MERCADIA</span>
+            <span class="navbar-brand d-block d-sm-none">M</span>
 
-          <div class="search-container me-auto">
-            <form id="searchForm" onsubmit="realizarBusca(event)">
-              <input
-                type="text"
-                id="searchInput"
-                class="form-control form-control-dark"
-                placeholder="Buscar carta..."
-              />
-            </form>
+            <div class="search-wrapper ms-2 me-auto">
+              <svg
+                class="search-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+              <form id="searchForm" onsubmit="realizarBusca(event)">
+                <input
+                  type="text"
+                  id="searchInput"
+                  class="form-control form-control-dark"
+                  placeholder="Buscar carta..."
+                  autocomplete="off"
+                />
+              </form>
+            </div>
           </div>
-        </div>
 
-        <div class="text-end ms-2 d-none d-sm-block">
-          <div class="text-dim" style="font-size: 0.65rem; text-transform: uppercase">
-            Atualizado
+          <div class="text-end ms-3 d-none d-sm-block">
+            <div
+              class="text-dim"
+              style="
+                font-size: 0.6rem;
+                letter-spacing: 0.5px;
+                text-transform: uppercase;
+                font-weight: 600;
+              "
+            >
+              Atualizado
+            </div>
+            <div style="font-size: 0.85rem; font-weight: 500; color: #fff" id="lastUpdate">
+              --/--
+            </div>
           </div>
-          <div style="font-size: 0.8rem; font-weight: 500" id="lastUpdate">--/--</div>
         </div>
       </div>
     </nav>
 
     <div class="modal fade" id="searchModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="searchModalTitle">Resultados</h5>
+            <h5 class="modal-title fs-6 text-uppercase text-muted fw-bold" id="searchModalTitle">
+              Resultados
+            </h5>
             <button
               type="button"
               class="btn-close"
@@ -248,34 +379,48 @@
           </div>
           <div class="modal-body p-0">
             <div class="table-responsive">
-              <table class="table table-hover">
+              <table class="table table-hover align-middle mb-0">
                 <thead>
                   <tr>
-                    <th>Carta</th>
-                    <th class="text-center">Set</th>
+                    <th class="ps-4">Carta</th>
+                    <th class="text-center d-none d-sm-table-cell">Set</th>
                     <th class="text-center">Qtd</th>
-                    <th class="text-end">Total</th>
+                    <th class="text-end pe-4">Total</th>
                   </tr>
                 </thead>
                 <tbody id="searchResultsBody"></tbody>
               </table>
             </div>
-            <div id="noResults" class="text-center py-4 text-muted d-none">
-              Nenhuma carta encontrada.
+            <div id="noResults" class="text-center py-5 text-muted d-none">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                fill="currentColor"
+                class="bi bi-inbox mb-2 opacity-50"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M4.98 4a.5.5 0 0 0-.39.188L1.54 8H6a.5.5 0 0 1 .5.5 1.5 1.5 0 1 0 3 0A.5.5 0 0 1 10 8h4.46l-3.05-3.812A.5.5 0 0 0 11.02 4H4.98zm-1.17-.437A1.5 1.5 0 0 1 4.98 3h6.04a1.5 1.5 0 0 1 1.17.563l3.7 4.625a.5.5 0 0 1 .106.374l-.39 3.124A1.5 1.5 0 0 1 14.117 13H1.883a1.5 1.5 0 0 1-1.489-1.314l-.39-3.124a.5.5 0 0 1 .106-.374l3.7-4.625z"
+                />
+              </svg>
+              <div>Nenhuma carta encontrada.</div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="container mt-3 px-2">
-      <div class="row g-2 mb-3">
+    <div class="container mt-4 px-3 fade-in">
+      <div class="row g-3 mb-4">
         <div class="col-12 col-md-4">
           <div class="ui-panel">
-            <div class="panel-body d-flex flex-column justify-content-center h-100">
-              <span class="panel-title mb-1">Patrimônio Total</span>
-              <div class="d-flex align-items-baseline">
-                <span class="big-number me-2" id="kpiTotal">...</span>
+            <div
+              class="panel-body d-flex flex-row flex-md-column justify-content-between justify-content-md-center align-items-center align-items-md-start h-100"
+            >
+              <span class="panel-title mb-md-2">Patrimônio Total</span>
+              <div>
+                <span class="big-number highlight-value" id="kpiTotal">...</span>
               </div>
             </div>
           </div>
@@ -283,8 +428,8 @@
         <div class="col-6 col-md-4">
           <div class="ui-panel">
             <div class="panel-body">
-              <span class="panel-title">Volume</span>
-              <div class="big-number mt-1" id="kpiQtd">...</div>
+              <span class="panel-title">Cartas (Volume)</span>
+              <div class="big-number mt-2" id="kpiQtd">...</div>
             </div>
           </div>
         </div>
@@ -292,17 +437,17 @@
           <div class="ui-panel">
             <div class="panel-body">
               <span class="panel-title">Variação 24h</span>
-              <div class="big-number mt-1" id="kpiVar">...</div>
+              <div class="big-number mt-2" id="kpiVar">...</div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="row mb-3">
+      <div class="row mb-4">
         <div class="col-12">
           <div class="ui-panel">
-            <div class="panel-header"><span class="panel-title">Evolução</span></div>
-            <div class="panel-body p-2">
+            <div class="panel-header"><span class="panel-title">Histórico de Valor</span></div>
+            <div class="panel-body">
               <div class="chart-container-main"><canvas id="mainChart"></canvas></div>
             </div>
           </div>
@@ -313,24 +458,25 @@
         <div class="col-12 col-lg-5">
           <div class="ui-panel h-100">
             <div class="panel-header"><span class="panel-title">Maiores Movimentações</span></div>
-            <div class="table-responsive">
-              <table class="table table-hover">
+            <div class="table-responsive flex-grow-1">
+              <table class="table table-hover align-middle">
                 <tbody id="tableMovers"></tbody>
               </table>
             </div>
           </div>
         </div>
+
         <div class="col-12 col-lg-7">
           <div class="ui-panel h-100">
             <div class="panel-header"><span class="panel-title">Top 10 Assets</span></div>
-            <div class="table-responsive">
-              <table class="table table-hover">
+            <div class="table-responsive flex-grow-1">
+              <table class="table table-hover align-middle">
                 <thead>
                   <tr>
-                    <th style="width: 30px">#</th>
+                    <th style="width: 40px" class="ps-4">#</th>
                     <th>Carta</th>
                     <th class="text-center d-none d-md-table-cell">Set</th>
-                    <th class="text-end">Total</th>
+                    <th class="text-end pe-4">Total</th>
                   </tr>
                 </thead>
                 <tbody id="tableTop10"></tbody>
@@ -346,8 +492,8 @@
     <script>
       const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
       Chart.defaults.font.family = "'Inter', sans-serif"
-      Chart.defaults.color = '#A0A0A0'
-      Chart.defaults.borderColor = '#333'
+      Chart.defaults.color = '#64748b' // Slate 500
+      Chart.defaults.borderColor = '#2a2b32'
 
       async function realizarBusca(e) {
         e.preventDefault()
@@ -359,7 +505,8 @@
         modal.show()
 
         const tbody = document.getElementById('searchResultsBody')
-        tbody.innerHTML = '<tr><td colspan="4" class="text-center py-3">Buscando...</td></tr>'
+        tbody.innerHTML =
+          '<tr><td colspan="4" class="text-center py-4 text-muted">Buscando...</td></tr>'
         document.getElementById('noResults').classList.add('d-none')
 
         try {
@@ -375,36 +522,37 @@
             resultados.forEach(c => {
               const tr = document.createElement('tr')
 
-              const extraBadge = c.extras ? `<span class="badge-extra ms-1">${c.extras}</span>` : ''
+              const extraBadge = c.extras ? `<span class="badge-extra ms-2">${c.extras}</span>` : ''
               const setBadge = `<span class="badge-tech">${c.edicao}</span>`
               const numDisplay = c.num ? `<span class="text-muted small ms-1">#${c.num}</span>` : ''
 
               tr.innerHTML = `
-                        <td>
-                            <div class="fw-bold text-white">${c.nome}</div>
-                            <div class="d-block d-md-none mt-1">
+                        <td class="ps-4">
+                            <div class="d-flex align-items-center">
+                              <div class="col-card-name">${c.nome}</div>
+                              <div class="d-none d-md-block">${extraBadge}</div>
+                            </div>
+                            <div class="d-block d-sm-none mt-1">
                                 ${setBadge} ${numDisplay} ${extraBadge}
                             </div>
-                            <div class="d-none d-md-inline-block">
-                                ${extraBadge}
-                            </div>
                         </td>
-                        <td class="text-center d-none d-md-table-cell">
+                        <td class="text-center d-none d-sm-table-cell">
                             ${setBadge}
                             <div class="mt-1">${numDisplay}</div>
                         </td>
                         <td class="text-center text-muted">${c.qtd}</td>
-                        <td class="text-end fw-bold text-white">${BRL.format(c.total)}</td>
+                        <td class="text-end fw-bold text-white pe-4" style="white-space: nowrap;">${BRL.format(
+                          c.total
+                        )}</td>
                     `
               tbody.appendChild(tr)
             })
           }
-
-          document.getElementById('searchModalTitle').innerText = `Resultados para "${termo}"`
+          document.getElementById('searchModalTitle').innerText = `Resultados: "${termo}"`
         } catch (error) {
           console.error(error)
           tbody.innerHTML =
-            '<tr><td colspan="4" class="text-center text-danger py-3">Erro na busca.</td></tr>'
+            '<tr><td colspan="4" class="text-center text-danger py-4">Erro na busca.</td></tr>'
         }
       }
 
@@ -413,86 +561,121 @@
           const req = await fetch('/api/dashboard')
           const data = await req.json()
 
-          if (data.vazio) {
+          if (!data || data.vazio) {
             document.getElementById('kpiTotal').innerText = 'R$ 0,00'
             return
           }
 
-          document.getElementById('kpiTotal').innerText = BRL.format(data.kpis.totalValor)
-          document.getElementById('kpiQtd').innerText = data.kpis.totalCartas
+          document.getElementById('kpiTotal').innerText = BRL.format(data.kpis.totalValor || 0)
+          document.getElementById('kpiQtd').innerText = data.kpis.totalCartas || 0
 
-          const dataUpdate = data.kpis.dataAtualizacao.split('-')
-          document.getElementById('lastUpdate').innerText = `${dataUpdate[2]}/${dataUpdate[1]}`
+          if (data.kpis.dataAtualizacao) {
+            const dataUpdate = data.kpis.dataAtualizacao.split('-')
+            document.getElementById('lastUpdate').innerText = `${dataUpdate[2]}/${dataUpdate[1]}`
+          }
 
-          const varVal = data.kpis.variacaoDia
+          const varVal = data.kpis.variacaoDia || 0
           const varEl = document.getElementById('kpiVar')
           varEl.innerText = (varVal > 0 ? '+' : '') + BRL.format(varVal)
-          varEl.className = 'big-number mt-1 ' + (varVal >= 0 ? 'var-up' : 'var-down')
+          varEl.className = 'big-number mt-2 ' + (varVal >= 0 ? 'var-up' : 'var-down')
 
+          // Gráfico
           const ctxMain = document.getElementById('mainChart').getContext('2d')
           const gradientMain = ctxMain.createLinearGradient(0, 0, 0, 300)
-          gradientMain.addColorStop(0, 'rgba(99, 102, 241, 0.2)')
+          gradientMain.addColorStop(0, 'rgba(99, 102, 241, 0.25)')
           gradientMain.addColorStop(1, 'rgba(99, 102, 241, 0)')
 
           new Chart(ctxMain, {
             type: 'line',
             data: {
-              labels: data.grafico.labels,
+              labels: data.grafico?.labels || [],
               datasets: [
                 {
                   label: 'Total',
-                  data: data.grafico.valores,
+                  data: data.grafico?.valores || [],
                   borderColor: '#6366f1',
                   borderWidth: 2,
                   backgroundColor: gradientMain,
                   fill: true,
-                  tension: 0.2,
+                  tension: 0.3, // Mais curvo, mais suave
                   pointRadius: 0,
                   pointHitRadius: 20,
+                  pointHoverRadius: 4,
                 },
               ],
             },
             options: {
               responsive: true,
               maintainAspectRatio: false,
-              plugins: { legend: { display: false } },
+              interaction: {
+                mode: 'index',
+                intersect: false,
+              },
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  backgroundColor: '#1e1e24',
+                  titleColor: '#fff',
+                  bodyColor: '#cbd5e1',
+                  borderColor: '#333',
+                  borderWidth: 1,
+                  padding: 10,
+                  displayColors: false,
+                  callbacks: {
+                    label: function (context) {
+                      return BRL.format(context.parsed.y)
+                    },
+                  },
+                },
+              },
               scales: {
-                x: { display: false },
+                x: {
+                  display: false,
+                },
                 y: {
-                  border: { dash: [4, 4] },
-                  grid: { color: '#2a2a2a' },
-                  ticks: { callback: v => BRL.format(v) },
+                  border: { display: false }, // Remove linha do eixo Y
+                  grid: { color: '#2a2b32' },
+                  ticks: {
+                    callback: v => BRL.format(v),
+                    maxTicksLimit: 5,
+                    padding: 10,
+                  },
                 },
               },
             },
           })
 
+          // Tabelas
           const tbodyTop = document.getElementById('tableTop10')
-          data.topValiosas.forEach((c, i) => {
+          const topList = data.topValiosas || []
+          topList.forEach((c, i) => {
             const tr = document.createElement('tr')
             const extraBadge = c.extras ? `<span class="badge-extra ms-1">${c.extras}</span>` : ''
             const setBadge = `<span class="badge-tech">${c.edicao}</span>`
             const numDisplay = c.num ? `<span class="text-muted small ms-1">#${c.num}</span>` : ''
 
             tr.innerHTML = `
-                    <td class="text-muted fw-bold small">${i + 1}</td>
+                    <td class="text-muted fw-bold small ps-4">${i + 1}</td>
                     <td>
                         <div class="col-card-name">${c.nome}</div>
                         <div class="d-block d-md-none mt-1">${setBadge} ${numDisplay} ${extraBadge}</div>
                         <div class="d-none d-md-inline-block">${extraBadge}</div>
                     </td>
                     <td class="text-center d-none d-md-table-cell">${setBadge}<div class="mt-1">${numDisplay}</div></td>
-                    <td class="text-end fw-bold text-white">${BRL.format(c.total)}</td>
+                    <td class="text-end fw-bold text-white pe-4" style="white-space: nowrap;">${BRL.format(
+                      c.total
+                    )}</td>
                 `
             tbodyTop.appendChild(tr)
           })
 
           const tbodyMovers = document.getElementById('tableMovers')
-          if (data.maioresMovimentacoes.length === 0) {
+          const movers = data.maioresMovimentacoes || []
+          if (movers.length === 0) {
             tbodyMovers.innerHTML =
-              '<tr><td colspan="3" class="text-center text-muted py-3">Mercado estável.</td></tr>'
+              '<tr><td colspan="3" class="text-center text-muted py-4">Sem grandes alterações.</td></tr>'
           } else {
-            data.maioresMovimentacoes.forEach(c => {
+            movers.forEach(c => {
               const isPos = c.diff > 0
               const colorClass = isPos ? 'var-up' : 'var-down'
               const icon = isPos ? '▲' : '▼'
@@ -502,15 +685,15 @@
                 : ''
 
               tr.innerHTML = `
-                        <td>
+                        <td class="ps-3">
                             <div class="col-card-name">${c.nome}</div>
                             <div class="d-flex align-items-center mt-1">
                                 <span class="badge-tech" style="font-size:0.6rem">${c.edicao}</span>
                                 ${extraBadge}
                             </div>
                         </td>
-                        <td class="text-end fw-bold ${colorClass}" style="font-size:0.9rem">
-                            ${icon}${BRL.format(Math.abs(c.diff))}
+                        <td class="text-end fw-bold ${colorClass} pe-3" style="font-size:0.9rem; white-space: nowrap;">
+                            ${icon} ${BRL.format(Math.abs(c.diff))}
                         </td>
                     `
               tbodyMovers.appendChild(tr)

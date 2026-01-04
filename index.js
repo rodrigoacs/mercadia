@@ -27,7 +27,10 @@ async function monitorarIndividualmente() {
       memoriaPrecos = JSON.parse(fs.readFileSync(ARQ_MEMORIA, 'utf8'))
     }
 
-    const dataHoje = new Date().toISOString().split('T')[0]
+    const dataHoje = new Date().toLocaleDateString('pt-BR', {
+      timeZone: 'America/Sao_Paulo'
+    }).split('/').reverse().join('-')
+
     let bufferCSV = ''
     let novaMemoria = {}
     let mudancas = []
