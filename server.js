@@ -15,26 +15,26 @@ if (!fs.existsSync(DATA_DIR)) {
 
 const CSV_FILE = path.join(DATA_DIR, 'historico_cartas.csv')
 
-function lerCSV() {
+function readCSV() {
   return new Promise((resolve, reject) => {
     const results = []
     if (!fs.existsSync(CSV_FILE)) return resolve([])
 
     fs.createReadStream(CSV_FILE)
       .pipe(csv())
-      .on('data', (data) => {
-        const total = parseFloat(data.Preco_Total)
-        const qtd = parseInt(data.Qtd)
+      .on('data', (row) => {
+        const total = parseFloat(row.Preco_Total)
+        const qty = parseInt(row.Qtd)
         if (!isNaN(total)) {
           results.push({
-            data: data.Data,
-            nome: data.Nome,
-            edicao: data.Edicao,
-            num: data.Num,
-            extras: data.Extras || '',
-            qtd: qtd,
-            unitario: parseFloat(data.Preco_Unit),
-            total: total
+            date: row.Data,
+            name: row.Nome,
+            set: row.Edicao,
+            num: row.Num,
+            extras: row.Extras || '',
+            qty: qty,
+            unitPrice: parseFloat(row.Preco_Unit),
+            totalPrice: total
           })
         }
       })
@@ -45,95 +45,158 @@ function lerCSV() {
 
 app.get('/api/dashboard', async (req, res) => {
   try {
-    const dados = await lerCSV()
-    if (dados.length === 0) return res.json({ vazio: true })
+    const data = await readCSV()
+    if (data.length === 0) return res.json({ empty: true })
 
     const timeline = {}
-    dados.forEach(d => {
-      if (!timeline[d.data]) timeline[d.data] = 0
-      timeline[d.data] += d.total
+    data.forEach(d => {
+      if (!timeline[d.date]) timeline[d.date] = 0
+      timeline[d.date] += d.totalPrice
     })
 
-    const datas = Object.keys(timeline).sort()
-    const ultimaData = datas[datas.length - 1]
-    const valorAtual = timeline[ultimaData]
-    const valorOntem = datas.length > 1 ? timeline[datas[datas.length - 2]] : valorAtual
+    const dates = Object.keys(timeline).sort()
+    const lastDate = dates[dates.length - 1]
+    const currentValue = timeline[lastDate]
 
-    const hoje = dados.filter(d => d.data === ultimaData)
+    const yesterdayValue = dates.length > 1 ? timeline[dates[dates.length - 2]] : currentValue
 
-    const topValiosas = [...hoje].sort((a, b) => b.total - a.total).slice(0, 10)
+    const index30d = dates.length > 30 ? dates.length - 31 : 0
+    const value30d = timeline[dates[index30d]]
+    const monthVar = currentValue - value30d
 
-    let maioresMovimentacoes = []
-    if (datas.length > 1) {
-      const dataOntem = datas[datas.length - 2]
-      const ontem = dados.filter(d => d.data === dataOntem)
-      const mapOntem = new Map(ontem.map(c => [`${c.nome}|${c.edicao}|${c.num}|${c.extras}`, c.unitario]))
+    const todayData = data.filter(d => d.date === lastDate)
+    const totalCards = todayData.reduce((acc, c) => acc + c.qty, 0)
 
-      const variacoes = []
-      hoje.forEach(h => {
-        const old = mapOntem.get(`${h.nome}|${h.edicao}|${h.num}|${h.extras}`)
-        if (old !== undefined && old > 0) {
-          const diff = h.unitario - old
+    const avgTicket = totalCards > 0 ? currentValue / totalCards : 0
+
+    const tiers = {
+      bulk: { qty: 0, value: 0, label: 'Bulk (< R$ 2)' },
+      low: { qty: 0, value: 0, label: 'Low (R$ 2-10)' },
+      mid: { qty: 0, value: 0, label: 'Mid (R$ 10-50)' },
+      high: { qty: 0, value: 0, label: 'High (> R$ 50)' }
+    }
+
+    todayData.forEach(c => {
+      if (c.unitPrice < 2) {
+        tiers.bulk.qty += c.qty; tiers.bulk.value += c.totalPrice
+      } else if (c.unitPrice < 10) {
+        tiers.low.qty += c.qty; tiers.low.value += c.totalPrice
+      } else if (c.unitPrice < 50) {
+        tiers.mid.qty += c.qty; tiers.mid.value += c.totalPrice
+      } else {
+        tiers.high.qty += c.qty; tiers.high.value += c.totalPrice
+      }
+    })
+
+    const topAssets = [...todayData].sort((a, b) => b.totalPrice - a.totalPrice).slice(0, 10)
+
+    let topGainers = []
+    let topLosers = []
+    let dailyChartData = { labels: [], values: [] }
+
+    if (dates.length > 1) {
+      for (let i = 1; i < dates.length; i++) {
+        dailyChartData.labels.push(dates[i])
+        dailyChartData.values.push(timeline[dates[i]] - timeline[dates[i - 1]])
+      }
+
+      const prevDate = dates[dates.length - 2]
+      const prevData = data.filter(d => d.date === prevDate)
+      const prevMap = new Map(prevData.map(c => [`${c.name}|${c.set}|${c.num}|${c.extras}`, c.unitPrice]))
+
+      const variations = []
+      todayData.forEach(h => {
+        const oldPrice = prevMap.get(`${h.name}|${h.set}|${h.num}|${h.extras}`)
+        if (oldPrice !== undefined && oldPrice > 0) {
+          const diff = h.unitPrice - oldPrice
+
           if (Math.abs(diff) >= 0.01) {
-            variacoes.push({
-              nome: h.nome,
-              edicao: h.edicao,
-              num: h.num,
+            variations.push({
+              name: h.name,
+              set: h.set,
               extras: h.extras,
               diff: diff,
-              atual: h.unitario
+              current: h.unitPrice
             })
           }
         }
       })
-      maioresMovimentacoes = variacoes.sort((a, b) => Math.abs(b.diff) - Math.abs(a.diff)).slice(0, 10)
+
+      topGainers = [...variations]
+        .filter(v => v.diff > 0)
+        .sort((a, b) => b.diff - a.diff)
+        .slice(0, 5)
+
+      topLosers = [...variations]
+        .filter(v => v.diff < 0)
+        .sort((a, b) => a.diff - b.diff)
+        .slice(0, 5)
     }
 
     res.json({
-      vazio: false,
+      empty: false,
       kpis: {
-        totalValor: valorAtual,
-        totalCartas: hoje.reduce((acc, c) => acc + c.qtd, 0),
-        variacaoDia: valorAtual - valorOntem,
-        dataAtualizacao: ultimaData
+        totalValue: currentValue,
+        totalCards: totalCards,
+        avgTicket: avgTicket,
+        dayVar: currentValue - yesterdayValue,
+        monthVar: monthVar,
+        lastUpdate: lastDate
       },
-      grafico: { labels: datas, valores: datas.map(d => timeline[d]) },
-      topValiosas,
-      maioresMovimentacoes
+      chart: { labels: dates, values: dates.map(d => timeline[d]) },
+      dailyChart: dailyChartData,
+      tiers,
+      topAssets,
+      topGainers,
+      topLosers
     })
 
-  } catch (e) {
-    console.error(e)
-    res.status(500).send('Erro no servidor')
+  } catch (err) {
+    console.error(err)
+    res.status(500).send('Server Error')
   }
 })
 
-app.get('/api/busca', async (req, res) => {
+app.get('/api/search', async (req, res) => {
   try {
-    const termo = req.query.q ? req.query.q.toLowerCase() : ''
-    if (termo.length < 2) return res.json([])
+    const query = req.query.q ? req.query.q.toLowerCase() : ''
+    if (query.length < 2) return res.json([])
 
-    const dados = await lerCSV()
-    if (dados.length === 0) return res.json([])
+    const data = await readCSV()
+    if (data.length === 0) return res.json([])
 
-    const datas = [...new Set(dados.map(d => d.data))].sort()
-    const ultimaData = datas[datas.length - 1]
+    const uniqueDates = [...new Set(data.map(d => d.date))].sort()
+    const lastDate = uniqueDates[uniqueDates.length - 1]
 
-    const resultados = dados.filter(d =>
-      d.data === ultimaData &&
-      d.nome.toLowerCase().includes(termo)
+    let results = data.filter(d =>
+      d.date === lastDate &&
+      d.name.toLowerCase().includes(query)
     )
 
-    resultados.sort((a, b) => b.total - a.total)
+    results = results.map(card => {
+      const history = data
+        .filter(d =>
+          d.name === card.name &&
+          d.set === card.set &&
+          d.num === card.num &&
+          d.extras === card.extras
+        )
+        .sort((a, b) => b.date.localeCompare(a.date))
+        .map(h => ({ date: h.date, value: h.unitPrice }))
 
-    res.json(resultados)
+      return { ...card, history }
+    })
 
-  } catch (e) {
-    console.error(e)
+    results.sort((a, b) => b.totalPrice - a.totalPrice)
+
+    res.json(results)
+
+  } catch (err) {
+    console.error(err)
     res.status(500).json([])
   }
 })
 
 app.listen(3000, () => {
-  console.log('🚀 Dashboard Rodando: http://localhost:3000')
+  console.log('🚀 Dashboard Running: http://localhost:3000')
 })
