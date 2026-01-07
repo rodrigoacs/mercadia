@@ -1,15 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
+<html lang="pt-br" data-bs-theme="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
-    <title>Mercadia</title>
-    <link rel="icon" href="favicon.ico" />
-
-    <meta name="theme-color" content="#18191e" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mercadia - Enterprise Edition</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -23,6 +17,7 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <style>
       :root {
@@ -67,7 +62,7 @@
         color: #fff;
         font-size: 0.9rem;
         border-radius: 8px;
-        padding: 8px 12px 8px 38px;
+        padding: 6px 12px;
       }
       .form-control-dark:focus {
         background-color: var(--bg-input);
@@ -83,46 +78,47 @@
         height: 100%;
         display: flex;
         flex-direction: column;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
       }
       .panel-header {
-        padding: 14px 18px;
+        padding: 12px 16px;
         border-bottom: 1px solid var(--border-color);
         display: flex;
         align-items: center;
         justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 8px;
       }
       .panel-title {
-        font-size: 0.7rem;
+        font-size: 0.75rem;
         font-weight: 700;
         text-transform: uppercase;
         color: var(--text-muted);
-        letter-spacing: 0.8px;
+        white-space: nowrap;
       }
       .panel-body {
-        padding: 18px;
+        padding: 16px;
         flex-grow: 1;
         position: relative;
+        min-width: 0;
       }
+
       .big-number {
-        font-size: 1.5rem;
+        font-size: clamp(1.2rem, 3vw, 1.8rem);
         font-weight: 700;
         color: #fff;
         line-height: 1.1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       .highlight-value {
-        font-size: 1.8rem;
+        font-size: clamp(1.5rem, 4vw, 2.4rem);
         background: linear-gradient(135deg, #e0e7ff 0%, #818cf8 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-      }
-      @media (min-width: 768px) {
-        .big-number {
-          font-size: 2rem;
-        }
-        .highlight-value {
-          font-size: 2.4rem;
-        }
+        white-space: nowrap;
       }
 
       .table {
@@ -135,27 +131,35 @@
         font-size: 0.7rem;
         text-transform: uppercase;
         color: var(--text-muted);
-        padding: 12px 16px;
+        padding: 10px 12px;
         white-space: nowrap;
+        background-color: var(--bg-panel);
+        position: sticky;
+        top: 0;
+        z-index: 5;
       }
       .table td {
         border-bottom: 1px solid var(--border-color);
-        padding: 12px 16px;
+        padding: 10px 12px;
         font-size: 0.85rem;
         color: var(--text-main);
         vertical-align: middle;
+        white-space: nowrap;
       }
+
       .col-card-name {
-        max-width: 40vw;
+        max-width: 180px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         font-weight: 600;
         color: #f1f5f9;
+        display: block;
       }
+
       @media (min-width: 992px) {
         .col-card-name {
-          max-width: 250px;
+          max-width: 300px;
         }
       }
 
@@ -164,7 +168,7 @@
         border: 1px solid #333;
         color: #cbd5e1;
         font-size: 0.65rem;
-        padding: 3px 8px;
+        padding: 3px 6px;
         border-radius: 6px;
       }
       .badge-extra {
@@ -173,7 +177,7 @@
         color: #a5b4fc;
         font-size: 0.6rem;
         font-weight: 600;
-        padding: 3px 6px;
+        padding: 2px 5px;
         border-radius: 4px;
       }
       .var-up {
@@ -187,17 +191,17 @@
 
       .chart-container-main {
         position: relative;
-        height: 240px;
+        height: 260px;
         width: 100%;
       }
       .chart-container-sm {
         position: relative;
-        height: 180px;
+        height: 200px;
         width: 100%;
       }
       @media (min-width: 768px) {
         .chart-container-main {
-          height: 320px;
+          height: 340px;
         }
       }
 
@@ -216,12 +220,35 @@
         height: 16px;
         pointer-events: none;
       }
+
+      .btn-filter {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        background: transparent;
+        border: 1px solid var(--border-color);
+        padding: 4px 12px;
+        border-radius: 6px;
+        transition: all 0.2s;
+        white-space: nowrap;
+      }
+      .btn-filter:hover,
+      .btn-filter.active {
+        background: var(--accent-primary);
+        color: #fff;
+        border-color: var(--accent-primary);
+      }
+      .btn-group-filter {
+        display: flex;
+        gap: 6px;
+      }
+
       .btn-history {
         background: transparent;
         border: 1px solid var(--border-color);
         color: var(--text-muted);
         border-radius: 8px;
-        padding: 4px 10px;
+        padding: 4px 8px;
         transition: all 0.2s;
       }
       .btn-history:hover {
@@ -229,15 +256,16 @@
         color: #fff;
         border-color: #6366f1;
       }
+
       .modal-content {
         background-color: var(--bg-panel);
         border: 1px solid var(--border-color);
-        border-radius: 12px;
       }
       .btn-close {
         filter: invert(1) grayscale(100%) brightness(200%);
         opacity: 0.5;
       }
+
       .fade-in {
         animation: fadeIn 0.5s ease-out forwards;
         opacity: 0;
@@ -258,10 +286,9 @@
     <nav class="navbar sticky-top">
       <div class="container px-3">
         <div class="d-flex align-items-center w-100 justify-content-between">
-          <div class="d-flex align-items-center flex-grow-1">
-            <span class="navbar-brand d-none d-sm-block">MERCADIA</span>
-            <span class="navbar-brand d-block d-sm-none">M</span>
-            <div class="search-wrapper ms-2 me-auto">
+          <span class="navbar-brand">MERCADIA</span>
+          <div style="max-width: 380px" class="ms-auto me-3 w-100">
+            <div class="search-wrapper">
               <svg
                 class="search-icon"
                 xmlns="http://www.w3.org/2000/svg"
@@ -281,22 +308,15 @@
                   type="text"
                   id="searchInput"
                   class="form-control form-control-dark"
+                  style="padding-left: 38px; padding-top: 8px; padding-bottom: 8px"
                   placeholder="Buscar..."
                   autocomplete="off"
                 />
               </form>
             </div>
           </div>
-          <div class="text-end ms-3 d-none d-sm-block">
-            <div
-              style="
-                font-size: 0.6rem;
-                letter-spacing: 0.5px;
-                text-transform: uppercase;
-                color: var(--text-muted);
-                font-weight: 600;
-              "
-            >
+          <div class="text-end d-none d-sm-block">
+            <div style="font-size: 0.6rem; text-transform: uppercase; color: var(--text-muted)">
               Atualizado
             </div>
             <div style="font-size: 0.85rem; font-weight: 500; color: #fff" id="lastUpdate">
@@ -307,13 +327,11 @@
       </div>
     </nav>
 
-    <div class="modal fade" id="searchModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="searchModal" tabindex="-1">
       <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title fs-6 text-uppercase text-muted fw-bold" id="searchModalTitle">
-              Resultados
-            </h5>
+            <h5 class="modal-title fs-6 text-uppercase text-muted fw-bold">Resultados</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
           <div class="modal-body p-0">
@@ -322,8 +340,8 @@
                 <thead>
                   <tr>
                     <th class="ps-4">Carta</th>
-                    <th class="text-center d-none d-sm-table-cell">Set</th>
-                    <th class="text-center">Histórico</th>
+                    <th class="text-center">Set</th>
+                    <th class="text-center">Hist</th>
                     <th class="text-center">Qtd</th>
                     <th class="text-end pe-4">Total</th>
                   </tr>
@@ -331,24 +349,19 @@
                 <tbody id="searchResultsBody"></tbody>
               </table>
             </div>
-            <div id="noResults" class="text-center py-5 text-muted d-none">
-              Nenhuma carta encontrada.
-            </div>
+            <div id="noResults" class="text-center py-5 text-muted d-none">Nada encontrado.</div>
           </div>
         </div>
       </div>
     </div>
-
-    <div class="modal fade" id="historyDetailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="historyDetailModal" tabindex="-1">
       <div class="modal-dialog modal-sm modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header py-2">
             <div class="d-flex flex-column">
-              <span
-                class="text-uppercase"
-                style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700"
+              <span class="text-uppercase" style="font-size: 0.65rem; color: var(--text-muted)"
                 >Histórico</span
-              ><span class="fw-bold text-white" id="histTitle" style="font-size: 0.9rem">...</span>
+              ><span class="fw-bold text-white" id="histTitle">...</span>
             </div>
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
@@ -356,15 +369,6 @@
             <table class="table table-sm table-striped mb-0">
               <tbody id="historyTableBody"></tbody>
             </table>
-          </div>
-          <div class="modal-footer py-1 justify-content-center">
-            <button
-              class="btn btn-sm btn-outline-secondary w-100"
-              data-bs-target="#searchModal"
-              data-bs-toggle="modal"
-            >
-              Voltar
-            </button>
           </div>
         </div>
       </div>
@@ -374,15 +378,12 @@
       <div class="row g-3 mb-4">
         <div class="col-12 col-lg-4">
           <div class="ui-panel">
-            <div
-              class="panel-body d-flex flex-row flex-lg-column justify-content-between justify-content-lg-center align-items-center align-items-lg-start h-100"
-            >
-              <span class="panel-title mb-lg-2">Patrimônio Total</span>
+            <div class="panel-body d-flex flex-column justify-content-center">
+              <span class="panel-title mb-2">Patrimônio Total</span>
               <div><span class="big-number highlight-value" id="kpiTotal">...</span></div>
             </div>
           </div>
         </div>
-
         <div class="col-12 col-lg-8">
           <div class="row g-3 h-100">
             <div class="col-6 col-md-3">
@@ -424,7 +425,16 @@
       <div class="row mb-4">
         <div class="col-12">
           <div class="ui-panel">
-            <div class="panel-header"><span class="panel-title">Evolução Patrimonial</span></div>
+            <div class="panel-header">
+              <span class="panel-title">Evolução Patrimonial</span>
+              <div class="btn-group-filter">
+                <button class="btn-filter" onclick="updateTimeRange('7d', this)">7D</button
+                ><button class="btn-filter" onclick="updateTimeRange('30d', this)">30D</button
+                ><button class="btn-filter active" onclick="updateTimeRange('max', this)">
+                  MAX
+                </button>
+              </div>
+            </div>
             <div class="panel-body">
               <div class="chart-container-main"><canvas id="mainChart"></canvas></div>
             </div>
@@ -433,17 +443,30 @@
       </div>
 
       <div class="row g-3 mb-4">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-8">
           <div class="ui-panel">
-            <div class="panel-header">
-              <span class="panel-title">Lucro/Prejuízo Diário (PnL)</span>
-            </div>
+            <div class="panel-header"><span class="panel-title">Lucro/Prejuízo Diário</span></div>
             <div class="panel-body">
               <div class="chart-container-sm"><canvas id="dailyChart"></canvas></div>
             </div>
           </div>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-4">
+          <div class="ui-panel">
+            <div class="panel-header">
+              <span class="panel-title">Distribuição</span>
+            </div>
+            <div class="panel-body d-flex justify-content-center">
+              <div style="height: 180px; width: 100%; max-width: 250px">
+                <canvas id="setChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <div class="col-12">
           <div class="ui-panel">
             <div class="panel-header">
               <span class="panel-title">Qualidade dos Ativos (Tier List)</span>
@@ -459,7 +482,7 @@
         <div class="col-12 col-md-6">
           <div class="ui-panel h-100">
             <div class="panel-header">
-              <span class="panel-title text-success">🚀 Top Valorização (24h)</span>
+              <span class="panel-title text-success">🚀 Top Valorização (R$)</span>
             </div>
             <div class="table-responsive flex-grow-1">
               <table class="table table-sm align-middle mb-0">
@@ -471,7 +494,7 @@
         <div class="col-12 col-md-6">
           <div class="ui-panel h-100">
             <div class="panel-header">
-              <span class="panel-title text-danger">📉 Maiores Quedas (24h)</span>
+              <span class="panel-title text-danger">📉 Maiores Quedas (R$)</span>
             </div>
             <div class="table-responsive flex-grow-1">
               <table class="table table-sm align-middle mb-0">
@@ -485,28 +508,54 @@
       <div class="row g-3">
         <div class="col-12">
           <div class="ui-panel h-100">
-            <div class="panel-header">
-              <span class="panel-title">Top 10 Assets (Valor Total)</span>
+            <div class="panel-header flex-wrap gap-2">
+              <span class="panel-title text-nowrap me-auto">Explorador de Inventário</span>
+              <div class="d-flex gap-2 align-items-center flex-wrap">
+                <select id="filterSet" class="form-control-dark" onchange="applyInventoryFilters()">
+                  <option value="all">Todas Edições</option>
+                </select>
+                <select
+                  id="filterExtra"
+                  class="form-control-dark"
+                  onchange="applyInventoryFilters()"
+                >
+                  <option value="all">Acabamento: Todos</option>
+                  <option value="foil">Apenas Foil/Etched</option>
+                  <option value="normal">Apenas Normal</option>
+                </select>
+                <select id="sortOrder" class="form-control-dark" onchange="applyInventoryFilters()">
+                  <option value="totalDesc">Maior Valor Total</option>
+                  <option value="unitDesc">Maior Preço Unit.</option>
+                  <option value="qtyDesc">Maior Quantidade</option>
+                  <option value="nameAsc">Nome (A-Z)</option>
+                </select>
+              </div>
             </div>
-            <div class="table-responsive flex-grow-1">
+            <div class="table-responsive flex-grow-1" style="max-height: 500px; overflow-y: auto">
               <table class="table table-hover align-middle">
                 <thead>
                   <tr>
                     <th style="width: 40px" class="ps-4">#</th>
                     <th>Carta</th>
-                    <th class="text-center d-none d-md-table-cell">Set</th>
+                    <th class="text-center">Set</th>
+                    <th class="text-center">Qtd</th>
+                    <th class="text-end">Unit.</th>
                     <th class="text-end pe-4">Total</th>
                   </tr>
                 </thead>
-                <tbody id="tableTopAssets"></tbody>
+                <tbody id="tableInventory"></tbody>
               </table>
+            </div>
+            <div
+              class="p-2 text-end text-muted small border-top border-secondary border-opacity-25"
+              id="inventoryCount"
+            >
+              Carregando...
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
       const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
@@ -514,222 +563,244 @@
       Chart.defaults.color = '#64748b'
       Chart.defaults.borderColor = '#2a2b32'
 
+      let globalData = {}
+      let fullInventory = [] // Dados completos para o explorador
+      let mainChartInstance = null
       let currentSearchResults = []
 
       async function performSearch(e) {
         e.preventDefault()
-        const query = document.getElementById('searchInput').value.trim()
-        if (query.length < 2) return
-
-        const modalEl = document.getElementById('searchModal')
-        const modal = new bootstrap.Modal(modalEl)
-        modal.show()
-        const tbody = document.getElementById('searchResultsBody')
-        tbody.innerHTML =
-          '<tr><td colspan="5" class="text-center py-4 text-muted">Buscando...</td></tr>'
+        const q = document.getElementById('searchInput').value.trim()
+        if (q.length < 2) return
+        new bootstrap.Modal(document.getElementById('searchModal')).show()
+        const tb = document.getElementById('searchResultsBody')
+        tb.innerHTML = '<tr><td colspan="5" class="text-center py-4 text-muted">...</td></tr>'
         document.getElementById('noResults').classList.add('d-none')
-
         try {
-          const req = await fetch(`/api/search?q=${encodeURIComponent(query)}`)
+          const req = await fetch(`/api/search?q=${encodeURIComponent(q)}`)
           currentSearchResults = await req.json()
-          tbody.innerHTML = ''
-
+          tb.innerHTML = ''
           if (currentSearchResults.length === 0) {
             document.getElementById('noResults').classList.remove('d-none')
-          } else {
-            document.getElementById('noResults').classList.add('d-none')
-            currentSearchResults.forEach((c, index) => {
-              const tr = document.createElement('tr')
-              let iconHistory = '<i class="bi bi-clock-history"></i>'
-              if (c.history && c.history.length > 1) {
-                const current = c.history[0].value
-                const previous = c.history[1].value
-                if (current > previous)
-                  iconHistory = '<i class="bi bi-graph-up-arrow text-success"></i>'
-                else if (current < previous)
-                  iconHistory = '<i class="bi bi-graph-down-arrow text-danger"></i>'
-              }
-              const extraBadge = c.extras ? `<span class="badge-extra ms-2">${c.extras}</span>` : ''
-
-              tr.innerHTML = `
-                <td class="ps-4"><div class="d-flex align-items-center"><div class="col-card-name">${
-                  c.name
-                }</div><div class="d-none d-md-block">${extraBadge}</div></div><div class="d-block d-sm-none mt-1"><span class="badge-tech">${
-                c.set
-              }</span> ${extraBadge}</div></td>
-                <td class="text-center d-none d-sm-table-cell"><span class="badge-tech">${
-                  c.set
-                }</span></td>
-                <td class="text-center"><button class="btn-history" onclick="openHistory(${index})">${iconHistory} <span class="d-none d-sm-inline ms-1" style="font-size: 0.75rem;">Ver</span></button></td>
-                <td class="text-center text-muted">${c.qty}</td>
-                <td class="text-end fw-bold text-white pe-4">${BRL.format(c.totalPrice)}</td>
-              `
-              tbody.appendChild(tr)
-            })
+            return
           }
-          document.getElementById('searchModalTitle').innerText = `Resultados: "${query}"`
-        } catch (error) {
-          console.error(error)
-          tbody.innerHTML =
-            '<tr><td colspan="5" class="text-center text-danger py-4">Erro.</td></tr>'
+          currentSearchResults.forEach((c, i) => {
+            let icn = '<i class="bi bi-clock-history"></i>'
+            if (c.history.length > 1) {
+              const cr = c.history[0].value,
+                pr = c.history[1].value
+              if (cr > pr) icn = '<i class="bi bi-graph-up-arrow text-success"></i>'
+              else if (cr < pr) icn = '<i class="bi bi-graph-down-arrow text-danger"></i>'
+            }
+            tb.innerHTML += `<tr><td class="ps-4"><div class="col-card-name fw-bold text-white">${
+              c.name
+            }</div><div class="small text-muted">${c.set} #${
+              c.num
+            }</div></td><td class="text-center"><span class="badge-tech">${
+              c.set
+            }</span></td><td class="text-center"><button class="btn btn-sm btn-outline-secondary border-0 text-muted" onclick="openHistory(${i})">${icn}</button></td><td class="text-center">${
+              c.qty
+            }</td><td class="text-end pe-4 text-white fw-bold">${BRL.format(
+              c.totalPrice
+            )}</td></tr>`
+          })
+        } catch (e) {
+          console.error(e)
         }
       }
 
-      function openHistory(index) {
-        const card = currentSearchResults[index]
-        if (!card) return
-        const historyModal = new bootstrap.Modal(document.getElementById('historyDetailModal'))
-        historyModal.show()
-        document.getElementById('histTitle').innerText = `${card.name} (${card.set})`
-        const tbody = document.getElementById('historyTableBody')
-        tbody.innerHTML = ''
-        if (!card.history || card.history.length === 0) {
-          tbody.innerHTML =
-            '<tr><td colspan="2" class="text-center text-muted">Sem dados.</td></tr>'
-          return
-        }
-        card.history.forEach((h, i) => {
-          const tr = document.createElement('tr')
-          let diffIcon = ''
-          if (i < card.history.length - 1) {
-            const prevVal = card.history[i + 1].value
-            if (h.value > prevVal) diffIcon = '<span class="text-success small ms-1">▲</span>'
-            else if (h.value < prevVal) diffIcon = '<span class="text-danger small ms-1">▼</span>'
+      function openHistory(i) {
+        const c = currentSearchResults[i]
+        if (!c) return
+        new bootstrap.Modal(document.getElementById('historyDetailModal')).show()
+        document.getElementById('histTitle').innerText = `${c.name} (${c.set})`
+        const tb = document.getElementById('historyTableBody')
+        tb.innerHTML = ''
+        c.history.forEach((h, x) => {
+          let d = ''
+          if (x < c.history.length - 1) {
+            const p = c.history[x + 1].value
+            if (h.value > p) d = '<span class="text-success ms-1">▲</span>'
+            else if (h.value < p) d = '<span class="text-danger ms-1">▼</span>'
           }
           const dp = h.date.split('-')
-          tr.innerHTML = `<td class="ps-3 text-muted">${dp[2]}/${
+          tb.innerHTML += `<tr><td class="ps-3 text-muted">${dp[2]}/${
             dp[1]
-          }</td><td class="text-end pe-3 text-white fw-bold">${BRL.format(
-            h.value
-          )} ${diffIcon}</td>`
-          tbody.appendChild(tr)
+          }</td><td class="text-end pe-3 text-white fw-bold">${BRL.format(h.value)}${d}</td></tr>`
         })
+      }
+
+      function updateTimeRange(range, btn) {
+        if (!globalData.chart) return
+        document.querySelectorAll('.btn-filter').forEach(b => b.classList.remove('active'))
+        btn.classList.add('active')
+        const allL = globalData.chart.labels,
+          allV = globalData.chart.values
+        let cut = range === '7d' ? -7 : range === '30d' ? -30 : 0
+        mainChartInstance.data.labels = cut === 0 ? allL : allL.slice(cut)
+        mainChartInstance.data.datasets[0].data = cut === 0 ? allV : allV.slice(cut)
+        mainChartInstance.update()
+      }
+
+      // --- INVENTORY EXPLORER LOGIC ---
+      async function loadInventory() {
+        try {
+          const req = await fetch('/api/inventory')
+          fullInventory = await req.json()
+
+          const sets = [...new Set(fullInventory.map(c => c.set))].sort()
+          const setSelect = document.getElementById('filterSet')
+          sets.forEach(s => {
+            const opt = document.createElement('option')
+            opt.value = s
+            opt.innerText = s
+            setSelect.appendChild(opt)
+          })
+
+          applyInventoryFilters()
+        } catch (e) {
+          console.error('Error loading inventory', e)
+        }
+      }
+
+      function applyInventoryFilters() {
+        const setF = document.getElementById('filterSet').value
+        const extraF = document.getElementById('filterExtra').value
+        const sortF = document.getElementById('sortOrder').value
+
+        let filtered = fullInventory.filter(c => {
+          if (setF !== 'all' && c.set !== setF) return false
+          if (extraF === 'foil' && (!c.extras || c.extras.trim() === '')) return false
+          if (extraF === 'normal' && c.extras && c.extras.trim() !== '') return false
+          return true
+        })
+
+        filtered.sort((a, b) => {
+          if (sortF === 'totalDesc') return b.totalPrice - a.totalPrice
+          if (sortF === 'unitDesc') return b.unitPrice - a.unitPrice
+          if (sortF === 'qtyDesc') return b.qty - a.qty
+          if (sortF === 'nameAsc') return a.name.localeCompare(b.name)
+          return 0
+        })
+
+        const tbody = document.getElementById('tableInventory')
+        tbody.innerHTML = ''
+        const displayList = filtered.slice(0, 100)
+
+        displayList.forEach((c, i) => {
+          const badge = c.extras ? `<span class="badge-extra ms-1">${c.extras}</span>` : ''
+          tbody.innerHTML += `<tr><td class="text-muted small ps-4">${
+            i + 1
+          }</td><td><div class="col-card-name fw-bold text-white">${
+            c.name
+          }</div>${badge}</td><td class="text-center"><span class="badge-tech">${
+            c.set
+          }</span></td><td class="text-center text-muted">${
+            c.qty
+          }</td><td class="text-end text-muted small">${BRL.format(
+            c.unitPrice
+          )}</td><td class="text-end fw-bold text-white pe-4">${BRL.format(c.totalPrice)}</td></tr>`
+        })
+        document.getElementById(
+          'inventoryCount'
+        ).innerText = `Mostrando ${displayList.length} de ${filtered.length} cartas.`
+      }
+
+      function filterFromChart(setName) {
+        const select = document.getElementById('filterSet')
+        if (setName === 'Outros') select.value = 'all'
+        else {
+          const exists = [...select.options].some(o => o.value === setName)
+          if (exists) select.value = setName
+        }
+        applyInventoryFilters()
+        document.getElementById('tableInventory').scrollIntoView({ behavior: 'smooth' })
       }
 
       async function initDashboard() {
         try {
           const req = await fetch('/api/dashboard')
-          const data = await req.json()
+          globalData = await req.json()
+          const data = globalData
+          if (!data || data.empty) return
 
-          if (!data || data.empty) {
-            document.getElementById('kpiTotal').innerText = 'R$ 0,00'
-            return
+          document.getElementById('kpiTotal').innerText = BRL.format(data.kpis.totalValue)
+          document.getElementById('kpiQty').innerText = data.kpis.totalCards
+          document.getElementById('kpiTicket').innerText = BRL.format(data.kpis.avgTicket)
+          document.getElementById('lastUpdate').innerText = data.kpis.lastUpdate
+            .split('-')
+            .reverse()
+            .slice(0, 2)
+            .join('/')
+          const setKpi = (id, val) => {
+            const el = document.getElementById(id)
+            el.innerText = (val > 0 ? '' : '') + BRL.format(val)
+            el.className = 'big-number mt-2 ' + (val >= 0 ? 'var-up' : 'var-down')
           }
-
-          document.getElementById('kpiTotal').innerText = BRL.format(data.kpis.totalValue || 0)
-          document.getElementById('kpiQty').innerText = data.kpis.totalCards || 0
-          document.getElementById('kpiTicket').innerText = BRL.format(data.kpis.avgTicket || 0)
-
-          if (data.kpis.lastUpdate) {
-            const dp = data.kpis.lastUpdate.split('-')
-            document.getElementById('lastUpdate').innerText = `${dp[2]}/${dp[1]}`
-          }
-
-          const varVal = data.kpis.dayVar || 0
-          const varEl = document.getElementById('kpiVar')
-          varEl.innerText = (varVal > 0 ? '+' : '') + BRL.format(varVal)
-          varEl.className = 'big-number mt-2 ' + (varVal >= 0 ? 'var-up' : 'var-down')
-
-          const varMonth = data.kpis.monthVar || 0
-          const monthEl = document.getElementById('kpiMonth')
-          monthEl.innerText = (varMonth > 0 ? '+' : '') + BRL.format(varMonth)
-          monthEl.className = 'big-number mt-2 ' + (varMonth >= 0 ? 'var-up' : 'var-down')
+          setKpi('kpiVar', data.kpis.dayVar)
+          setKpi('kpiMonth', data.kpis.monthVar)
 
           const ctxMain = document.getElementById('mainChart').getContext('2d')
-          const gradientMain = ctxMain.createLinearGradient(0, 0, 0, 300)
-          gradientMain.addColorStop(0, 'rgba(99, 102, 241, 0.3)')
-          gradientMain.addColorStop(1, 'rgba(99, 102, 241, 0)')
-          new Chart(ctxMain, {
+          const grad = ctxMain.createLinearGradient(0, 0, 0, 300)
+          grad.addColorStop(0, 'rgba(99,102,241,0.3)')
+          grad.addColorStop(1, 'rgba(99,102,241,0)')
+          mainChartInstance = new Chart(ctxMain, {
             type: 'line',
             data: {
-              labels: data.chart?.labels || [],
+              labels: data.chart.labels,
               datasets: [
                 {
                   label: 'Total',
-                  data: data.chart?.values || [],
+                  data: data.chart.values,
                   borderColor: '#6366f1',
                   borderWidth: 2,
-                  backgroundColor: gradientMain,
+                  backgroundColor: grad,
                   fill: true,
                   tension: 0.3,
                   pointRadius: 0,
                   pointHitRadius: 20,
-                  pointHoverRadius: 6,
-                  pointHoverBackgroundColor: '#fff',
-                  pointHoverBorderColor: '#6366f1',
                 },
               ],
             },
             options: {
               responsive: true,
               maintainAspectRatio: false,
-              plugins: {
-                legend: { display: false },
-                tooltip: {
-                  backgroundColor: 'rgba(30, 30, 36, 0.9)',
-                  titleColor: '#e2e8f0',
-                  bodyColor: '#fff',
-                  borderColor: 'rgba(99, 102, 241, 0.2)',
-                  borderWidth: 1,
-                  padding: 12,
-                  displayColors: false,
-                  callbacks: {
-                    title: function (context) {
-                      const dateParts = context[0].label.split('-')
-                      const dateObj = new Date(dateParts[0], dateParts[1] - 1, dateParts[2])
-                      return dateObj.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long' })
-                    },
-                    label: function (context) {
-                      return BRL.format(context.parsed.y)
-                    },
-                  },
-                },
-              },
+              plugins: { legend: { display: false } },
               scales: {
                 x: {
                   display: true,
-                  grid: { display: false, drawBorder: false },
+                  grid: { display: false },
                   ticks: {
-                    color: '#64748b',
                     maxTicksLimit: 7,
-                    maxRotation: 0,
-                    callback: function (val) {
-                      const label = this.getLabelForValue(val)
-                      const parts = label.split('-')
-                      return `${parts[2]}/${parts[1]}`
+                    callback: function (v) {
+                      return this.getLabelForValue(v).split('-').slice(1).reverse().join('/')
                     },
                   },
                 },
                 y: {
                   display: true,
                   position: 'right',
-                  grid: { color: '#2a2b32', borderDash: [5, 5], drawBorder: false },
+                  grid: { color: '#2a2b32', borderDash: [5, 5] },
                   ticks: {
-                    color: '#64748b',
-                    maxTicksLimit: 6,
-                    padding: 10,
-                    callback: function (value) {
-                      return new Intl.NumberFormat('pt-BR', {
+                    callback: v =>
+                      new Intl.NumberFormat('pt-BR', {
                         notation: 'compact',
                         style: 'currency',
                         currency: 'BRL',
-                      }).format(value)
-                    },
+                      }).format(v),
                   },
                 },
               },
             },
           })
 
-          if (data.dailyChart && data.dailyChart.labels && data.dailyChart.labels.length > 0) {
-            const ctxDaily = document.getElementById('dailyChart').getContext('2d')
-            new Chart(ctxDaily, {
+          if (data.dailyChart.labels.length)
+            new Chart(document.getElementById('dailyChart'), {
               type: 'bar',
               data: {
                 labels: data.dailyChart.labels,
                 datasets: [
                   {
-                    label: 'Variação',
                     data: data.dailyChart.values,
                     backgroundColor: data.dailyChart.values.map(v =>
                       v >= 0 ? '#34d399' : '#f87171'
@@ -745,19 +816,60 @@
                 scales: { x: { display: false }, y: { grid: { color: '#2a2b32' } } },
               },
             })
-          }
 
-          if (data.tiers && data.tiers.bulk) {
-            const tiers = data.tiers
-            const ctxTier = document.getElementById('tierChart').getContext('2d')
-            new Chart(ctxTier, {
-              type: 'bar',
+          if (data.setChart)
+            new Chart(document.getElementById('setChart'), {
+              type: 'doughnut',
               data: {
-                labels: [tiers.bulk.label, tiers.low.label, tiers.mid.label, tiers.high.label],
+                labels: data.setChart.labels,
                 datasets: [
                   {
-                    label: 'Qtd Cartas',
-                    data: [tiers.bulk.qty, tiers.low.qty, tiers.mid.qty, tiers.high.qty],
+                    data: data.setChart.values,
+                    backgroundColor: [
+                      '#6366f1',
+                      '#818cf8',
+                      '#a5b4fc',
+                      '#c7d2fe',
+                      '#e0e7ff',
+                      '#334155',
+                    ],
+                    borderWidth: 0,
+                  },
+                ],
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                onClick: (evt, activeElements) => {
+                  if (activeElements.length > 0) {
+                    const index = activeElements[0].index
+                    filterFromChart(data.setChart.labels[index])
+                  }
+                },
+                plugins: {
+                  legend: {
+                    position: 'right',
+                    labels: { color: '#94a3b8', boxWidth: 10, font: { size: 10 } },
+                  },
+                  tooltip: { callbacks: { label: c => ` ${c.label}: ${BRL.format(c.raw)}` } },
+                },
+                cutout: '70%',
+              },
+            })
+
+          if (data.tiers)
+            new Chart(document.getElementById('tierChart'), {
+              type: 'bar',
+              data: {
+                labels: ['Bulk', 'Low', 'Mid', 'High'],
+                datasets: [
+                  {
+                    data: [
+                      data.tiers.bulk.qty,
+                      data.tiers.low.qty,
+                      data.tiers.mid.qty,
+                      data.tiers.high.qty,
+                    ],
                     backgroundColor: ['#475569', '#94a3b8', '#6366f1', '#a855f7'],
                     borderRadius: 4,
                   },
@@ -771,57 +883,33 @@
                 scales: { x: { display: false }, y: { grid: { display: false } } },
               },
             })
-          }
 
-          const tbodyGain = document.getElementById('tableTopGainers')
-          if (!data.topGainers || data.topGainers.length === 0) {
-            tbodyGain.innerHTML =
-              '<tr><td class="text-center text-muted small">Sem dados.</td></tr>'
-          } else {
-            data.topGainers.forEach(c => {
-              const tr = document.createElement('tr')
-              tr.innerHTML = `<td class="ps-3"><div class="col-card-name" style="max-width: 140px;">${
-                c.name
-              }</div></td><td class="text-end pe-3 var-up small">+${BRL.format(c.diff)}</td>`
-              tbodyGain.appendChild(tr)
+          const fillTable = (id, list, colorCheck = false) => {
+            const tb = document.getElementById(id)
+            if (!list.length) {
+              tb.innerHTML = '<tr><td class="text-center text-muted">Vazio</td></tr>'
+              return
+            }
+            list.forEach(x => {
+              let val = BRL.format(x.diff)
+              let cls = colorCheck ? (x.diff > 0 ? 'var-up' : 'var-down') : 'text-white'
+              let prefix = colorCheck ? (x.diff > 0 ? '+' : '') : ''
+              tb.innerHTML += `<tr><td class="ps-3"><div class="col-card-name fw-bold text-white">${
+                x.name
+              }</div>${
+                x.set ? '<div class="small text-muted">' + x.set + '</div>' : ''
+              }</td><td class="text-end pe-3 fw-bold ${cls}">${prefix}${val}</td></tr>`
             })
           }
 
-          const tbodyLoss = document.getElementById('tableTopLosers')
-          if (!data.topLosers || data.topLosers.length === 0) {
-            tbodyLoss.innerHTML =
-              '<tr><td class="text-center text-muted small">Sem quedas relevantes.</td></tr>'
-          } else {
-            data.topLosers.forEach(c => {
-              const tr = document.createElement('tr')
-              tr.innerHTML = `<td class="ps-3"><div class="col-card-name" style="max-width: 140px;">${
-                c.name
-              }</div></td><td class="text-end pe-3 var-down small">${BRL.format(c.diff)}</td>`
-              tbodyLoss.appendChild(tr)
-            })
-          }
+          fillTable('tableTopGainers', data.topGainers, true)
+          fillTable('tableTopLosers', data.topLosers, true)
 
-          const tbodyTop = document.getElementById('tableTopAssets')
-          if (data.topAssets) {
-            data.topAssets.forEach((c, i) => {
-              const tr = document.createElement('tr')
-              tr.innerHTML = `<td class="text-muted small ps-4">${
-                i + 1
-              }</td><td><div class="col-card-name">${
-                c.name
-              }</div></td><td class="text-center d-none d-md-table-cell"><span class="badge-tech">${
-                c.set
-              }</span></td><td class="text-end fw-bold text-white pe-4">${BRL.format(
-                c.totalPrice
-              )}</td>`
-              tbodyTop.appendChild(tr)
-            })
-          }
+          loadInventory()
         } catch (e) {
           console.error(e)
         }
       }
-
       initDashboard()
     </script>
   </body>

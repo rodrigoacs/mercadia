@@ -128,3 +128,43 @@ Sun Jan  4 12:19:30 -03 2026
 📊 47 cartas tiveram alteração de preço.
 📤 Enviando para VPS...
 ✅ Concluído!
+---------------------------------
+Mon Jan  5 11:09:32 -03 2026
+[1/5/2026, 11:09:32 AM] 🔍 Iniciando análise rigorosa...
+✅ Sucesso! Total Coleção: R$ 9927.19
+📝 Dados salvos em CSV formato internacional.
+📊 69 cartas tiveram alteração de preço.
+📤 Enviando para VPS...
+✅ Concluído!
+---------------------------------
+Tue Jan  6 10:55:01 -03 2026
+[1/6/2026, 10:55:02 AM] 🔍 Iniciando análise rigorosa...
+✅ Sucesso! Total Coleção: R$ 9984.63
+📝 Dados salvos em CSV formato internacional.
+📊 148 cartas tiveram alteração de preço.
+📤 Enviando para VPS...
+✅ Concluído!
+---------------------------------
+Wed Jan  7 10:56:37 -03 2026
+[1/7/2026, 10:56:37 AM] 🔍 Iniciando análise rigorosa...
+✅ Sucesso! Total Coleção: R$ 10537.74
+📝 Dados salvos em CSV formato internacional.
+📊 179 cartas tiveram alteração de preço.
+📤 Enviando para VPS...
+✅ Concluído!
+---------------------------------
+Wed Jan  7 10:58:00 -03 2026
+[1/7/2026, 10:58:00 AM] 🔍 Iniciando análise rigorosa...
+✅ Sucesso! Total Coleção: R$ 10537.74
+📝 Dados salvos em CSV formato internacional.
+📊 4 cartas tiveram alteração de preço.
+📤 Enviando para VPS...
+✅ Concluído!
+---------------------------------
+Wed Jan  7 11:00:07 -03 2026
+[1/7/2026, 11:00:07 AM] 🔍 Iniciando análise rigorosa...
+✅ Sucesso! Total Coleção: R$ 10537.74
+📝 Dados salvos em CSV formato internacional.
+📊 4 cartas tiveram alteração de preço.
+📤 Enviando para VPS...
+✅ Concluído!
