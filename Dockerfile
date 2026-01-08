@@ -10,6 +10,6 @@ COPY . .
 
 RUN mkdir -p /app/data && chown -R node:node /app/data
 
-EXPOSE 80
+EXPOSE 3000
 
 CMD ["node", "server.js"]

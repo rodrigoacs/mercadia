@@ -1,15 +1,21 @@
-version: '3.8'
-
-services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: mercadia_app
-    restart: unless-stopped
-    networks:
-      - proxy
-
-networks:
-  proxy:
-    external: true
+version: '3.8'                                                                                                                                                                                                                             
+                                                                                                                                                                                                                                             
+services:                                                                                                                                                                                                                                  
+  app:                                                                                                                                                                                                                                     
+    build:                                                                                                                                                                                                                                 
+      context: .                                                                                                                                                                                                                           
+      dockerfile: Dockerfile                                                                                                                                                                                                               
+      container_name: mercadia_app                                                                                                                                                                                                           
+      restart: unless-stopped                                                                                                                                                                                                                
+    volumes:                                                                                                                                                                                                                               
+      - ./data:/app/data                                                                                                                                                                                                                   
+    networks:                                                                                                                                                                                                                              
+      - proxy                                                                                                                                                                                                                              
+    dns:                                                                                                                                                                                                                                   
+       - 8.8.8.8                                                                                                                                                                                                                            
+       - 8.8.4.4                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                            
+networks:                                                                                                                                                                                                                                  
+   proxy:                                                                                                                                                                                                                                   
+     external: true                                                                                                                                                                                                                         
+                   
