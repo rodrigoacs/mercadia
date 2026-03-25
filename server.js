@@ -1,26 +1,16 @@
-const express = require('express')
-const cors = require('cors')
-const path = require('path')
-
-// Importações (MVC)
-const CsvRepository = require('./src/repositories/CsvRepository')
-const AnalyticsService = require('./src/services/AnalyticsService')
-const DashboardController = require('./src/controllers/DashboardController')
+import express from 'express'
+import cors from 'cors'
+import { getDashboard, search, getInventory, getCommanderPool } from './src/handlers.js'
 
 const app = express()
 app.use(cors())
 app.use(express.static('public'))
 
-// Configuração (Wiring)
-const csvFile = path.join(__dirname, 'data', 'historico_cartas.csv')
-const repository = new CsvRepository(csvFile)
-const service = new AnalyticsService(repository)
-const controller = new DashboardController(service)
-
-// Rotas
-app.get('/api/dashboard', (req, res) => controller.getDashboard(req, res))
-app.get('/api/search', (req, res) => controller.search(req, res))
-app.get('/api/inventory', (req, res) => controller.getInventory(req, res)) // Nova rota
+// Rotas da nossa API
+app.get('/api/dashboard', getDashboard)
+app.get('/api/search', search)
+app.get('/api/inventory', getInventory)
+app.get('/api/commander-pool', getCommanderPool) // A mágica acontece aqui
 
 app.listen(3000, () => {
   console.log('🚀 Sistema Mercadia Rodando: http://localhost:3000')
