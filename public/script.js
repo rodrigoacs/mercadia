@@ -4,23 +4,23 @@ Chart.defaults.color = '#64748b'
 Chart.defaults.borderColor = '#2a2b32'
 
 let globalData = {}
-let fullInventory = [] 
+let fullInventory = []
 let mainChartInstance = null
 let currentSearchResults = []
 let selectedColors = []
 
-// Função FODA para renderizar os ícones de mana
+// NOVA FUNÇÃO: Renderiza as imagens SVG oficiais da Wizards via Scryfall (À Prova de Falhas)
 function formatManaCost(cost) {
   if (!cost) return ''
-  // Pega tudo que estiver entre {} e troca pelo icone da Mana Font
   return cost.replace(/{([^}]+)}/g, (match, p1) => {
-    const symbol = p1.toLowerCase().replace('/', '')
-    return `<i class="ms ms-${symbol} ms-cost ms-shadow"></i>`
+    // Transforma coisas como W/B em WB para buscar o SVG correto
+    let symbol = p1.toUpperCase().replace('/', '')
+    return `<img src="https://svgs.scryfall.io/card-symbols/${symbol}.svg" alt="${match}" style="height: 16px; vertical-align: text-bottom; margin: 0 1px; filter: drop-shadow(0px 1px 1px rgba(0,0,0,0.8));">`
   })
 }
 
 function showCardImage(imgUri, name) {
-  if(!imgUri) {
+  if (!imgUri) {
     alert("Imagem não encontrada para esta carta.")
     return
   }
@@ -52,7 +52,7 @@ async function performSearch(e) {
         if (cr > pr) icnHist = '<i class="bi bi-graph-up-arrow text-success"></i>'
         else if (cr < pr) icnHist = '<i class="bi bi-graph-down-arrow text-danger"></i>'
       }
-      
+
       const btnImg = `<button class="btn-action-icon me-1" onclick="showCardImage('${c.imageUri || ''}', '${c.name.replace(/'/g, "\\'")}')" title="Ver Carta"><i class="bi bi-image"></i></button>`
       const btnHist = `<button class="btn-action-icon" onclick="openHistory(${i})" title="Histórico de Preço">${icnHist}</button>`
 
@@ -105,7 +105,7 @@ function updateTimeRange(range, btn) {
 function toggleCommanderMode() {
   const active = document.getElementById('commanderModeToggle').checked
   const colorBox = document.getElementById('colorFilters')
-  if(active) {
+  if (active) {
     colorBox.style.opacity = '1'
     colorBox.style.pointerEvents = 'auto'
     fetchCommanderPool()
@@ -118,15 +118,15 @@ function toggleCommanderMode() {
 
 function toggleColor(color) {
   const btn = document.querySelector(`.c-${color.toLowerCase()}`)
-  if(selectedColors.includes(color)) {
+  if (selectedColors.includes(color)) {
     selectedColors = selectedColors.filter(c => c !== color)
     btn.classList.remove('active')
   } else {
     selectedColors.push(color)
     btn.classList.add('active')
   }
-  
-  if(color === 'C' && selectedColors.includes('C')) {
+
+  if (color === 'C' && selectedColors.includes('C')) {
     selectedColors = ['C']
     document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'))
     btn.classList.add('active')
@@ -135,7 +135,7 @@ function toggleColor(color) {
     document.querySelector('.c-c')?.classList.remove('active')
   }
 
-  if(document.getElementById('commanderModeToggle').checked) {
+  if (document.getElementById('commanderModeToggle').checked) {
     fetchCommanderPool()
   }
 }
@@ -146,7 +146,7 @@ async function fetchCommanderPool() {
     const req = await fetch(`/api/commander-pool?colors=${colorString}`)
     fullInventory = await req.json()
     applyInventoryFilters()
-  } catch(e) { console.error(e) }
+  } catch (e) { console.error(e) }
 }
 
 async function loadInventory() {
@@ -198,7 +198,7 @@ function applyInventoryFilters() {
   displayList.forEach((c, i) => {
     const badge = c.extras ? `<span class="badge-extra ms-1">${c.extras}</span>` : ''
     const imgBtn = c.imageUri ? `<button class="btn btn-sm btn-link p-0 text-muted" onclick="showCardImage('${c.imageUri}', '${c.name.replace(/'/g, "\\'")}')"><i class="bi bi-image"></i></button>` : ''
-    
+
     tbody.innerHTML += `<tr>
       <td class="text-center ps-4">${imgBtn}</td>
       <td>
@@ -240,7 +240,7 @@ async function initDashboard() {
     document.getElementById('kpiQty').innerText = data.kpis.totalCards
     document.getElementById('kpiTicket').innerText = BRL.format(data.kpis.avgTicket)
     document.getElementById('lastUpdate').innerText = data.kpis.lastUpdate.split('-').reverse().slice(0, 2).join('/')
-    
+
     const setKpi = (id, val) => {
       const el = document.getElementById(id)
       el.innerText = (val > 0 ? '+' : '') + BRL.format(val)
@@ -315,7 +315,7 @@ async function initDashboard() {
       list.forEach(x => {
         let val = BRL.format(x.diff), cls = colorCheck ? (x.diff > 0 ? 'var-up' : 'var-down') : 'text-white', prefix = colorCheck ? (x.diff > 0 ? '+' : '') : ''
         const imgBtn = x.imageUri ? `<button class="btn btn-sm btn-link p-0 text-muted me-2" onclick="showCardImage('${x.imageUri}', '${x.name.replace(/'/g, "\\'")}')"><i class="bi bi-image"></i></button>` : ''
-        
+
         tb.innerHTML += `<tr>
           <td class="ps-3 d-flex align-items-center">
             ${imgBtn}
@@ -328,7 +328,7 @@ async function initDashboard() {
         </tr>`
       })
     }
-    
+
     fillTable('tableTopGainers', data.topGainers, true)
     fillTable('tableTopLosers', data.topLosers, true)
 
