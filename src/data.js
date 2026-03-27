@@ -34,7 +34,6 @@ export const getRawData = async () => {
       client.query('SELECT name, set_code, num, extras, color_identity, mana_cost, cmc, type_line, rarity, oracle_text, legalities, image_uri FROM metadata_cartas')
     ])
 
-    // Dicionário com a chave exata (Nome + Edição + Num + Extras)
     const metaDict = new Map()
     for (const m of metaResult.rows) {
       metaDict.set(`${m.name}|${m.set_code}|${m.num}|${m.extras}`, {
@@ -54,7 +53,6 @@ export const getRawData = async () => {
     }
 
     cache = histResult.rows.map(row => {
-      // Busca a arte exata baseada na chave completa
       const metaKey = `${row.name}|${row.set_code}|${row.num || ''}|${row.extras || ''}`
       const meta = metaDict.get(metaKey) || emptyMeta
 

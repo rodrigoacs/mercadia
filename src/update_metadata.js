@@ -18,7 +18,7 @@ const pool = new Pool({
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 async function updateScryfallData() {
-  console.log('🚀 Iniciando o Algoritmo de Scoring Definitivo do Scryfall...')
+  console.log('🚀 A iniciar o Algoritmo de Scoring Máximo do Scryfall...')
   const client = await pool.connect()
 
   try {
@@ -54,7 +54,7 @@ async function updateScryfallData() {
     `)
 
     const missingCards = missingCardsQuery.rows
-    console.log(`🔍 Encontradas ${missingCards.length} variantes. A calcular scores...`)
+    console.log(`🔍 Encontradas ${missingCards.length} variantes. A calcular scores matemáticos...`)
 
     if (missingCards.length === 0) return
 
@@ -63,18 +63,16 @@ async function updateScryfallData() {
 
     for (const card of missingCards) {
       try {
-        const cleanName = card.name.split('//')[0].trim()
+        const cleanName = card.name.split('//')[0].trim().replace(/"/g, '')
         const dbNum = card.num ? card.num.toString().trim().toLowerCase() : ''
         const dbTags = (card.set_code + ' ' + (card.extras || '')).toLowerCase()
         const safeNum = card.num || ''
         const safeExtras = card.extras || ''
 
-        // Pede TODAS AS IMPRESSÕES ÚNICAS dessa carta no Scryfall
-        const url = `https://api.scryfall.com/cards/search?q=${encodeURIComponent('!"' + cleanName + '" unique:prints')}`
+        let url = `https://api.scryfall.com/cards/search?q=${encodeURIComponent('!"' + cleanName + '" unique:prints')}`
         let response = await fetch(url)
         let data = response.ok ? await response.json() : null
 
-        // Fallback: se o nome deu ruim, usa o fuzzy e pega a única que vier
         if (!data || !data.data || data.data.length === 0) {
           const fallbackUrl = `https://api.scryfall.com/cards/named?fuzzy=${encodeURIComponent(cleanName)}`
           response = await fetch(fallbackUrl)
@@ -85,30 +83,47 @@ async function updateScryfallData() {
         }
 
         if (data && data.data && data.data.length > 0) {
-          // ALGORITMO DE SCORING: Vamos eleger a melhor impressão!
           let bestPrint = data.data[0]
-          let maxScore = -1
+          let maxScore = -99999
 
           for (const p of data.data) {
             let score = 0
             const pNum = p.collector_number ? p.collector_number.toLowerCase() : ''
+            const pSetName = p.set_name ? p.set_name.toLowerCase() : ''
+            const pSetType = p.set_type ? p.set_type.toLowerCase() : ''
+            const finishes = p.finishes || []
+            const frameEffects = p.frame_effects || []
 
-            // 1. O Número Bate? (Ganha o jogo)
-            if (dbNum && pNum === dbNum) score += 1000
-
-            // 2. É Promo?
-            if (p.promo && dbTags.includes('promo')) score += 100
-            if (p.promo_types) {
-              if (p.promo_types.includes('prerelease') && dbTags.includes('lançamento')) score += 100
-              if (p.promo_types.includes('bundle') && dbTags.includes('bundle')) score += 100
-              if (p.promo_types.includes('promopack') && dbTags.includes('promo pack')) score += 100
+            if (dbNum && pNum === dbNum) {
+              score += 5000
+            } else if (dbNum && pNum.includes(dbNum)) {
+              score += 2000
             }
 
-            // 3. Tratamentos e Bordas
-            if (p.frame_effects && p.frame_effects.includes('showcase') && dbTags.includes('showcase')) score += 100
-            if (p.border_color === 'borderless' && (dbTags.includes('borderless') || dbTags.includes('sem borda'))) score += 100
-            if (p.frame === '1997' && (dbTags.includes('retro') || dbTags.includes('moldura'))) score += 100
-            if (p.frame_effects && p.frame_effects.includes('extendedart') && (dbTags.includes('estendida') || dbTags.includes('extended'))) score += 100
+            if (dbTags.includes('commander')) {
+              if (pSetName.includes('commander') || pSetType === 'commander') score += 1000
+              else score -= 1000
+            } else {
+              if (pSetName.includes('commander') || pSetType === 'commander') score -= 1000
+            }
+
+            const isDbVariant = dbTags.includes('variante') || dbTags.includes('promo') || dbTags.includes('showcase') || dbTags.includes('borda') || dbTags.includes('borderless') || dbTags.includes('estendida') || dbTags.includes('extended') || dbTags.includes('retro') || dbTags.includes('moldura')
+
+            const isPrintVariant = p.promo || p.border_color === 'borderless' || p.full_art || frameEffects.length > 0 || pSetType === 'promo' || pSetType === 'masterpiece'
+
+            if (isDbVariant && isPrintVariant) {
+              score += 800
+
+              if (dbTags.includes('showcase') && frameEffects.includes('showcase')) score += 500
+              if ((dbTags.includes('borderless') || dbTags.includes('sem borda')) && p.border_color === 'borderless') score += 500
+              if ((dbTags.includes('estendida') || dbTags.includes('extended')) && frameEffects.includes('extendedart')) score += 500
+              if ((dbTags.includes('retro') || dbTags.includes('moldura')) && p.frame === '1997') score += 500
+              if (dbTags.includes('etched') && finishes.includes('etched')) score += 500
+              if (dbTags.includes('promo') && (p.promo || pSetType === 'promo')) score += 500
+
+            } else if (!isDbVariant && isPrintVariant) {
+              score -= 800
+            }
 
             if (score > maxScore) {
               maxScore = score

@@ -9,11 +9,9 @@ let mainChartInstance = null
 let currentSearchResults = []
 let selectedColors = []
 
-// NOVA FUNÇÃO: Renderiza as imagens SVG oficiais da Wizards via Scryfall (À Prova de Falhas)
 function formatManaCost(cost) {
   if (!cost) return ''
   return cost.replace(/{([^}]+)}/g, (match, p1) => {
-    // Transforma coisas como W/B em WB para buscar o SVG correto
     let symbol = p1.toUpperCase().replace('/', '')
     return `<img src="https://svgs.scryfall.io/card-symbols/${symbol}.svg" alt="${match}" style="height: 16px; vertical-align: text-bottom; margin: 0 1px; filter: drop-shadow(0px 1px 1px rgba(0,0,0,0.8));">`
   })
