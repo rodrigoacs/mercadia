@@ -1,7 +1,7 @@
 const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
 Chart.defaults.font.family = "'Inter', sans-serif"
-Chart.defaults.color = '#64748b'
-Chart.defaults.borderColor = '#2a2b32'
+Chart.defaults.color = '#9e978e' // Texto mutado do novo tema
+Chart.defaults.borderColor = '#36312d' // Borda do novo tema
 
 let globalData = {}
 let fullInventory = []
@@ -249,21 +249,28 @@ async function initDashboard() {
 
     const ctxMain = document.getElementById('mainChart').getContext('2d')
     const grad = ctxMain.createLinearGradient(0, 0, 0, 300)
-    grad.addColorStop(0, 'rgba(99,102,241,0.3)')
-    grad.addColorStop(1, 'rgba(99,102,241,0)')
+    // Gradiente Dourado (Rare Spark)
+    grad.addColorStop(0, 'rgba(212, 175, 55, 0.3)')
+    grad.addColorStop(1, 'rgba(212, 175, 55, 0)')
+
     mainChartInstance = new Chart(ctxMain, {
       type: 'line',
       data: {
         labels: data.chart.labels,
         datasets: [{
-          label: 'Total', data: data.chart.values, borderColor: '#6366f1', borderWidth: 2, backgroundColor: grad, fill: true, tension: 0.3, pointRadius: 0, pointHitRadius: 20
+          label: 'Total',
+          data: data.chart.values,
+          borderColor: '#d4af37', // Linha Dourada
+          borderWidth: 2,
+          backgroundColor: grad,
+          fill: true, tension: 0.3, pointRadius: 0, pointHitRadius: 20
         }]
       },
       options: {
         responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
         scales: {
           x: { display: true, grid: { display: false }, ticks: { maxTicksLimit: 7, callback: function (v) { return this.getLabelForValue(v).split('-').slice(1).reverse().join('/') } } },
-          y: { display: true, position: 'right', grid: { color: '#2a2b32', borderDash: [5, 5] }, ticks: { callback: v => new Intl.NumberFormat('pt-BR', { notation: 'compact', style: 'currency', currency: 'BRL' }).format(v) } }
+          y: { display: true, position: 'right', grid: { color: '#36312d', borderDash: [5, 5] }, ticks: { callback: v => new Intl.NumberFormat('pt-BR', { notation: 'compact', style: 'currency', currency: 'BRL' }).format(v) } }
         }
       }
     })
@@ -273,9 +280,13 @@ async function initDashboard() {
         type: 'bar',
         data: {
           labels: data.dailyChart.labels,
-          datasets: [{ data: data.dailyChart.values, backgroundColor: data.dailyChart.values.map(v => v >= 0 ? '#34d399' : '#f87171'), borderRadius: 4 }]
+          datasets: [{
+            data: data.dailyChart.values,
+            backgroundColor: data.dailyChart.values.map(v => v >= 0 ? '#10b981' : '#ef4444'), // Verde Esmeralda e Vermelho Vivo
+            borderRadius: 4
+          }]
         },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { grid: { color: '#2a2b32' } } } }
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { grid: { color: '#36312d' } } } }
       })
 
     if (data.setChart)
@@ -283,7 +294,12 @@ async function initDashboard() {
         type: 'doughnut',
         data: {
           labels: data.setChart.labels,
-          datasets: [{ data: data.setChart.values, backgroundColor: ['#6366f1', '#818cf8', '#a5b4fc', '#c7d2fe', '#e0e7ff', '#334155'], borderWidth: 0 }]
+          datasets: [{
+            data: data.setChart.values,
+            // Paleta Dourado/Bronze/Couro
+            backgroundColor: ['#D4AF37', '#B8860B', '#CD7F32', '#A0522D', '#8B4513', '#4A3C31'],
+            borderWidth: 0
+          }]
         },
         options: {
           responsive: true, maintainAspectRatio: false, cutout: '70%',
@@ -291,18 +307,78 @@ async function initDashboard() {
             if (activeElements.length > 0) filterFromChart(data.setChart.labels[activeElements[0].index])
           },
           plugins: {
-            legend: { position: 'right', labels: { color: '#94a3b8', boxWidth: 10, font: { size: 10 } } },
+            legend: { position: 'right', labels: { color: '#9e978e', boxWidth: 10, font: { size: 10 } } },
             tooltip: { callbacks: { label: c => ` ${c.label}: ${BRL.format(c.raw)}` } }
           }
         }
       })
 
+    // Cores de Mana MUITO MAIS VIBRANTES
+    if (data.colorDist) {
+      new Chart(document.getElementById('colorChart'), {
+        type: 'doughnut',
+        data: {
+          labels: ['Branco', 'Azul', 'Preto', 'Vermelho', 'Verde', 'Multicolor', 'Incolor'],
+          datasets: [{
+            data: [data.colorDist.W, data.colorDist.U, data.colorDist.B, data.colorDist.R, data.colorDist.G, data.colorDist.M, data.colorDist.C],
+            // Branco Brilhante, Azul Vivo, Chumbo, Vermelho Sangue, Verde Esmeralda, Âmbar/Ouro, Cinza Metálico
+            backgroundColor: ['#FFFDE7', '#3B82F6', '#52525B', '#EF4444', '#10B981', '#F59E0B', '#A8A29E'],
+            borderWidth: 1, borderColor: '#1a1816'
+          }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false, cutout: '70%',
+          plugins: { legend: { position: 'right', labels: { color: '#9e978e', boxWidth: 10, font: { size: 10 } } } }
+        }
+      })
+    }
+
+    // Curva de Mana (Dourada)
+    if (data.manaCurve) {
+      new Chart(document.getElementById('manaCurveChart'), {
+        type: 'bar',
+        data: {
+          labels: ['0', '1', '2', '3', '4', '5', '6+'],
+          datasets: [{
+            data: [data.manaCurve['0'], data.manaCurve['1'], data.manaCurve['2'], data.manaCurve['3'], data.manaCurve['4'], data.manaCurve['5'], data.manaCurve['6+']],
+            backgroundColor: '#d4af37', // Dourado
+            borderRadius: 4
+          }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { display: false } }, y: { display: false } } }
+      })
+    }
+
+    // Gráfico de Raridade com cores MTG (Preto, Prata, Ouro, Laranja-Mítico)
+    if (data.rarityDist) {
+      new Chart(document.getElementById('rarityChart'), {
+        type: 'doughnut',
+        data: {
+          labels: ['Comum', 'Incomum', 'Rara', 'Mítica'],
+          datasets: [{
+            data: [data.rarityDist.common, data.rarityDist.uncommon, data.rarityDist.rare, data.rarityDist.mythic],
+            backgroundColor: ['#52525B', '#9CA3AF', '#D4AF37', '#EA580C'],
+            borderWidth: 1, borderColor: '#1a1816'
+          }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false, cutout: '70%',
+          plugins: { legend: { position: 'right', labels: { color: '#9e978e', boxWidth: 10, font: { size: 10 } } } }
+        }
+      })
+    }
+
+    // Tier Chart acompanhando as cores de Raridade
     if (data.tiers)
       new Chart(document.getElementById('tierChart'), {
         type: 'bar',
         data: {
           labels: ['Bulk (< R$ 2)', 'Low (R$ 2-10)', 'Mid (R$ 10-50)', 'High (> R$ 50)'],
-          datasets: [{ data: [data.tiers.bulk.qty, data.tiers.low.qty, data.tiers.mid.qty, data.tiers.high.qty], backgroundColor: ['#475569', '#94a3b8', '#6366f1', '#a855f7'], borderRadius: 4 }]
+          datasets: [{
+            data: [data.tiers.bulk.qty, data.tiers.low.qty, data.tiers.mid.qty, data.tiers.high.qty],
+            backgroundColor: ['#52525B', '#9CA3AF', '#D4AF37', '#EA580C'],
+            borderRadius: 4
+          }]
         },
         options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { grid: { display: false } } } }
       })

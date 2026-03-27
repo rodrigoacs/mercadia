@@ -71,7 +71,6 @@ const calculateVariations = (data, timeline, dates, todayData) => {
     if (oldPrice !== undefined && oldPrice > 0) {
       const diff = h.unitPrice - oldPrice
       if (Math.abs(diff) >= 0.01) {
-        // Agora mandamos a imagem e o custo de mana junto!
         variations.push({ name: h.name, set: h.set, diff: diff, extras: h.extras, imageUri: h.imageUri, manaCost: h.manaCost })
       }
     }
@@ -81,6 +80,29 @@ const calculateVariations = (data, timeline, dates, todayData) => {
   topLosers = [...variations].filter(v => v.diff < 0).sort((a, b) => a.diff - b.diff).slice(0, 5)
 
   return { topGainers, topLosers, dailyChartData }
+}
+
+// === NOVAS FUNÇÕES: DISTRIBUIÇÃO E RARIDADE ===
+const calculateColorDistribution = (todayData) => {
+  const dist = { W: 0, U: 0, B: 0, R: 0, G: 0, M: 0, C: 0 }
+  todayData.forEach(c => {
+    if (c.colorIdentity === 'C' || !c.colorIdentity) dist.C += c.qty
+    else {
+      const colors = c.colorIdentity.split(',')
+      if (colors.length > 1) dist.M += c.qty
+      else dist[colors[0]] += c.qty
+    }
+  })
+  return dist
+}
+
+const calculateRarityDistribution = (todayData) => {
+  const dist = { common: 0, uncommon: 0, rare: 0, mythic: 0 }
+  todayData.forEach(c => {
+    const r = c.rarity ? c.rarity.toLowerCase() : ''
+    if (dist[r] !== undefined) dist[r] += c.qty
+  })
+  return dist
 }
 
 export const getDashboardData = async () => {
@@ -98,7 +120,10 @@ export const getDashboardData = async () => {
 
   return {
     empty: false, kpis, chart: { labels: dates, values: dates.map(d => timeline[d]) },
-    dailyChart: variations.dailyChartData, setChart, tiers, topGainers: variations.topGainers, topLosers: variations.topLosers
+    dailyChart: variations.dailyChartData, setChart, tiers, topGainers: variations.topGainers, topLosers: variations.topLosers,
+    // Enviando os novos dados pro Frontend
+    colorDist: calculateColorDistribution(todayData),
+    rarityDist: calculateRarityDistribution(todayData)
   }
 }
 
@@ -108,7 +133,12 @@ export const searchCardData = async (query) => {
   const uniqueDates = [...new Set(data.map(d => d.date))].sort()
   const lastDate = uniqueDates[uniqueDates.length - 1]
 
-  let results = data.filter(d => d.date === lastDate && d.name.toLowerCase().includes(query))
+  // === BUSCA PROFUNDA (ORACLE TEXT) ===
+  // Agora a busca pega o Nome OU qualquer coisa escrita nas regras da carta
+  let results = data.filter(d => 
+    d.date === lastDate && 
+    (d.name.toLowerCase().includes(query) || (d.oracleText && d.oracleText.toLowerCase().includes(query)))
+  )
 
   return results.map(card => {
     const history = data
