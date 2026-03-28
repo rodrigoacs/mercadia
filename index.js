@@ -18,7 +18,6 @@ if (!fs.existsSync(DATA_DIR)) {
 
 const ARQ_MEMORIA = path.join(DATA_DIR, 'ultimo_estado.json')
 
-// Conexão direta com a sua VPS (puxando do .env que ensinei a criar antes)
 const pool = new Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
@@ -33,7 +32,6 @@ async function monitorarIndividualmente() {
   const client = await pool.connect()
 
   try {
-    // Garante que a tabela exista na VPS
     await client.query(`
       CREATE TABLE IF NOT EXISTS historico_cartas (
         id SERIAL PRIMARY KEY,
@@ -114,6 +112,9 @@ async function monitorarIndividualmente() {
 
     if (inserts.length > 0) {
       await client.query('BEGIN')
+
+      console.log(`🧹 Limpando dados antigos do dia ${dataHoje} para evitar duplicação...`)
+      await client.query('DELETE FROM historico_cartas WHERE date = $1', [dataHoje])
 
       const insertQuery = `
         INSERT INTO historico_cartas (date, name, set_code, num, extras, qty, unit_price, total_price)

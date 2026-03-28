@@ -18,25 +18,30 @@ export const getRawData = async () => {
   const now = Date.now()
 
   if (cache && (now - lastFetch < CACHE_TTL)) {
+    console.log('📦 Usando cache (válido por mais', Math.round((CACHE_TTL - (now - lastFetch)) / 1000), 's)')
     return cache
   }
 
-  console.log('⏳ Carregando os dados do banco de dados...')
+  console.log('⏳ Carregando dados do banco de dados...')
   const client = await pool.connect()
   try {
+    console.log('📇 Criando índices...')
     await client.query(`
       CREATE INDEX IF NOT EXISTS idx_historico_data ON historico_cartas (date);
       CREATE INDEX IF NOT EXISTS idx_historico_nome_set ON historico_cartas (name, set_code);
     `)
 
+    console.log('🔍 Consultando histórico e metadata...')
     const [histResult, metaResult] = await Promise.all([
       client.query('SELECT date, name, set_code, num, extras, qty, unit_price, total_price FROM historico_cartas ORDER BY date ASC'),
       client.query('SELECT name, set_code, num, extras, color_identity, mana_cost, cmc, type_line, rarity, oracle_text, legalities, image_uri FROM metadata_cartas')
     ])
 
+    console.log(`📊 Processando ${histResult.rows.length} cartas e ${metaResult.rows.length} metadados...`)
+
     const metaDict = new Map()
     for (const m of metaResult.rows) {
-      metaDict.set(`${m.name}|${m.set_code}|${m.num}|${m.extras}`, {
+      metaDict.set(`${m.name}|${m.set_code}|${m.num || ''}|${m.extras || ''}`, {
         colorIdentity: m.color_identity || 'C',
         manaCost: m.mana_cost || '',
         cmc: parseFloat(m.cmc) || 0,
@@ -70,11 +75,11 @@ export const getRawData = async () => {
     })
 
     lastFetch = now
-    console.log('✅ Estrutura cacheada com artes exatas!')
+    console.log(`✅ Cache atualizado! ${cache.length} cartas em memória`)
 
     return cache
   } catch (error) {
-    console.error('Erro ao buscar dados:', error)
+    console.error('❌ Erro ao buscar dados:', error.message)
     return cache || []
   } finally {
     client.release()

@@ -1,11 +1,9 @@
 const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
-Chart.defaults.font.family = "'Inter', sans-serif"
-Chart.defaults.color = '#9e978e' // Texto mutado do novo tema
-Chart.defaults.borderColor = '#36312d' // Borda do novo tema
 
 let globalData = {}
 let fullInventory = []
 let mainChartInstance = null
+let organicChartInstance = null
 let currentSearchResults = []
 let selectedColors = []
 
@@ -17,14 +15,48 @@ function formatManaCost(cost) {
   })
 }
 
-function showCardImage(imgUri, name) {
-  if (!imgUri) {
-    alert("Imagem não encontrada para esta carta.")
-    return
+function showCardDetails(encStr) {
+  try {
+    const c = JSON.parse(decodeURIComponent(atob(encStr)))
+    if (!c.imageUri) {
+      alert("Imagem não encontrada para esta carta.")
+      return
+    }
+
+    document.getElementById('detailImage').src = c.imageUri
+    document.getElementById('detailName').innerText = c.name
+    document.getElementById('detailMana').innerHTML = formatManaCost(c.manaCost)
+    document.getElementById('detailType').innerText = c.typeLine || 'Desconhecido'
+
+    let oracle = c.oracleText || 'Sem texto de regras.'
+    document.getElementById('detailOracle').innerHTML = formatManaCost(oracle)
+
+    document.getElementById('detailSet').innerText = `${c.set.toUpperCase()} #${c.num || ''} ${c.extras ? '(' + c.extras + ')' : ''}`
+
+    const rarities = { common: 'Comum', uncommon: 'Incomum', rare: 'Rara', mythic: 'Mítica' }
+    document.getElementById('detailRarity').innerText = rarities[c.rarity?.toLowerCase()] || c.rarity || '-'
+
+    document.getElementById('detailQty').innerText = `${c.qty}x`
+    document.getElementById('detailUnit').innerText = BRL.format(c.unitPrice || 0)
+    document.getElementById('detailTotal').innerText = BRL.format((c.unitPrice || 0) * (c.qty || 1))
+
+    const legDiv = document.getElementById('detailLegalities')
+    legDiv.innerHTML = ''
+    if (c.legalities) {
+      const formats = ['standard', 'pioneer', 'modern', 'legacy', 'commander', 'pauper']
+      formats.forEach(f => {
+        if (c.legalities[f]) {
+          const isLegal = c.legalities[f] === 'legal'
+          const badgeClass = isLegal ? 'bg-success' : 'bg-danger'
+          legDiv.innerHTML += `<span class="badge ${badgeClass} text-uppercase" style="font-size: 0.65rem; padding: 0.4em 0.6em;">${f}</span>`
+        }
+      })
+    }
+
+    new bootstrap.Modal(document.getElementById('imagePreviewModal')).show()
+  } catch (e) {
+    console.error('Erro ao abrir detalhes', e)
   }
-  document.getElementById('scryfallImage').src = imgUri
-  document.getElementById('scryfallName').innerText = name
-  new bootstrap.Modal(document.getElementById('imagePreviewModal')).show()
 }
 
 async function performSearch(e) {
@@ -51,7 +83,8 @@ async function performSearch(e) {
         else if (cr < pr) icnHist = '<i class="bi bi-graph-down-arrow text-danger"></i>'
       }
 
-      const btnImg = `<button class="btn-action-icon me-1" onclick="showCardImage('${c.imageUri || ''}', '${c.name.replace(/'/g, "\\'")}')" title="Ver Carta"><i class="bi bi-image"></i></button>`
+      const enc = btoa(encodeURIComponent(JSON.stringify(c)))
+      const btnImg = `<button class="btn-action-icon me-1" onclick="showCardDetails('${enc}')" title="Inspecionar Carta"><i class="bi bi-image"></i></button>`
       const btnHist = `<button class="btn-action-icon" onclick="openHistory(${i})" title="Histórico de Preço">${icnHist}</button>`
 
       tb.innerHTML += `<tr>
@@ -65,9 +98,7 @@ async function performSearch(e) {
         <td class="text-end pe-4 text-white fw-bold">${BRL.format(c.totalPrice)}</td>
       </tr>`
     })
-  } catch (e) {
-    console.error(e)
-  }
+  } catch (e) { console.error(e) }
 }
 
 function openHistory(i) {
@@ -89,15 +120,19 @@ function openHistory(i) {
   })
 }
 
-function updateTimeRange(range, btn) {
+function updateTimeRange(range, btn, type) {
   if (!globalData.chart) return
-  document.querySelectorAll('.btn-filter').forEach(b => b.classList.remove('active'))
+  document.querySelectorAll(`.btn-filter-${type}`).forEach(b => b.classList.remove('active'))
   btn.classList.add('active')
-  const allL = globalData.chart.labels, allV = globalData.chart.values
+
+  const instance = type === 'main' ? mainChartInstance : organicChartInstance
+  const allL = type === 'main' ? globalData.chart.labels : globalData.organicChart.labels
+  const allV = type === 'main' ? globalData.chart.values : globalData.organicChart.values
+
   let cut = range === '7d' ? -7 : range === '30d' ? -30 : 0
-  mainChartInstance.data.labels = cut === 0 ? allL : allL.slice(cut)
-  mainChartInstance.data.datasets[0].data = cut === 0 ? allV : allV.slice(cut)
-  mainChartInstance.update()
+  instance.data.labels = cut === 0 ? allL : allL.slice(cut)
+  instance.data.datasets[0].data = cut === 0 ? allV : allV.slice(cut)
+  instance.update()
 }
 
 function toggleCommanderMode() {
@@ -171,21 +206,48 @@ async function loadInventory() {
 function applyInventoryFilters() {
   const setF = document.getElementById('filterSet').value
   const extraF = document.getElementById('filterExtra').value
+  const typeF = document.getElementById('filterType').value
+  const rarityF = document.getElementById('filterRarity').value
+  const tierF = document.getElementById('filterTier').value
   const sortF = document.getElementById('sortOrder').value
 
   let filtered = fullInventory.filter(c => {
     if (setF !== 'all' && c.set !== setF) return false
     if (extraF === 'foil' && (!c.extras || c.extras.trim() === '')) return false
     if (extraF === 'normal' && c.extras && c.extras.trim() !== '') return false
+    if (rarityF !== 'all' && (!c.rarity || c.rarity.toLowerCase() !== rarityF)) return false
+
+    if (typeF !== 'all') {
+      if (!c.typeLine) return false
+      const tl = c.typeLine.toLowerCase()
+      if (!tl.includes(typeF)) return false
+    }
+
+    if (tierF !== 'all') {
+      if (tierF === 'bulk' && c.unitPrice >= 2) return false
+      if (tierF === 'low' && (c.unitPrice < 2 || c.unitPrice >= 10)) return false
+      if (tierF === 'mid' && (c.unitPrice < 10 || c.unitPrice >= 50)) return false
+      if (tierF === 'high' && c.unitPrice < 50) return false
+    }
+
     return true
   })
+
+  const rarityWeight = { 'mythic': 4, 'rare': 3, 'uncommon': 2, 'common': 1 }
 
   filtered.sort((a, b) => {
     if (sortF === 'totalDesc') return b.totalPrice - a.totalPrice
     if (sortF === 'unitDesc') return b.unitPrice - a.unitPrice
+    if (sortF === 'unitAsc') return a.unitPrice - b.unitPrice
     if (sortF === 'qtyDesc') return b.qty - a.qty
     if (sortF === 'nameAsc') return a.name.localeCompare(b.name)
-    if (sortF === 'cmcDesc') return (b.cmc || 0) - (a.cmc || 0)
+
+    if (sortF === 'rarityDesc') {
+      const rA = rarityWeight[a.rarity?.toLowerCase()] || 0
+      const rB = rarityWeight[b.rarity?.toLowerCase()] || 0
+      return rB - rA || b.totalPrice - a.totalPrice
+    }
+
     return 0
   })
 
@@ -195,7 +257,8 @@ function applyInventoryFilters() {
 
   displayList.forEach((c, i) => {
     const badge = c.extras ? `<span class="badge-extra ms-1">${c.extras}</span>` : ''
-    const imgBtn = c.imageUri ? `<button class="btn btn-sm btn-link p-0 text-muted" onclick="showCardImage('${c.imageUri}', '${c.name.replace(/'/g, "\\'")}')"><i class="bi bi-image"></i></button>` : ''
+    const enc = btoa(encodeURIComponent(JSON.stringify(c)))
+    const imgBtn = c.imageUri ? `<button class="btn btn-sm btn-link p-0 text-muted" onclick="showCardDetails('${enc}')"><i class="bi bi-image"></i></button>` : ''
 
     tbody.innerHTML += `<tr>
       <td class="text-center ps-4">${imgBtn}</td>
@@ -239,6 +302,12 @@ async function initDashboard() {
     document.getElementById('kpiTicket').innerText = BRL.format(data.kpis.avgTicket)
     document.getElementById('lastUpdate').innerText = data.kpis.lastUpdate.split('-').reverse().slice(0, 2).join('/')
 
+    if (data.pareto) {
+      document.getElementById('paretoRow').style.display = 'flex'
+      document.getElementById('paretoText').innerHTML = `A <strong>Regra de Pareto</strong> em ação: apenas <strong class="text-white">${data.pareto.percentCards}%</strong> das suas cartas físicas (${data.pareto.totalCardsIncluded} un.) correspondem a <strong>80%</strong> de todo o seu patrimônio.`
+      document.getElementById('paretoValue').innerText = BRL.format(data.pareto.accWealth)
+    }
+
     const setKpi = (id, val) => {
       const el = document.getElementById(id)
       el.innerText = (val > 0 ? '+' : '') + BRL.format(val)
@@ -248,138 +317,82 @@ async function initDashboard() {
     setKpi('kpiMonth', data.kpis.monthVar)
 
     const ctxMain = document.getElementById('mainChart').getContext('2d')
-    const grad = ctxMain.createLinearGradient(0, 0, 0, 300)
-    // Gradiente Dourado (Rare Spark)
-    grad.addColorStop(0, 'rgba(212, 175, 55, 0.3)')
-    grad.addColorStop(1, 'rgba(212, 175, 55, 0)')
+    const gradMain = ctxMain.createLinearGradient(0, 0, 0, 300)
+    gradMain.addColorStop(0, 'rgba(20, 184, 166, 0.3)')
+    gradMain.addColorStop(1, 'rgba(20, 184, 166, 0)')
 
     mainChartInstance = new Chart(ctxMain, {
       type: 'line',
       data: {
         labels: data.chart.labels,
-        datasets: [{
-          label: 'Total',
-          data: data.chart.values,
-          borderColor: '#d4af37', // Linha Dourada
-          borderWidth: 2,
-          backgroundColor: grad,
-          fill: true, tension: 0.3, pointRadius: 0, pointHitRadius: 20
-        }]
+        datasets: [{ label: 'Total', data: data.chart.values, borderColor: '#14b8a6', borderWidth: 2, backgroundColor: gradMain, fill: true, tension: 0.3, pointRadius: 0, pointHitRadius: 20 }]
       },
-      options: {
-        responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
-        scales: {
-          x: { display: true, grid: { display: false }, ticks: { maxTicksLimit: 7, callback: function (v) { return this.getLabelForValue(v).split('-').slice(1).reverse().join('/') } } },
-          y: { display: true, position: 'right', grid: { color: '#36312d', borderDash: [5, 5] }, ticks: { callback: v => new Intl.NumberFormat('pt-BR', { notation: 'compact', style: 'currency', currency: 'BRL' }).format(v) } }
-        }
-      }
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: true, grid: { display: false }, ticks: { maxTicksLimit: 7, callback: function (v) { return this.getLabelForValue(v).split('-').slice(1).reverse().join('/') } } }, y: { display: true, position: 'right', grid: { color: 'rgba(54, 49, 45, 0.7)', borderDash: [5, 5] }, ticks: { callback: v => new Intl.NumberFormat('pt-BR', { notation: 'compact', style: 'currency', currency: 'BRL' }).format(v) } } } }
+    })
+
+    const ctxOrg = document.getElementById('organicChart').getContext('2d')
+    const gradOrg = ctxOrg.createLinearGradient(0, 0, 0, 300)
+    gradOrg.addColorStop(0, 'rgba(16, 185, 129, 0.3)')
+    gradOrg.addColorStop(1, 'rgba(16, 185, 129, 0)')
+
+    organicChartInstance = new Chart(ctxOrg, {
+      type: 'line',
+      data: {
+        labels: data.organicChart.labels,
+        datasets: [{ label: 'Lucro de Mercado Acumulado', data: data.organicChart.values, borderColor: '#10b981', borderWidth: 2, backgroundColor: gradOrg, fill: true, tension: 0.3, pointRadius: 0, pointHitRadius: 20 }]
+      },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: true, grid: { display: false }, ticks: { maxTicksLimit: 7, callback: function (v) { return this.getLabelForValue(v).split('-').slice(1).reverse().join('/') } } }, y: { display: true, position: 'right', grid: { color: 'rgba(54, 49, 45, 0.7)', borderDash: [5, 5] }, ticks: { callback: v => new Intl.NumberFormat('pt-BR', { notation: 'compact', style: 'currency', currency: 'BRL' }).format(v) } } } }
     })
 
     if (data.dailyChart.labels.length)
       new Chart(document.getElementById('dailyChart'), {
         type: 'bar',
-        data: {
-          labels: data.dailyChart.labels,
-          datasets: [{
-            data: data.dailyChart.values,
-            backgroundColor: data.dailyChart.values.map(v => v >= 0 ? '#10b981' : '#ef4444'), // Verde Esmeralda e Vermelho Vivo
-            borderRadius: 4
-          }]
-        },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { grid: { color: '#36312d' } } } }
+        data: { labels: data.dailyChart.labels, datasets: [{ data: data.dailyChart.values, backgroundColor: data.dailyChart.values.map(v => v >= 0 ? '#10b981' : '#ef4444'), borderRadius: 4 }] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { grid: { color: 'rgba(54, 49, 45, 0.7)' } } } }
       })
 
     if (data.setChart)
       new Chart(document.getElementById('setChart'), {
         type: 'doughnut',
-        data: {
-          labels: data.setChart.labels,
-          datasets: [{
-            data: data.setChart.values,
-            // Paleta Dourado/Bronze/Couro
-            backgroundColor: ['#D4AF37', '#B8860B', '#CD7F32', '#A0522D', '#8B4513', '#4A3C31'],
-            borderWidth: 0
-          }]
-        },
-        options: {
-          responsive: true, maintainAspectRatio: false, cutout: '70%',
-          onClick: (evt, activeElements) => {
-            if (activeElements.length > 0) filterFromChart(data.setChart.labels[activeElements[0].index])
-          },
-          plugins: {
-            legend: { position: 'right', labels: { color: '#9e978e', boxWidth: 10, font: { size: 10 } } },
-            tooltip: { callbacks: { label: c => ` ${c.label}: ${BRL.format(c.raw)}` } }
-          }
-        }
+        data: { labels: data.setChart.labels, datasets: [{ data: data.setChart.values, backgroundColor: ['#14b8a6', '#0d9488', '#0f766e', '#115e59', '#134e4a', '#042f2e'], borderWidth: 0 }] },
+        options: { responsive: true, maintainAspectRatio: false, cutout: '70%', onClick: (evt, activeElements) => { if (activeElements.length > 0) filterFromChart(data.setChart.labels[activeElements[0].index]) }, plugins: { legend: { position: 'right', labels: { color: '#9e978e', boxWidth: 10, font: { size: 10 } } }, tooltip: { callbacks: { label: c => ` ${c.label}: ${BRL.format(c.raw)}` } } } }
       })
 
-    // Cores de Mana MUITO MAIS VIBRANTES
     if (data.colorDist) {
       new Chart(document.getElementById('colorChart'), {
         type: 'doughnut',
-        data: {
-          labels: ['Branco', 'Azul', 'Preto', 'Vermelho', 'Verde', 'Multicolor', 'Incolor'],
-          datasets: [{
-            data: [data.colorDist.W, data.colorDist.U, data.colorDist.B, data.colorDist.R, data.colorDist.G, data.colorDist.M, data.colorDist.C],
-            // Branco Brilhante, Azul Vivo, Chumbo, Vermelho Sangue, Verde Esmeralda, Âmbar/Ouro, Cinza Metálico
-            backgroundColor: ['#FFFDE7', '#3B82F6', '#52525B', '#EF4444', '#10B981', '#F59E0B', '#A8A29E'],
-            borderWidth: 1, borderColor: '#1a1816'
-          }]
-        },
-        options: {
-          responsive: true, maintainAspectRatio: false, cutout: '70%',
-          plugins: { legend: { position: 'right', labels: { color: '#9e978e', boxWidth: 10, font: { size: 10 } } } }
-        }
+        data: { labels: ['Branco', 'Azul', 'Preto', 'Vermelho', 'Verde', 'Multicolor', 'Incolor'], datasets: [{ data: [data.colorDist.W, data.colorDist.U, data.colorDist.B, data.colorDist.R, data.colorDist.G, data.colorDist.M, data.colorDist.C], backgroundColor: ['#FFFDE7', '#3B82F6', '#52525B', '#EF4444', '#10B981', '#F59E0B', '#A8A29E'], borderWidth: 1, borderColor: '#1a1816' }] },
+        options: { responsive: true, maintainAspectRatio: false, cutout: '70%', plugins: { legend: { position: 'right', labels: { color: '#9e978e', boxWidth: 10, font: { size: 10 } } } } }
       })
     }
 
-    // Curva de Mana (Dourada)
-    if (data.manaCurve) {
-      new Chart(document.getElementById('manaCurveChart'), {
+    if (data.typeDist) {
+      new Chart(document.getElementById('typeChart'), {
         type: 'bar',
         data: {
-          labels: ['0', '1', '2', '3', '4', '5', '6+'],
+          labels: ['Criaturas', 'Mágicas', 'Terrenos', 'Artefatos', 'Encantamentos', 'Planeswalkers'],
           datasets: [{
-            data: [data.manaCurve['0'], data.manaCurve['1'], data.manaCurve['2'], data.manaCurve['3'], data.manaCurve['4'], data.manaCurve['5'], data.manaCurve['6+']],
-            backgroundColor: '#d4af37', // Dourado
+            data: [data.typeDist.creature, data.typeDist.instant + data.typeDist.sorcery, data.typeDist.land, data.typeDist.artifact, data.typeDist.enchantment, data.typeDist.planeswalker],
+            backgroundColor: '#14b8a6', 
             borderRadius: 4
           }]
         },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { display: false } }, y: { display: false } } }
+        options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { grid: { display: false } } } }
       })
     }
 
-    // Gráfico de Raridade com cores MTG (Preto, Prata, Ouro, Laranja-Mítico)
     if (data.rarityDist) {
       new Chart(document.getElementById('rarityChart'), {
         type: 'doughnut',
-        data: {
-          labels: ['Comum', 'Incomum', 'Rara', 'Mítica'],
-          datasets: [{
-            data: [data.rarityDist.common, data.rarityDist.uncommon, data.rarityDist.rare, data.rarityDist.mythic],
-            backgroundColor: ['#52525B', '#9CA3AF', '#D4AF37', '#EA580C'],
-            borderWidth: 1, borderColor: '#1a1816'
-          }]
-        },
-        options: {
-          responsive: true, maintainAspectRatio: false, cutout: '70%',
-          plugins: { legend: { position: 'right', labels: { color: '#9e978e', boxWidth: 10, font: { size: 10 } } } }
-        }
+        data: { labels: ['Comum', 'Incomum', 'Rara', 'Mítica'], datasets: [{ data: [data.rarityDist.common, data.rarityDist.uncommon, data.rarityDist.rare, data.rarityDist.mythic], backgroundColor: ['#52525B', '#9CA3AF', '#F59E0B', '#EA580C'], borderWidth: 1, borderColor: '#1a1816' }] },
+        options: { responsive: true, maintainAspectRatio: false, cutout: '70%', plugins: { legend: { position: 'right', labels: { color: '#9e978e', boxWidth: 10, font: { size: 10 } } } } }
       })
     }
 
-    // Tier Chart acompanhando as cores de Raridade
     if (data.tiers)
       new Chart(document.getElementById('tierChart'), {
         type: 'bar',
-        data: {
-          labels: ['Bulk (< R$ 2)', 'Low (R$ 2-10)', 'Mid (R$ 10-50)', 'High (> R$ 50)'],
-          datasets: [{
-            data: [data.tiers.bulk.qty, data.tiers.low.qty, data.tiers.mid.qty, data.tiers.high.qty],
-            backgroundColor: ['#52525B', '#9CA3AF', '#D4AF37', '#EA580C'],
-            borderRadius: 4
-          }]
-        },
+        data: { labels: ['Bulk (< R$ 2)', 'Low (R$ 2-10)', 'Mid (R$ 10-50)', 'High (> R$ 50)'], datasets: [{ data: [data.tiers.bulk.qty, data.tiers.low.qty, data.tiers.mid.qty, data.tiers.high.qty], backgroundColor: ['#52525B', '#9CA3AF', '#14b8a6', '#EA580C'], borderRadius: 4 }] },
         options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { grid: { display: false } } } }
       })
 
@@ -388,7 +401,8 @@ async function initDashboard() {
       if (!list.length) { tb.innerHTML = '<tr><td class="text-center text-muted">Vazio</td></tr>'; return }
       list.forEach(x => {
         let val = BRL.format(x.diff), cls = colorCheck ? (x.diff > 0 ? 'var-up' : 'var-down') : 'text-white', prefix = colorCheck ? (x.diff > 0 ? '+' : '') : ''
-        const imgBtn = x.imageUri ? `<button class="btn btn-sm btn-link p-0 text-muted me-2" onclick="showCardImage('${x.imageUri}', '${x.name.replace(/'/g, "\\'")}')"><i class="bi bi-image"></i></button>` : ''
+        const enc = btoa(encodeURIComponent(JSON.stringify(x)))
+        const imgBtn = x.imageUri ? `<button class="btn btn-sm btn-link p-0 text-muted me-2" onclick="showCardDetails('${enc}')"><i class="bi bi-image"></i></button>` : ''
 
         tb.innerHTML += `<tr>
           <td class="ps-3 d-flex align-items-center">
@@ -403,8 +417,31 @@ async function initDashboard() {
       })
     }
 
+    const fillTopCardsTable = (id, list) => {
+      const tb = document.getElementById(id)
+      if (!list.length) { tb.innerHTML = '<tr><td class="text-center text-muted">Vazio</td></tr>'; return }
+      list.forEach((x, i) => {
+        const enc = btoa(encodeURIComponent(JSON.stringify(x)))
+        const imgBtn = x.imageUri ? `<button class="btn btn-sm btn-link p-0 text-muted me-2" onclick="showCardDetails('${enc}')"><i class="bi bi-image"></i></button>` : ''
+        const pos = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `${i + 1}º`
+        tb.innerHTML += `<tr>
+          <td class="text-center text-muted fw-bold" style="width: 40px;">${pos}</td>
+          <td class="ps-2 d-flex align-items-center">
+            ${imgBtn}
+            <div>
+              <div class="col-card-name fw-bold text-white">${x.name} <span class="ms-2 fs-6">${formatManaCost(x.manaCost)}</span></div>
+              ${x.set ? '<div class="small text-muted">' + x.set + '</div>' : ''}
+            </div>
+          </td>
+          <td class="text-center text-muted">${x.qty}x</td>
+          <td class="text-end pe-3 fw-bold text-warning align-middle">${BRL.format(x.unitPrice)}</td>
+        </tr>`
+      })
+    }
+
     fillTable('tableTopGainers', data.topGainers, true)
     fillTable('tableTopLosers', data.topLosers, true)
+    fillTopCardsTable('tableTopCards', data.topCards)
 
     loadInventory()
   } catch (e) { console.error(e) }

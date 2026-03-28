@@ -10,18 +10,77 @@ const buildTimeline = (data) => {
   return { timeline, dates }
 }
 
-const calculateKPIs = (timeline, dates, todayData, lastDate) => {
+const calculateKPIs = (timeline, dates, todayData, lastDate, trueVars) => {
   const currentValue = timeline[lastDate]
-  const yesterdayValue = dates.length > 1 ? timeline[dates[dates.length - 2]] : currentValue
-  const index30d = dates.length > 30 ? dates.length - 31 : 0
-  const value30d = timeline[dates[index30d]]
   const totalCards = todayData.reduce((acc, c) => acc + c.qty, 0)
   const avgTicket = totalCards > 0 ? currentValue / totalCards : 0
 
+  const dailyVals = trueVars.dailyChartData.values
+  const dayVar = dailyVals.length > 0 ? dailyVals[dailyVals.length - 1] : 0
+  const monthVals = dailyVals.slice(-30)
+  const monthVar = monthVals.reduce((a, b) => a + b, 0)
+
   return {
     totalValue: currentValue, totalCards: totalCards, avgTicket: avgTicket,
-    dayVar: currentValue - yesterdayValue, monthVar: currentValue - value30d, lastUpdate: lastDate
+    dayVar: dayVar, monthVar: monthVar, lastUpdate: lastDate
   }
+}
+
+const calculateTrueVariations = (data, dates, todayData) => {
+  let topGainers = [], topLosers = []
+  const dailyChartData = { labels: [], values: [] }
+  const organicLineData = { labels: dates, values: [0] }
+
+  if (dates.length <= 1) return { topGainers, topLosers, dailyChartData, organicLineData }
+
+  const dataByDate = {}
+  data.forEach(d => {
+    if (!dataByDate[d.date]) dataByDate[d.date] = []
+    dataByDate[d.date].push(d)
+  })
+
+  let cumulativeOrganic = 0
+
+  for (let i = 1; i < dates.length; i++) {
+    const prevDate = dates[i - 1]
+    const currDate = dates[i]
+    const prevCards = dataByDate[prevDate] || []
+    const currCards = dataByDate[currDate] || []
+
+    const currMap = new Map(currCards.map(c => [`${c.name}|${c.set}|${c.num}|${c.extras}`, { price: c.unitPrice, qty: c.qty }]))
+
+    let dailyDiff = 0
+    prevCards.forEach(prev => {
+      const curr = currMap.get(`${prev.name}|${prev.set}|${prev.num}|${prev.extras}`)
+      if (curr) {
+        const heldQty = Math.min(prev.qty, curr.qty)
+        if (heldQty > 0) dailyDiff += (curr.price - prev.unitPrice) * heldQty
+      }
+    })
+
+    dailyChartData.labels.push(currDate)
+    dailyChartData.values.push(dailyDiff)
+    cumulativeOrganic += dailyDiff
+    organicLineData.values.push(cumulativeOrganic)
+  }
+
+  const prevDateForTop = dates[dates.length - 2]
+  const prevDataForTop = dataByDate[prevDateForTop] || []
+  const prevMap = new Map(prevDataForTop.map(c => [`${c.name}|${c.set}|${c.num}|${c.extras}`, c.unitPrice]))
+
+  const variations = []
+  todayData.forEach(h => {
+    const oldPrice = prevMap.get(`${h.name}|${h.set}|${h.num}|${h.extras}`)
+    if (oldPrice !== undefined && oldPrice > 0) {
+      const diff = h.unitPrice - oldPrice
+      if (Math.abs(diff) >= 0.01) variations.push({ ...h, diff: diff })
+    }
+  })
+
+  topGainers = [...variations].filter(v => v.diff > 0).sort((a, b) => b.diff - a.diff).slice(0, 5)
+  topLosers = [...variations].filter(v => v.diff < 0).sort((a, b) => a.diff - b.diff).slice(0, 5)
+
+  return { topGainers, topLosers, dailyChartData, organicLineData }
 }
 
 const calculateSetDistribution = (todayData) => {
@@ -37,12 +96,7 @@ const calculateSetDistribution = (todayData) => {
 }
 
 const calculateTiers = (todayData) => {
-  const tiers = {
-    bulk: { qty: 0, value: 0, label: 'Bulk (< R$ 2)' },
-    low: { qty: 0, value: 0, label: 'Low (R$ 2-10)' },
-    mid: { qty: 0, value: 0, label: 'Mid (R$ 10-50)' },
-    high: { qty: 0, value: 0, label: 'High (> R$ 50)' }
-  }
+  const tiers = { bulk: { qty: 0, value: 0 }, low: { qty: 0, value: 0 }, mid: { qty: 0, value: 0 }, high: { qty: 0, value: 0 } }
   todayData.forEach(c => {
     if (c.unitPrice < 2) { tiers.bulk.qty += c.qty; tiers.bulk.value += c.totalPrice }
     else if (c.unitPrice < 10) { tiers.low.qty += c.qty; tiers.low.value += c.totalPrice }
@@ -52,45 +106,13 @@ const calculateTiers = (todayData) => {
   return tiers
 }
 
-const calculateVariations = (data, timeline, dates, todayData) => {
-  let topGainers = [], topLosers = [], dailyChartData = { labels: [], values: [] }
-  if (dates.length <= 1) return { topGainers, topLosers, dailyChartData }
-
-  for (let i = 1; i < dates.length; i++) {
-    dailyChartData.labels.push(dates[i])
-    dailyChartData.values.push(timeline[dates[i]] - timeline[dates[i - 1]])
-  }
-
-  const prevDate = dates[dates.length - 2]
-  const prevData = data.filter(d => d.date === prevDate)
-  const prevMap = new Map(prevData.map(c => [`${c.name}|${c.set}|${c.num}|${c.extras}`, c.unitPrice]))
-
-  const variations = []
-  todayData.forEach(h => {
-    const oldPrice = prevMap.get(`${h.name}|${h.set}|${h.num}|${h.extras}`)
-    if (oldPrice !== undefined && oldPrice > 0) {
-      const diff = h.unitPrice - oldPrice
-      if (Math.abs(diff) >= 0.01) {
-        variations.push({ name: h.name, set: h.set, diff: diff, extras: h.extras, imageUri: h.imageUri, manaCost: h.manaCost })
-      }
-    }
-  })
-
-  topGainers = [...variations].filter(v => v.diff > 0).sort((a, b) => b.diff - a.diff).slice(0, 5)
-  topLosers = [...variations].filter(v => v.diff < 0).sort((a, b) => a.diff - b.diff).slice(0, 5)
-
-  return { topGainers, topLosers, dailyChartData }
-}
-
-// === NOVAS FUNÇÕES: DISTRIBUIÇÃO E RARIDADE ===
 const calculateColorDistribution = (todayData) => {
   const dist = { W: 0, U: 0, B: 0, R: 0, G: 0, M: 0, C: 0 }
   todayData.forEach(c => {
     if (c.colorIdentity === 'C' || !c.colorIdentity) dist.C += c.qty
     else {
       const colors = c.colorIdentity.split(',')
-      if (colors.length > 1) dist.M += c.qty
-      else dist[colors[0]] += c.qty
+      if (colors.length > 1) dist.M += c.qty; else dist[colors[0]] += c.qty
     }
   })
   return dist
@@ -98,11 +120,50 @@ const calculateColorDistribution = (todayData) => {
 
 const calculateRarityDistribution = (todayData) => {
   const dist = { common: 0, uncommon: 0, rare: 0, mythic: 0 }
+  todayData.forEach(c => { const r = c.rarity ? c.rarity.toLowerCase() : ''; if (dist[r] !== undefined) dist[r] += c.qty })
+  return dist
+}
+
+const calculateTypeDistribution = (todayData) => {
+  const dist = { creature: 0, land: 0, artifact: 0, enchantment: 0, planeswalker: 0, instant: 0, sorcery: 0 }
   todayData.forEach(c => {
-    const r = c.rarity ? c.rarity.toLowerCase() : ''
-    if (dist[r] !== undefined) dist[r] += c.qty
+    if (!c.typeLine) return
+    const t = c.typeLine.toLowerCase()
+    if (t.includes('creature')) dist.creature += c.qty
+    else if (t.includes('land')) dist.land += c.qty
+    else if (t.includes('artifact')) dist.artifact += c.qty
+    else if (t.includes('enchantment')) dist.enchantment += c.qty
+    else if (t.includes('planeswalker')) dist.planeswalker += c.qty
+    else if (t.includes('instant')) dist.instant += c.qty
+    else if (t.includes('sorcery')) dist.sorcery += c.qty
   })
   return dist
+}
+
+const calculateTopCards = (todayData) => [...todayData].sort((a, b) => b.unitPrice - a.unitPrice).slice(0, 5)
+
+const calculatePareto = (todayData, totalValue, totalCards) => {
+  if (totalValue === 0 || totalCards === 0) return null
+  const sorted = [...todayData].sort((a, b) => b.unitPrice - a.unitPrice)
+
+  let accWealth = 0
+  let accCards = 0
+  const targetWealth = totalValue * 0.8
+
+  for (const c of sorted) {
+    if (accWealth >= targetWealth) break
+    for (let i = 0; i < c.qty; i++) {
+      if (accWealth >= targetWealth) break
+      accWealth += c.unitPrice
+      accCards += 1
+    }
+  }
+
+  return {
+    percentCards: ((accCards / totalCards) * 100).toFixed(1),
+    accWealth: accWealth,
+    totalCardsIncluded: accCards
+  }
 }
 
 export const getDashboardData = async () => {
@@ -113,17 +174,25 @@ export const getDashboardData = async () => {
   const lastDate = dates[dates.length - 1]
   const todayData = data.filter(d => d.date === lastDate)
 
-  const kpis = calculateKPIs(timeline, dates, todayData, lastDate)
-  const setChart = calculateSetDistribution(todayData)
-  const tiers = calculateTiers(todayData)
-  const variations = calculateVariations(data, timeline, dates, todayData)
+  const trueVars = calculateTrueVariations(data, dates, todayData)
+  const totalValue = timeline[lastDate]
+  const totalCards = todayData.reduce((acc, c) => acc + c.qty, 0)
 
   return {
-    empty: false, kpis, chart: { labels: dates, values: dates.map(d => timeline[d]) },
-    dailyChart: variations.dailyChartData, setChart, tiers, topGainers: variations.topGainers, topLosers: variations.topLosers,
-    // Enviando os novos dados pro Frontend
+    empty: false,
+    kpis: calculateKPIs(timeline, dates, todayData, lastDate, trueVars),
+    chart: { labels: dates, values: dates.map(d => timeline[d]) },
+    organicChart: trueVars.organicLineData,
+    dailyChart: trueVars.dailyChartData,
+    setChart: calculateSetDistribution(todayData),
+    tiers: calculateTiers(todayData),
+    topGainers: trueVars.topGainers,
+    topLosers: trueVars.topLosers,
     colorDist: calculateColorDistribution(todayData),
-    rarityDist: calculateRarityDistribution(todayData)
+    rarityDist: calculateRarityDistribution(todayData),
+    typeDist: calculateTypeDistribution(todayData),
+    topCards: calculateTopCards(todayData),
+    pareto: calculatePareto(todayData, totalValue, totalCards)
   }
 }
 
@@ -133,10 +202,8 @@ export const searchCardData = async (query) => {
   const uniqueDates = [...new Set(data.map(d => d.date))].sort()
   const lastDate = uniqueDates[uniqueDates.length - 1]
 
-  // === BUSCA PROFUNDA (ORACLE TEXT) ===
-  // Agora a busca pega o Nome OU qualquer coisa escrita nas regras da carta
-  let results = data.filter(d => 
-    d.date === lastDate && 
+  let results = data.filter(d =>
+    d.date === lastDate &&
     (d.name.toLowerCase().includes(query) || (d.oracleText && d.oracleText.toLowerCase().includes(query)))
   )
 
@@ -164,7 +231,6 @@ export const getCommanderPoolData = async (commanderColors) => {
   const uniqueDates = [...new Set(data.map(d => d.date))].sort()
   const lastDate = uniqueDates[uniqueDates.length - 1]
   const inventory = data.filter(d => d.date === lastDate)
-
   const allowedColors = commanderColors === 'C' || !commanderColors ? [] : commanderColors.split(',')
 
   return inventory.filter(card => {
