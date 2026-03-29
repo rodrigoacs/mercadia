@@ -3,15 +3,24 @@
   "Bolas's Citadel|A Guerra da Centelha||": 19.75,
   "Command the Dreadhorde|A Guerra da Centelha||": 0.95,
   "Angrath's Rampage|A Guerra da Centelha||": 0.21,
+<<<<<<< HEAD
   "Leyline Prowler|A Guerra da Centelha||": 0.23,
   "Angrath, Captain of Chaos|A Guerra da Centelha||": 0.15,
   "Audacity|A Guerra dos Irmaos||": 0.5,
+=======
+  "Leyline Prowler|A Guerra da Centelha||": 0.21,
+  "Angrath, Captain of Chaos|A Guerra da Centelha||": 0.15,
+  "Audacity|A Guerra dos Irmaos||": 0.45,
+>>>>>>> main
   "Thran Power Suit|A Guerra dos Irmaos||": 5.99,
   "Blackblade Reforged|A Guerra dos Irmaos (Schematic)||": 13.9,
   "Runechanter's Pike|A Guerra dos Irmaos (Schematic)||": 0.69,
   "Scavenged Brawler|A Guerra dos Irmaos Commander||": 18,
   "Bedevil|A Guerra dos Irmaos Commander||": 1.95,
+<<<<<<< HEAD
   "Arcane Sanctum|A Guerra dos Irmaos Commander||": 1.5,
+=======
+>>>>>>> main
   "Crumbling Necropolis|A Guerra dos Irmaos Commander||": 2.7,
   "Smoldering Marsh|A Guerra dos Irmaos Commander||": 2.99,
   "Duress|A Saga de Urza||": 23,
@@ -20,7 +29,11 @@
   "Air Response Unit|Aetherdrift||": 0.09,
   "Brightfield Glider|Aetherdrift||": 0.1,
   "Detention Chariot|Aetherdrift||": 0.13,
+<<<<<<< HEAD
   "Gallant Strike|Aetherdrift||Foil": 0.48,
+=======
+  "Gallant Strike|Aetherdrift||Foil": 0.49,
+>>>>>>> main
   "Interface Ace|Aetherdrift||": 0.11,
   "Leonin Surveyor|Aetherdrift||": 0.09,
   "Lightwheel Enhancements|Aetherdrift||": 0.11,
@@ -42,15 +55,25 @@
   "Guidelight Optimizer|Aetherdrift||": 0.14,
   "Howler's Heavy|Aetherdrift||": 0.05,
   "Hulldrifter|Aetherdrift||Foil": 0.22,
+<<<<<<< HEAD
   "Keen Buccaneer|Aetherdrift||Foil": 0.21,
   "Midnight Mangler|Aetherdrift||": 0.14,
   "Repurposing Bay|Aetherdrift||": 6.4,
+=======
+  "Keen Buccaneer|Aetherdrift||Foil": 0.22,
+  "Midnight Mangler|Aetherdrift||": 0.14,
+  "Repurposing Bay|Aetherdrift||": 6.8,
+>>>>>>> main
   "Roadside Blowout|Aetherdrift||": 0.09,
   "Sabotage Strategist|Aetherdrift||": 0.14,
   "Slick Imitator|Aetherdrift||": 0.19,
   "Spectral Interference|Aetherdrift||": 0.07,
   "Stall Out|Aetherdrift||": 0.13,
+<<<<<<< HEAD
   "Stock Up|Aetherdrift||": 39.9,
+=======
+  "Stock Up|Aetherdrift||": 48.8,
+>>>>>>> main
   "Transit Mage|Aetherdrift||": 0.44,
   "Trip Up|Aetherdrift||": 0.06,
   "Engine Rat|Aetherdrift||": 0.14,
@@ -58,7 +81,11 @@
   "Gonti, Night Minister|Aetherdrift||": 1.2,
   "Grim Bauble|Aetherdrift||": 0.49,
   "Hellish Sideswipe|Aetherdrift||": 0.15,
+<<<<<<< HEAD
   "Intimidation Tactics|Aetherdrift||": 0.4,
+=======
+  "Intimidation Tactics|Aetherdrift||": 0.39,
+>>>>>>> main
   "Locust Spray|Aetherdrift||": 0.13,
   "Momentum Breaker|Aetherdrift||": 1.6,
   "Pactdoll Terror|Aetherdrift||": 2.49,
@@ -109,7 +136,11 @@
   "Skyserpent Seeker|Aetherdrift||": 0.18,
   "Thundering Broodwagon|Aetherdrift||": 0.2,
   "Aetherjacket|Aetherdrift||": 0.09,
+<<<<<<< HEAD
   "Aetherjacket|Aetherdrift||Foil": 0.23,
+=======
+  "Aetherjacket|Aetherdrift||Foil": 0.24,
+>>>>>>> main
   "Camera Launcher|Aetherdrift||": 0.09,
   "Rover Blades|Aetherdrift||": 0.14,
   "Skybox Ferry|Aetherdrift||": 0.09,
@@ -123,6 +154,7 @@
   "Wind-Scarred Crag|Aetherdrift||": 0.1,
   "Talisman of Curiosity|Aetherdrift Commander||": 3.63,
   "Talisman of Dominance|Aetherdrift Commander||": 7,
+<<<<<<< HEAD
   "Drowned Catacomb|Aetherdrift Commander||": 9.39,
   "Rhet-Tomb Mystic|Aetherdrift Commander (Extended Art)||": 1.65,
   "Adaptive Omnitool|Aetherdrift Commander (Extended Art)||": 7.49,
@@ -136,14 +168,24 @@
   "Sol Grail|Aliancas||": 0.25,
   "Soldevi Sentry (Attacking)|Aliancas||": 0.1,
   "Surge of Strength|Aliancas||": 0.25,
+=======
+  "Drowned Catacomb|Aetherdrift Commander||": 12.25,
+  "Rhet-Tomb Mystic|Aetherdrift Commander (Extended Art)||": 1.65,
+  "Adaptive Omnitool|Aetherdrift Commander (Extended Art)||": 7.49,
+>>>>>>> main
   "Alms|Alisios||": 0.23,
   "Burrenton Shield-Bearers|Alvorecer||": 0.05,
   "Dewdrop Spy|Alvorecer||": 0.07,
   "Cartouche of Knowledge|Amonkhet||": 0.14,
   "Bontu the Glorified|Amonkhet||": 5.63,
   "Shadow of the Grave|Amonkhet||": 0.45,
+<<<<<<< HEAD
   "Supernatural Stamina|Amonkhet||": 0.1,
   "Blazing Volley|Amonkhet||": 0.05,
+=======
+  "Supernatural Stamina|Amonkhet||": 0.05,
+  "Blazing Volley|Amonkhet||": 0.06,
+>>>>>>> main
   "Deem Worthy|Amonkhet||": 0.1,
   "Magma Spray|Amonkhet||": 0.1,
   "Cartouche of Strength|Amonkhet||": 0.08,
@@ -158,6 +200,7 @@
   "Whirlpool Warrior|Apocalipse||": 6.29,
   "Dead Ringers|Apocalipse||": 0.06,
   "Mournful Zombie|Apocalipse||": 0.18,
+<<<<<<< HEAD
   "Quagmire Druid|Apocalipse||": 0.13,
   "Bloodfire Dwarf|Apocalipse||": 1.99,
   "Bloodfire Kavu|Apocalipse||": 0.18,
@@ -191,26 +234,61 @@
   "Sunken Hollow|As Cavernas Perdidas de Ixalan Commander||": 2.95,
   "Xavier Sal, Infested Captain|As Cavernas Perdidas de Ixalan Commander (Variants)||": 5.6,
   "Screeching Skaab|Ascensao das Trevas||": 0.09,
+=======
+  "Nightscape Familiar|Archenemy: Nicol Bolas||": 4.75,
+  "Defossilize|As Cavernas Perdidas de Ixalan||": 0.11,
+  "Fanatical Offering|As Cavernas Perdidas de Ixalan||": 14,
+  "Fungal Fortitude|As Cavernas Perdidas de Ixalan||": 0.1,
+  "Curator of Sun's Creation|As Cavernas Perdidas de Ixalan||": 0.08,
+  "Daring Discovery|As Cavernas Perdidas de Ixalan||": 0.09,
+  "Etali's Favor|As Cavernas Perdidas de Ixalan||": 0.07,
+  "Geological Appraiser|As Cavernas Perdidas de Ixalan||": 0.1,
+  "Tectonic Hazard|As Cavernas Perdidas de Ixalan||": 0.5,
+  "Zoyowa's Justice|As Cavernas Perdidas de Ixalan||": 0.23,
+  "Disruptor Wanderglyph|As Cavernas Perdidas de Ixalan||": 0.1,
+  "Tarrian's Soulcleaver|As Cavernas Perdidas de Ixalan (Extended Art)||": 5.31,
+  "Ojer Axonil, Deepest Might|As Cavernas Perdidas de Ixalan (Showcase)||Foil": 230,
+  "Trumpeting Carnosaur|As Cavernas Perdidas de Ixalan (Showcase)||": 8,
+  "Feed the Swarm|As Cavernas Perdidas de Ixalan Commander||": 3.49,
+  "Dimir Signet|As Cavernas Perdidas de Ixalan Commander||": 3.73,
+  "Sunken Hollow|As Cavernas Perdidas de Ixalan Commander||": 2.95,
+  "Xavier Sal, Infested Captain|As Cavernas Perdidas de Ixalan Commander (Variants)||": 5.6,
+  "Screeching Skaab|Ascensao das Trevas||": 0.1,
+>>>>>>> main
   "Flayer of the Hatebound|Ascensao das Trevas||": 0.35,
   "Evolving Wilds|Ascensao dos Eldrazi||": 0.19,
   "Restart Sequence|Assassin's Creed||": 0.7,
   "Brotherhood Regalia|Assassin's Creed||": 40,
   "Terminate|Assassin's Creed||": 1.9,
+<<<<<<< HEAD
   "Slime Against Humanity|Assassinato na Mansao Karlov||": 0.98,
   "Assassin's Trophy|Assassinato na Mansao Karlov||": 7.5,
   "Judith, Carnage Connoisseur|Assassinato na Mansao Karlov (Dossier)||": 3.9,
+=======
+  "Slime Against Humanity|Assassinato na Mansao Karlov||": 0.99,
+  "Assassin's Trophy|Assassinato na Mansao Karlov||": 7.5,
+  "Judith, Carnage Connoisseur|Assassinato na Mansao Karlov (Dossier)||": 3.63,
+>>>>>>> main
   "Judith, Carnage Connoisseur|Assassinato na Mansao Karlov (Dossier)||Foil": 11.83,
   "Welcoming Vampire|Assassinato na Mansao Karlov Commander||": 8.75,
   "Consider|Assassinato na Mansao Karlov Commander||": 5.99,
   "Etali, Primal Storm|Assassinato na Mansao Karlov Commander||": 4.3,
   "Neheb, the Eternal|Assassinato na Mansao Karlov Commander||": 28.98,
   "Choked Estuary|Assassinato na Mansao Karlov Commander||": 3.1,
+<<<<<<< HEAD
   "Exotic Orchard|Assassinato na Mansao Karlov Commander||": 1.81,
+=======
+  "Exotic Orchard|Assassinato na Mansao Karlov Commander||": 1.9,
+>>>>>>> main
   "Aang's Journey|Avatar: The Last Airbender||": 0.16,
   "Energybending|Avatar: The Last Airbender||": 0.2,
   "Zuko's Exile|Avatar: The Last Airbender||": 0.07,
   "Aang, the Last Airbender|Avatar: The Last Airbender||": 0.12,
+<<<<<<< HEAD
   "Aang's Iceberg|Avatar: The Last Airbender||": 1.72,
+=======
+  "Aang's Iceberg|Avatar: The Last Airbender||": 1.4,
+>>>>>>> main
   "Airbender Ascension|Avatar: The Last Airbender||": 3.74,
   "Airbender's Reversal|Avatar: The Last Airbender||": 0.16,
   "Airbending Lesson|Avatar: The Last Airbender||": 0.08,
@@ -234,7 +312,11 @@
   "Razor Rings|Avatar: The Last Airbender||": 0.07,
   "Sandbenders' Storm|Avatar: The Last Airbender||": 0.08,
   "South Pole Voyager|Avatar: The Last Airbender||": 1.06,
+<<<<<<< HEAD
   "Southern Air Temple|Avatar: The Last Airbender||": 0.25,
+=======
+  "Southern Air Temple|Avatar: The Last Airbender||": 0.26,
+>>>>>>> main
   "Team Avatar|Avatar: The Last Airbender||": 0.1,
   "Water Tribe Captain|Avatar: The Last Airbender||": 0.08,
   "Water Tribe Rallier|Avatar: The Last Airbender||": 0.1,
@@ -253,14 +335,22 @@
   "It'll Quench Ya!|Avatar: The Last Airbender||": 0.11,
   "Katara, Bending Prodigy|Avatar: The Last Airbender||": 0.15,
   "Knowledge Seeker|Avatar: The Last Airbender||": 0.15,
+<<<<<<< HEAD
   "The Legend of Kuruk|Avatar: The Last Airbender||": 24.75,
+=======
+  "The Legend of Kuruk|Avatar: The Last Airbender||": 24.9,
+>>>>>>> main
   "Lost Days|Avatar: The Last Airbender||": 0.07,
   "Master Pakku|Avatar: The Last Airbender||": 0.1,
   "The Mechanist, Aerial Artisan|Avatar: The Last Airbender||": 1.2,
   "Octopus Form|Avatar: The Last Airbender||": 0.08,
   "Otter-Penguin|Avatar: The Last Airbender||": 0.08,
   "Rowdy Snowballers|Avatar: The Last Airbender||": 0.05,
+<<<<<<< HEAD
   "Secret of Bloodbending|Avatar: The Last Airbender||": 6.64,
+=======
+  "Secret of Bloodbending|Avatar: The Last Airbender||": 6.65,
+>>>>>>> main
   "Serpent of the Pass|Avatar: The Last Airbender||": 0.12,
   "Sokka's Haiku|Avatar: The Last Airbender||": 0.13,
   "The Spirit Oasis|Avatar: The Last Airbender||": 0.13,
@@ -269,6 +359,7 @@
   "Waterbender Ascension|Avatar: The Last Airbender||": 1.49,
   "Waterbending Lesson|Avatar: The Last Airbender||": 0.07,
   "Watery Grasp|Avatar: The Last Airbender||": 0.05,
+<<<<<<< HEAD
   "Yue, the Moon Spirit|Avatar: The Last Airbender||": 0.88,
   "Azula Always Lies|Avatar: The Last Airbender||": 0.08,
   "Azula, On the Hunt|Avatar: The Last Airbender||": 0.14,
@@ -301,6 +392,40 @@
   "Sold Out|Avatar: The Last Airbender||": 0.08,
   "Swampsnare Trap|Avatar: The Last Airbender||": 0.08,
   "Wolfbat|Avatar: The Last Airbender||": 0.08,
+=======
+  "Yue, the Moon Spirit|Avatar: The Last Airbender||": 0.89,
+  "Azula Always Lies|Avatar: The Last Airbender||": 0.07,
+  "Azula, On the Hunt|Avatar: The Last Airbender||": 0.15,
+  "Beetle-Headed Merchants|Avatar: The Last Airbender||": 0.05,
+  "Boiling Rock Rioter|Avatar: The Last Airbender||": 0.4,
+  "Buzzard-Wasp Colony|Avatar: The Last Airbender||": 0.13,
+  "Callous Inspector|Avatar: The Last Airbender||": 0.07,
+  "Canyon Crawler|Avatar: The Last Airbender||": 0.07,
+  "Cat-Gator|Avatar: The Last Airbender||": 0.15,
+  "Corrupt Court Official|Avatar: The Last Airbender||": 0.07,
+  "Dai Li Indoctrination|Avatar: The Last Airbender||": 0.09,
+  "Deadly Precision|Avatar: The Last Airbender||": 0.07,
+  "Epic Downfall|Avatar: The Last Airbender||": 0.09,
+  "Fatal Fissure|Avatar: The Last Airbender||": 0.11,
+  "The Fire Nation Drill|Avatar: The Last Airbender||": 0.89,
+  "Fire Nation Engineer|Avatar: The Last Airbender||": 0.07,
+  "Foggy Swamp Hunters|Avatar: The Last Airbender||": 0.08,
+  "Heartless Act|Avatar: The Last Airbender||": 0.21,
+  "Hog-Monkey|Avatar: The Last Airbender||": 0.07,
+  "June, Bounty Hunter|Avatar: The Last Airbender||": 0.15,
+  "Koh, the Face Stealer|Avatar: The Last Airbender||": 8.78,
+  "Mai, Scornful Striker|Avatar: The Last Airbender||": 5.79,
+  "Merchant of Many Hats|Avatar: The Last Airbender||": 0.07,
+  "Northern Air Temple|Avatar: The Last Airbender||": 0.1,
+  "Obsessive Pursuit|Avatar: The Last Airbender||": 4.59,
+  "Ozai's Cruelty|Avatar: The Last Airbender||": 0.2,
+  "Pirate Peddlers|Avatar: The Last Airbender||": 0.07,
+  "Raven Eagle|Avatar: The Last Airbender||": 0.89,
+  "Ruinous Waterbending|Avatar: The Last Airbender||": 0.1,
+  "Sold Out|Avatar: The Last Airbender||": 0.07,
+  "Swampsnare Trap|Avatar: The Last Airbender||": 0.07,
+  "Wolfbat|Avatar: The Last Airbender||": 0.07,
+>>>>>>> main
   "Zuko's Conviction|Avatar: The Last Airbender||": 0.26,
   "Boar-q-pine|Avatar: The Last Airbender||": 0.05,
   "Bumi Bash|Avatar: The Last Airbender||": 0.07,
@@ -316,28 +441,47 @@
   "Firebending Lesson|Avatar: The Last Airbender||": 0.1,
   "Firebending Student|Avatar: The Last Airbender||": 3.89,
   "How to Start a Riot|Avatar: The Last Airbender||": 0.05,
+<<<<<<< HEAD
   "Iroh's Demonstration|Avatar: The Last Airbender||": 0.3,
+=======
+  "Iroh's Demonstration|Avatar: The Last Airbender||": 0.28,
+>>>>>>> main
   "Jeong Jeong, the Deserter|Avatar: The Last Airbender||": 0.13,
   "Lightning Strike|Avatar: The Last Airbender||": 0.07,
   "Mai, Jaded Edge|Avatar: The Last Airbender||": 0.08,
   "Mongoose Lizard|Avatar: The Last Airbender||": 0.07,
   "Rough Rhino Cavalry|Avatar: The Last Airbender||": 0.07,
+<<<<<<< HEAD
   "Solstice Revelations|Avatar: The Last Airbender||": 0.24,
+=======
+  "Solstice Revelations|Avatar: The Last Airbender||": 0.25,
+>>>>>>> main
   "Treetop Freedom Fighters|Avatar: The Last Airbender||": 0.07,
   "Twin Blades|Avatar: The Last Airbender||": 0.07,
   "Ty Lee, Artful Acrobat|Avatar: The Last Airbender||": 0.1,
   "War Balloon|Avatar: The Last Airbender||": 0.09,
   "Yuyan Archers|Avatar: The Last Airbender||": 0.07,
+<<<<<<< HEAD
   "Zhao, the Moon Slayer|Avatar: The Last Airbender||": 2.41,
+=======
+  "Zhao, the Moon Slayer|Avatar: The Last Airbender||": 2.42,
+>>>>>>> main
   "Zuko, Exiled Prince|Avatar: The Last Airbender||": 0.12,
   "Badgermole|Avatar: The Last Airbender||": 0.1,
   "The Boulder, Ready to Rumble|Avatar: The Last Airbender||": 0.12,
   "Bumi, King of Three Trials|Avatar: The Last Airbender||": 0.17,
   "Cycle of Renewal|Avatar: The Last Airbender||": 0.12,
+<<<<<<< HEAD
   "The Earth King|Avatar: The Last Airbender||": 1.63,
   "Earth Kingdom General|Avatar: The Last Airbender||": 0.09,
   "Earth Rumble|Avatar: The Last Airbender||": 0.15,
   "Earthbender Ascension|Avatar: The Last Airbender||": 17.9,
+=======
+  "The Earth King|Avatar: The Last Airbender||": 1.64,
+  "Earth Kingdom General|Avatar: The Last Airbender||": 0.09,
+  "Earth Rumble|Avatar: The Last Airbender||": 0.15,
+  "Earthbender Ascension|Avatar: The Last Airbender||": 17.87,
+>>>>>>> main
   "Earthbending Lesson|Avatar: The Last Airbender||": 0.1,
   "Earthen Ally|Avatar: The Last Airbender||": 0.38,
   "Flopsie, Bumi's Buddy|Avatar: The Last Airbender||": 0.13,
@@ -345,13 +489,21 @@
   "Haru, Hidden Talent|Avatar: The Last Airbender||": 0.15,
   "Invasion Tactics|Avatar: The Last Airbender||": 0.13,
   "Leaves from the Vine|Avatar: The Last Airbender||": 0.16,
+<<<<<<< HEAD
   "The Legend of Kyoshi|Avatar: The Last Airbender||": 24.75,
+=======
+  "The Legend of Kyoshi|Avatar: The Last Airbender||": 23.61,
+>>>>>>> main
   "Origin of Metalbending|Avatar: The Last Airbender||": 0.15,
   "Ostrich-Horse|Avatar: The Last Airbender||": 0.07,
   "Pillar Launch|Avatar: The Last Airbender||": 0.07,
   "Raucous Audience|Avatar: The Last Airbender||": 0.07,
   "Rebellious Captives|Avatar: The Last Airbender||": 0.07,
+<<<<<<< HEAD
   "Rockalanche|Avatar: The Last Airbender||": 0.26,
+=======
+  "Rockalanche|Avatar: The Last Airbender||": 0.27,
+>>>>>>> main
   "Rocky Rebuke|Avatar: The Last Airbender||": 0.08,
   "Saber-Tooth Moose-Lion|Avatar: The Last Airbender||": 0.05,
   "Seismic Sense|Avatar: The Last Airbender||": 0.33,
@@ -359,6 +511,7 @@
   "Sparring Dummy|Avatar: The Last Airbender||": 0.07,
   "True Ancestry|Avatar: The Last Airbender||": 0.14,
   "Turtle-Duck|Avatar: The Last Airbender||": 0.07,
+<<<<<<< HEAD
   "Unlucky Cabbage Merchant|Avatar: The Last Airbender||": 0.38,
   "Walltop Sentries|Avatar: The Last Airbender||": 0.07,
   "Aang, at the Crossroads|Avatar: The Last Airbender||": 4.04,
@@ -366,6 +519,15 @@
   "Air Nomad Legacy|Avatar: The Last Airbender||": 0.15,
   "Azula, Cunning Usurper|Avatar: The Last Airbender||": 1.94,
   "Bitter Work|Avatar: The Last Airbender||": 0.29,
+=======
+  "Unlucky Cabbage Merchant|Avatar: The Last Airbender||": 0.39,
+  "Walltop Sentries|Avatar: The Last Airbender||": 0.07,
+  "Aang, at the Crossroads|Avatar: The Last Airbender||": 4.03,
+  "Abandon Attachments|Avatar: The Last Airbender||": 0.32,
+  "Air Nomad Legacy|Avatar: The Last Airbender||": 0.15,
+  "Azula, Cunning Usurper|Avatar: The Last Airbender||": 1.95,
+  "Bitter Work|Avatar: The Last Airbender||": 0.3,
+>>>>>>> main
   "Cat-Owl|Avatar: The Last Airbender||": 0.05,
   "Cruel Administrator|Avatar: The Last Airbender||": 0.1,
   "Dai Li Agents|Avatar: The Last Airbender||": 0.09,
@@ -376,7 +538,11 @@
   "Hama, the Bloodbender|Avatar: The Last Airbender||": 0.13,
   "Hei Bai, Spirit of Balance|Avatar: The Last Airbender||": 0.13,
   "Hermitic Herbalist|Avatar: The Last Airbender||": 0.18,
+<<<<<<< HEAD
   "Iroh, Tea Master|Avatar: The Last Airbender||": 1.37,
+=======
+  "Iroh, Tea Master|Avatar: The Last Airbender||": 1.38,
+>>>>>>> main
   "Katara, Water Tribe's Hope|Avatar: The Last Airbender||": 2.51,
   "Long Feng, Grand Secretariat|Avatar: The Last Airbender||": 0.11,
   "Messenger Hawk|Avatar: The Last Airbender||": 0.05,
@@ -385,9 +551,15 @@
   "Pretending Poxbearers|Avatar: The Last Airbender||": 0.05,
   "Professor Zei, Anthropologist|Avatar: The Last Airbender||": 0.14,
   "Sandbender Scavengers|Avatar: The Last Airbender||": 0.67,
+<<<<<<< HEAD
   "Sokka, Bold Boomeranger|Avatar: The Last Airbender||": 2.74,
   "Sokka, Lateral Strategist|Avatar: The Last Airbender||": 0.17,
   "Sokka, Tenacious Tactician|Avatar: The Last Airbender||": 3.34,
+=======
+  "Sokka, Bold Boomeranger|Avatar: The Last Airbender||": 2.75,
+  "Sokka, Lateral Strategist|Avatar: The Last Airbender||": 0.17,
+  "Sokka, Tenacious Tactician|Avatar: The Last Airbender||": 3.35,
+>>>>>>> main
   "Suki, Kyoshi Warrior|Avatar: The Last Airbender||": 0.12,
   "Sun Warriors|Avatar: The Last Airbender||": 0.11,
   "Tolls of War|Avatar: The Last Airbender||": 0.11,
@@ -397,14 +569,24 @@
   "Wandering Musicians|Avatar: The Last Airbender||": 0.07,
   "White Lotus Reinforcements|Avatar: The Last Airbender||": 0.13,
   "Zhao, Ruthless Admiral|Avatar: The Last Airbender||": 0.11,
+<<<<<<< HEAD
   "Zuko, Conflicted|Avatar: The Last Airbender||": 1.36,
   "Barrels of Blasting Jelly|Avatar: The Last Airbender||": 0.07,
   "Bender's Waterskin|Avatar: The Last Airbender||": 0.35,
+=======
+  "Zuko, Conflicted|Avatar: The Last Airbender||": 1.37,
+  "Barrels of Blasting Jelly|Avatar: The Last Airbender||": 0.07,
+  "Bender's Waterskin|Avatar: The Last Airbender||": 0.33,
+>>>>>>> main
   "Fire Nation Warship|Avatar: The Last Airbender||": 0.08,
   "Kyoshi Battle Fan|Avatar: The Last Airbender||": 0.07,
   "Meteor Sword|Avatar: The Last Airbender||": 0.15,
   "Airship Engine Room|Avatar: The Last Airbender||": 0.15,
+<<<<<<< HEAD
   "Boiling Rock Prison|Avatar: The Last Airbender||": 0.15,
+=======
+  "Boiling Rock Prison|Avatar: The Last Airbender||": 0.18,
+>>>>>>> main
   "Fire Nation Palace|Avatar: The Last Airbender||": 6.68,
   "Foggy Bottom Swamp|Avatar: The Last Airbender||": 0.07,
   "Kyoshi Village|Avatar: The Last Airbender||": 0.1,
@@ -412,12 +594,17 @@
   "Misty Palms Oasis|Avatar: The Last Airbender||": 0.07,
   "North Pole Gates|Avatar: The Last Airbender||": 0.07,
   "Omashu City|Avatar: The Last Airbender||": 0.07,
+<<<<<<< HEAD
   "Realm of Koh|Avatar: The Last Airbender||": 2.88,
+=======
+  "Realm of Koh|Avatar: The Last Airbender||": 2.89,
+>>>>>>> main
   "Rumble Arena|Avatar: The Last Airbender||": 0.15,
   "Secret Tunnel|Avatar: The Last Airbender||": 3.58,
   "Serpent's Pass|Avatar: The Last Airbender||": 0.15,
   "Sun-Blessed Peak|Avatar: The Last Airbender||": 0.07,
   "White Lotus Hideout|Avatar: The Last Airbender||": 0.14,
+<<<<<<< HEAD
   "Zhao, the Moon Slayer|Avatar: The Last Airbender (Extended Art)||Foil": 12.25,
   "Momo, Friendly Flier|Avatar: The Last Airbender (Field Notes)||": 7.49,
   "Phoenix Fleet Airship|Avatar: The Last Airbender (Field Notes)||": 47.6,
@@ -426,6 +613,16 @@
   "Waterbender Ascension|Avatar: The Last Airbender (Scene Cards)||": 8.6,
   "Empty City Ruse|Avatar: The Last Airbender Eternal (Source Material)||": 5.39,
   "Taunting Challenge|Avatar: The Last Airbender Eternal (Source Material)||": 8.64,
+=======
+  "Zhao, the Moon Slayer|Avatar: The Last Airbender (Extended Art)||Foil": 12.26,
+  "Momo, Friendly Flier|Avatar: The Last Airbender (Field Notes)||": 7.49,
+  "Phoenix Fleet Airship|Avatar: The Last Airbender (Field Notes)||": 47.61,
+  "Crashing Wave|Avatar: The Last Airbender (Scene Cards)||": 0.35,
+  "Combustion Technique|Avatar: The Last Airbender (Scene Cards)||": 0.95,
+  "Waterbender Ascension|Avatar: The Last Airbender (Scene Cards)||": 8.6,
+  "Empty City Ruse|Avatar: The Last Airbender Eternal (Source Material)||": 5.4,
+  "Taunting Challenge|Avatar: The Last Airbender Eternal (Source Material)||": 8.65,
+>>>>>>> main
   "Hero of Goma Fada|Batalha por Zendikar||": 0.22,
   "Kitesail Scout|Batalha por Zendikar||": 0.08,
   "Sheer Drop|Batalha por Zendikar||": 0.07,
@@ -439,7 +636,7 @@
   "Guul Draz Overseer|Batalha por Zendikar||": 0.34,
   "Voracious Null|Batalha por Zendikar||": 0.08,
   "Touch of the Void|Batalha por Zendikar||": 0.06,
-  "Stonefury|Batalha por Zendikar||": 0.09,
+  "Stonefury|Batalha por Zendikar||": 0.1,
   "Sure Strike|Batalha por Zendikar||": 0.05,
   "Volcanic Upheaval|Batalha por Zendikar||": 0.07,
   "Unnatural Aggression|Batalha por Zendikar||": 0.1,
@@ -449,22 +646,34 @@
   "Galewind Moose|Bloomburrow||": 0.15,
   "Baylen, the Haymaker|Bloomburrow||": 2.25,
   "Finneas, Ace Archer|Bloomburrow||Foil": 0.95,
+<<<<<<< HEAD
   "Decree of Pain|Bloomburrow Commander||": 3.58,
+=======
+  "Decree of Pain|Bloomburrow Commander||": 3.5,
+>>>>>>> main
   "Beast Within|Bloomburrow Commander||": 6.73,
   "End-Raze Forerunners|Bloomburrow Commander||": 2.82,
   "Izzet Signet|Bloomburrow Commander||": 2.75,
   "Ornithopter of Paradise|Bloomburrow Commander||": 3.48,
   "Path of Ancestry|Bloomburrow Commander||": 0.75,
+<<<<<<< HEAD
   "Kami of the Painted Road|Campeoes de Kamigawa||": 0.1,
   "Pious Kitsune|Campeoes de Kamigawa||": 0.2,
   "Devouring Rage|Campeoes de Kamigawa||": 0.17,
   "Reflex Sliver|Caos Planar||": 0.25,
+=======
+  "Kami of the Painted Road|Campeoes de Kamigawa||": 0.12,
+  "Pious Kitsune|Campeoes de Kamigawa||": 0.2,
+  "Devouring Rage|Campeoes de Kamigawa||": 0.17,
+  "Reflex Sliver|Caos Planar||": 0.21,
+>>>>>>> main
   "Necrotic Sliver|Caos Planar||": 0.99,
   "Isolate|Challenger Decks 2022||": 0.25,
   "Glint Hawk Idol|Cicatrizes de Mirrodin||": 0.1,
   "Cultivate|Commander||": 5.9,
   "Acidic Slime|Commander 2013||": 0.43,
   "Spoils of Victory|Commander 2013||": 7.99,
+<<<<<<< HEAD
   "Akoum Refuge|Commander 2013||": 0.49,
   "Esper Panorama|Commander 2013||": 1.99,
   "Victimize|Commander 2015||": 2.99,
@@ -473,12 +682,23 @@
   "Kess, Dissident Mage|Commander 2017||": 7.2,
   "Sanguine Bond|Commander 2017||": 17.75,
   "Stitch Together|Commander 2018||": 9,
+=======
+  "Akoum Refuge|Commander 2013||": 0.46,
+  "Esper Panorama|Commander 2013||": 1.99,
+  "Victimize|Commander 2015||": 2.99,
+  "Darksteel Ingot|Commander 2015||": 1.35,
+  "Evolving Wilds|Commander 2015||": 0.2,
+  "Kess, Dissident Mage|Commander 2017||": 7.2,
+  "Sanguine Bond|Commander 2017||": 17.75,
+  "Stitch Together|Commander 2018||": 7.99,
+>>>>>>> main
   "Epic Proportions|Commander 2018||": 0.51,
   "Beacon of Unrest|Commander 2019||": 1.1,
   "Sakura-Tribe Elder|Commander 2019||": 3.9,
   "Soulflayer|Commander 2020||": 0.4,
   "Command Tower|Commander 2020||": 1.25,
   "Ghostly Prison|Commander 2021||": 32,
+<<<<<<< HEAD
   "Gideon, Champion of Justice|Commander 2021||": 0.95,
   "Defiant Bloodlord|Commander 2021||": 0.29,
   "Quicksmith Genius|Commander 2021||": 0.13,
@@ -487,6 +707,16 @@
   "Pyromancer's Goggles|Commander 2021||": 4.49,
   "Sol Ring|Commander 2021||": 7.88,
   "Temple of the False God|Commander 2021||": 0.63,
+=======
+  "Gideon, Champion of Justice|Commander 2021||": 1.28,
+  "Defiant Bloodlord|Commander 2021||": 0.29,
+  "Quicksmith Genius|Commander 2021||": 0.13,
+  "Key to the City|Commander 2021||": 0.99,
+  "Mind Stone|Commander 2021||": 1.5,
+  "Pyromancer's Goggles|Commander 2021||": 4.49,
+  "Sol Ring|Commander 2021||": 8.99,
+  "Temple of the False God|Commander 2021||": 0.9,
+>>>>>>> main
   "Seraph of Dawn|Commander Legends||": 0.1,
   "Aqueous Form|Commander Legends||": 0.5,
   "Court of Cunning|Commander Legends||": 20.79,
@@ -494,22 +724,38 @@
   "Haunted Cloak|Commander Legends||": 0.25,
   "Hero's Blade|Commander Legends||": 0.25,
   "Dawn Charm|Commander Legends||": 1.99,
+<<<<<<< HEAD
   "Loxodon Warhammer|Commander Legends||": 4.73,
   "Sword of Vengeance|Commander Legends||": 4.25,
   "Astral Confrontation|Commander Legends: Batalha por Portal de Baldur||": 0.09,
+=======
+  "Loxodon Warhammer|Commander Legends||": 4.75,
+  "Sword of Vengeance|Commander Legends||": 4.25,
+  "Astral Confrontation|Commander Legends: Batalha por Portal de Baldur||": 0.08,
+>>>>>>> main
   "Minimus Containment|Commander Legends: Batalha por Portal de Baldur||": 0.08,
   "Contact Other Plane|Commander Legends: Batalha por Portal de Baldur||": 0.08,
   "Dream Fracture|Commander Legends: Batalha por Portal de Baldur||": 0.1,
   "Kenku Artificer|Commander Legends: Batalha por Portal de Baldur||": 1.79,
+<<<<<<< HEAD
   "Pseudodragon Familiar|Commander Legends: Batalha por Portal de Baldur||": 0.08,
   "Vicious Battlerager|Commander Legends: Batalha por Portal de Baldur||": 0.2,
   "Lightning Bolt|Commander Legends: Batalha por Portal de Baldur||": 8.7,
+=======
+  "Pseudodragon Familiar|Commander Legends: Batalha por Portal de Baldur||": 0.06,
+  "Vicious Battlerager|Commander Legends: Batalha por Portal de Baldur||": 0.2,
+  "Lightning Bolt|Commander Legends: Batalha por Portal de Baldur||": 9.99,
+>>>>>>> main
   "Pack Attack|Commander Legends: Batalha por Portal de Baldur||": 0.09,
   "Circle of the Land Druid|Commander Legends: Batalha por Portal de Baldur||": 0.2,
   "Wilson, Refined Grizzly|Commander Legends: Batalha por Portal de Baldur||": 0.25,
   "You Meet in a Tavern|Commander Legends: Batalha por Portal de Baldur||": 0.18,
   "Mahadi, Emporium Master|Commander Legends: Batalha por Portal de Baldur||": 0.49,
+<<<<<<< HEAD
   "Blasphemous Act|Commander Legends: Batalha por Portal de Baldur||": 19.99,
+=======
+  "Blasphemous Act|Commander Legends: Batalha por Portal de Baldur||": 18.81,
+>>>>>>> main
   "Chaos Wand|Commander Legends: Batalha por Portal de Baldur||": 0.79,
   "Lightning Bolt|Commander Legends: Batalha por Portal de Baldur (Rulebook)||": 8.5,
   "Raphael, Fiendish Savior|Commander Legends: Batalha por Portal de Baldur (Rulebook)||": 0.9,
@@ -519,10 +765,16 @@
   "Avatar of Slaughter|Commander Masters||": 0.95,
   "Faithless Looting|Commander Masters||": 4.9,
   "Magus of the Wheel|Commander Masters||": 3.99,
+<<<<<<< HEAD
   "Sapphire Medallion|Commander Masters||": 30.99,
   "Sol Ring|Commander Masters||": 10.8,
   "Command Tower|Commander Masters||": 1.99,
   "Synapse Sliver|Commander Masters||": 19.75,
+=======
+  "Sapphire Medallion|Commander Masters||": 34,
+  "Sol Ring|Commander Masters||": 9.9,
+  "Command Tower|Commander Masters||": 1.99,
+>>>>>>> main
   "Exotic Orchard|Commander Masters||": 1.9,
   "Frantic Search|Commander Masters (Borderless)||": 3.5,
   "Dread Return|Commander Masters (Borderless)||": 3.95,
@@ -533,10 +785,16 @@
   "Doubling Season|Commander Masters (Foil Etched)||Foil Especial / Foil Etched": 162,
   "Ancient Ziggurat|Confluencia||": 3.58,
   "Disciple of Kangee|Conjuncao||": 0.21,
+<<<<<<< HEAD
   "Confound|Conjuncao||": 0.68,
   "Vaporkin|Conspiracy: Take the Crown||": 0.04,
   "Altar's Reap|Conspiracy: Take the Crown||": 0.15,
   "Plummet|Conspiracy: Take the Crown||": 0.04,
+=======
+  "Vaporkin|Conspiracy: Take the Crown||": 0.05,
+  "Altar's Reap|Conspiracy: Take the Crown||": 0.15,
+  "Plummet|Conspiracy: Take the Crown||": 0.05,
+>>>>>>> main
   "Strength in Numbers|Conspiracy: Take the Crown||": 0.15,
   "Éowyn, Shieldmaiden|Contos da Terra Media Commander||": 4.42,
   "Frodo, Adventurous Hobbit|Contos da Terra Media Commander||": 4,
@@ -548,19 +806,29 @@
   "Saruman, the White Hand|Contos da Terra Media Commander||": 6,
   "Beregond of the Guard|Contos da Terra Media Commander||": 3.99,
   "Champions of Minas Tirith|Contos da Terra Media Commander||": 4.39,
+<<<<<<< HEAD
   "Field-Tested Frying Pan|Contos da Terra Media Commander||": 3.89,
   "The Gaffer|Contos da Terra Media Commander||": 69.99,
+=======
+  "Field-Tested Frying Pan|Contos da Terra Media Commander||": 3.9,
+  "The Gaffer|Contos da Terra Media Commander||": 69.95,
+>>>>>>> main
   "Gilraen, Dúnedain Protector|Contos da Terra Media Commander||": 5.93,
   "Grey Host Reinforcements|Contos da Terra Media Commander||": 2.84,
   "Gwaihir, Greatest of the Eagles|Contos da Terra Media Commander||": 5.72,
   "Lossarnach Captain|Contos da Terra Media Commander||": 5,
+<<<<<<< HEAD
   "Of Herbs and Stewed Rabbit|Contos da Terra Media Commander||": 7.2,
+=======
+  "Of Herbs and Stewed Rabbit|Contos da Terra Media Commander||": 6.66,
+>>>>>>> main
   "Archivist of Gondor|Contos da Terra Media Commander||": 2.25,
   "Corsairs of Umbar|Contos da Terra Media Commander||": 4.5,
   "Denethor, Stone Seer|Contos da Terra Media Commander||": 1.63,
   "Fealty to the Realm|Contos da Terra Media Commander||": 2.52,
   "Monstrosity of the Lake|Contos da Terra Media Commander||": 1.55,
   "Raise the Palisade|Contos da Terra Media Commander||": 97.5,
+<<<<<<< HEAD
   "Subjugate the Hobbits|Contos da Terra Media Commander||": 3.57,
   "Trap the Trespassers|Contos da Terra Media Commander||": 2.22,
   "Gollum, Obsessed Stalker|Contos da Terra Media Commander||": 6.95,
@@ -583,17 +851,49 @@
   "Prize Pig|Contos da Terra Media Commander||": 4.13,
   "Travel Through Caradhras|Contos da Terra Media Commander||": 1.45,
   "Windswift Slice|Contos da Terra Media Commander||": 8.85,
+=======
+  "Subjugate the Hobbits|Contos da Terra Media Commander||": 3.4,
+  "Trap the Trespassers|Contos da Terra Media Commander||": 2.22,
+  "Gollum, Obsessed Stalker|Contos da Terra Media Commander||": 6.79,
+  "Lobelia, Defender of Bag End|Contos da Terra Media Commander||": 4.36,
+  "Rapacious Guest|Contos da Terra Media Commander||": 14.4,
+  "Shelob, Dread Weaver|Contos da Terra Media Commander||": 9.75,
+  "Call for Aid|Contos da Terra Media Commander||": 3.85,
+  "Cavern-Hoard Dragon|Contos da Terra Media Commander||": 119,
+  "Gimli of the Glittering Caves|Contos da Terra Media Commander||": 10.8,
+  "Orcish Siegemaster|Contos da Terra Media Commander||": 7.16,
+  "Rampaging War Mammoth|Contos da Terra Media Commander||": 3,
+  "Arwen, Weaver of Hope|Contos da Terra Media Commander||": 37.5,
+  "Assemble the Entmoot|Contos da Terra Media Commander||": 4.95,
+  "Feasting Hobbit|Contos da Terra Media Commander||": 6.53,
+  "Galadhrim Ambush|Contos da Terra Media Commander||": 29.7,
+  "Haldir, Lórien Lieutenant|Contos da Terra Media Commander||": 5.95,
+  "Legolas Greenleaf|Contos da Terra Media Commander||": 5.12,
+  "Mirkwood Elk|Contos da Terra Media Commander||": 2.66,
+  "Motivated Pony|Contos da Terra Media Commander||": 2.74,
+  "Prize Pig|Contos da Terra Media Commander||": 4.13,
+  "Travel Through Caradhras|Contos da Terra Media Commander||": 1.45,
+  "Windswift Slice|Contos da Terra Media Commander||": 8.89,
+>>>>>>> main
   "The Balrog of Moria|Contos da Terra Media Commander||": 11.89,
   "Banquet Guests|Contos da Terra Media Commander||": 4.66,
   "Bilbo, Birthday Celebrant|Contos da Terra Media Commander||": 6.75,
   "Boromir, Gondor's Hope|Contos da Terra Media Commander||": 3.9,
   "Círdan the Shipwright|Contos da Terra Media Commander||": 2.69,
   "Elrond of the White Council|Contos da Terra Media Commander||": 2.45,
+<<<<<<< HEAD
   "Éomer, King of Rohan|Contos da Terra Media Commander||": 4.75,
   "Erestor of the Council|Contos da Terra Media Commander||": 1.76,
   "Faramir, Steward of Gondor|Contos da Terra Media Commander||": 3.9,
   "Farmer Cotton|Contos da Terra Media Commander||": 15.95,
   "Forth Eorlingas!|Contos da Terra Media Commander||": 38.99,
+=======
+  "Éomer, King of Rohan|Contos da Terra Media Commander||": 5.17,
+  "Erestor of the Council|Contos da Terra Media Commander||": 1.76,
+  "Faramir, Steward of Gondor|Contos da Terra Media Commander||": 3.9,
+  "Farmer Cotton|Contos da Terra Media Commander||": 15.95,
+  "Forth Eorlingas!|Contos da Terra Media Commander||": 39,
+>>>>>>> main
   "Gríma, Saruman's Footman|Contos da Terra Media Commander||": 19.39,
   "In the Darkness Bind Them|Contos da Terra Media Commander||": 15.39,
   "Lidless Gaze|Contos da Terra Media Commander||": 0.55,
@@ -608,28 +908,46 @@
   "Sail into the West|Contos da Terra Media Commander||": 2.15,
   "Song of Eärendil|Contos da Terra Media Commander||": 3.15,
   "Summons of Saruman|Contos da Terra Media Commander||": 5.25,
+<<<<<<< HEAD
   "Taunt from the Rampart|Contos da Terra Media Commander||": 31.5,
   "Too Greedily, Too Deep|Contos da Terra Media Commander||": 6.8,
   "Treebeard, Gracious Host|Contos da Terra Media Commander||": 21,
   "Wake the Dragon|Contos da Terra Media Commander||": 2.9,
   "Crown of Gondor|Contos da Terra Media Commander||": 4.5,
+=======
+  "Taunt from the Rampart|Contos da Terra Media Commander||": 28.8,
+  "Too Greedily, Too Deep|Contos da Terra Media Commander||": 6.79,
+  "Treebeard, Gracious Host|Contos da Terra Media Commander||": 18.68,
+  "Wake the Dragon|Contos da Terra Media Commander||": 2.9,
+  "Crown of Gondor|Contos da Terra Media Commander||": 4.46,
+>>>>>>> main
   "Hithlain Rope|Contos da Terra Media Commander||": 3.6,
   "Lothlórien Blade|Contos da Terra Media Commander||": 2.66,
   "Model of Unity|Contos da Terra Media Commander||": 1.5,
   "Relic of Sauron|Contos da Terra Media Commander||": 59.69,
   "The Black Gate|Contos da Terra Media Commander||": 78.99,
   "Banishing Light|Contos da Terra Media Commander||": 0.2,
+<<<<<<< HEAD
   "Bastion Protector|Contos da Terra Media Commander||": 5.9,
   "Call for Unity|Contos da Terra Media Commander||": 0.77,
   "Dawn of Hope|Contos da Terra Media Commander||": 3.17,
   "Dearly Departed|Contos da Terra Media Commander||": 0.35,
   "Dusk // Dawn|Contos da Terra Media Commander||": 2.93,
   "Fell the Mighty|Contos da Terra Media Commander||": 1.95,
+=======
+  "Bastion Protector|Contos da Terra Media Commander||": 5.75,
+  "Call for Unity|Contos da Terra Media Commander||": 0.77,
+  "Dawn of Hope|Contos da Terra Media Commander||": 3.17,
+  "Dearly Departed|Contos da Terra Media Commander||": 0.35,
+  "Dusk // Dawn|Contos da Terra Media Commander||": 2.6,
+  "Fell the Mighty|Contos da Terra Media Commander||": 1.68,
+>>>>>>> main
   "Fiend Hunter|Contos da Terra Media Commander||": 0.35,
   "Frontline Medic|Contos da Terra Media Commander||": 1,
   "Fumigate|Contos da Terra Media Commander||": 3.5,
   "Increasing Devotion|Contos da Terra Media Commander||": 0.75,
   "Marshal's Anthem|Contos da Terra Media Commander||": 1,
+<<<<<<< HEAD
   "Mentor of the Meek|Contos da Terra Media Commander||": 2.39,
   "Palace Jailer|Contos da Terra Media Commander||": 0.89,
   "Path to Exile|Contos da Terra Media Commander||": 10.95,
@@ -637,6 +955,15 @@
   "Sunset Revelry|Contos da Terra Media Commander||": 0.45,
   "Swords to Plowshares|Contos da Terra Media Commander||": 11.95,
   "Unbreakable Formation|Contos da Terra Media Commander||": 8.46,
+=======
+  "Mentor of the Meek|Contos da Terra Media Commander||": 2.15,
+  "Palace Jailer|Contos da Terra Media Commander||": 0.89,
+  "Path to Exile|Contos da Terra Media Commander||": 10.95,
+  "Selfless Squire|Contos da Terra Media Commander||": 2.2,
+  "Sunset Revelry|Contos da Terra Media Commander||": 0.45,
+  "Swords to Plowshares|Contos da Terra Media Commander||": 11.95,
+  "Unbreakable Formation|Contos da Terra Media Commander||": 8.76,
+>>>>>>> main
   "Verge Rangers|Contos da Terra Media Commander||": 1,
   "Village Bell-Ringer|Contos da Terra Media Commander||": 0.96,
   "Visions of Glory|Contos da Terra Media Commander||": 1.5,
@@ -656,14 +983,22 @@
   "Preordain|Contos da Terra Media Commander||": 9.7,
   "Swan Song|Contos da Terra Media Commander||": 48.95,
   "Crypt Incursion|Contos da Terra Media Commander||": 5.49,
+<<<<<<< HEAD
   "Decree of Pain|Contos da Terra Media Commander||": 5.79,
   "Feed the Swarm|Contos da Terra Media Commander||": 3.71,
   "Go for the Throat|Contos da Terra Media Commander||": 5.75,
   "Languish|Contos da Terra Media Commander||": 4.19,
+=======
+  "Decree of Pain|Contos da Terra Media Commander||": 5.75,
+  "Feed the Swarm|Contos da Terra Media Commander||": 3.71,
+  "Go for the Throat|Contos da Terra Media Commander||": 5.75,
+  "Languish|Contos da Terra Media Commander||": 3.75,
+>>>>>>> main
   "Living Death|Contos da Terra Media Commander||": 29.99,
   "Merciless Executioner|Contos da Terra Media Commander||": 4.75,
   "Night's Whisper|Contos da Terra Media Commander||": 5.76,
   "Reanimate|Contos da Terra Media Commander||": 64.74,
+<<<<<<< HEAD
   "Revenge of Ravens|Contos da Terra Media Commander||": 2.75,
   "Sanguine Bond|Contos da Terra Media Commander||": 21.99,
   "Toxic Deluge|Contos da Terra Media Commander||": 49.99,
@@ -677,20 +1012,45 @@
   "Frontier Warmonger|Contos da Terra Media Commander||": 0.95,
   "Goblin Cratermaker|Contos da Terra Media Commander||": 0.95,
   "Goblin Dark-Dwellers|Contos da Terra Media Commander||": 0.87,
+=======
+  "Revenge of Ravens|Contos da Terra Media Commander||": 2.42,
+  "Sanguine Bond|Contos da Terra Media Commander||": 21.99,
+  "Toxic Deluge|Contos da Terra Media Commander||": 49.99,
+  "Anger|Contos da Terra Media Commander||": 11.2,
+  "Blasphemous Act|Contos da Terra Media Commander||": 16.68,
+  "Combat Celebrant|Contos da Terra Media Commander||": 10.35,
+  "Court of Ire|Contos da Terra Media Commander||": 4.34,
+  "Earthquake|Contos da Terra Media Commander||": 5.39,
+  "Faithless Looting|Contos da Terra Media Commander||": 6.84,
+  "Flamerush Rider|Contos da Terra Media Commander||": 0.75,
+  "Frontier Warmonger|Contos da Terra Media Commander||": 0.95,
+  "Goblin Cratermaker|Contos da Terra Media Commander||": 0.95,
+  "Goblin Dark-Dwellers|Contos da Terra Media Commander||": 0.84,
+>>>>>>> main
   "Guttersnipe|Contos da Terra Media Commander||": 3.98,
   "Harsh Mentor|Contos da Terra Media Commander||": 1.79,
   "Humble Defector|Contos da Terra Media Commander||": 0.2,
   "Inferno Titan|Contos da Terra Media Commander||": 1.49,
+<<<<<<< HEAD
   "Knollspine Dragon|Contos da Terra Media Commander||": 3.05,
   "Scourge of the Throne|Contos da Terra Media Commander||": 8.95,
+=======
+  "Knollspine Dragon|Contos da Terra Media Commander||": 2.81,
+  "Scourge of the Throne|Contos da Terra Media Commander||": 4.75,
+>>>>>>> main
   "Shared Animosity|Contos da Terra Media Commander||": 19.95,
   "Shiny Impetus|Contos da Terra Media Commander||": 0.45,
   "Siege-Gang Commander|Contos da Terra Media Commander||": 1.5,
   "Thrill of Possibility|Contos da Terra Media Commander||": 0.49,
   "Treasure Nabber|Contos da Terra Media Commander||": 7.2,
   "Zealous Conscripts|Contos da Terra Media Commander||": 2.69,
+<<<<<<< HEAD
   "Arbor Elf|Contos da Terra Media Commander||": 5.6,
   "Asceticism|Contos da Terra Media Commander||": 34.75,
+=======
+  "Arbor Elf|Contos da Terra Media Commander||": 5.61,
+  "Asceticism|Contos da Terra Media Commander||": 38,
+>>>>>>> main
   "Beast Within|Contos da Terra Media Commander||": 5.84,
   "Birds of Paradise|Contos da Terra Media Commander||": 69.74,
   "Cultivate|Contos da Terra Media Commander||": 4.49,
@@ -698,7 +1058,11 @@
   "Elvish Mystic|Contos da Terra Media Commander||": 6.9,
   "Elvish Piper|Contos da Terra Media Commander||": 12.75,
   "Elvish Visionary|Contos da Terra Media Commander||": 0.23,
+<<<<<<< HEAD
   "Elvish Warmaster|Contos da Terra Media Commander||": 27.99,
+=======
+  "Elvish Warmaster|Contos da Terra Media Commander||": 29.75,
+>>>>>>> main
   "Essence Warden|Contos da Terra Media Commander||": 16.99,
   "Farhaven Elf|Contos da Terra Media Commander||": 2.5,
   "Farseek|Contos da Terra Media Commander||": 7.95,
@@ -706,10 +1070,17 @@
   "Gilded Goose|Contos da Terra Media Commander||": 8.72,
   "Great Oak Guardian|Contos da Terra Media Commander||": 1.25,
   "Harmonize|Contos da Terra Media Commander||": 2.5,
+<<<<<<< HEAD
   "Heroic Intervention|Contos da Terra Media Commander||": 83.9,
   "Hornet Queen|Contos da Terra Media Commander||": 1.45,
   "Inscription of Abundance|Contos da Terra Media Commander||": 1.75,
   "Lignify|Contos da Terra Media Commander||": 4.49,
+=======
+  "Heroic Intervention|Contos da Terra Media Commander||": 64.75,
+  "Hornet Queen|Contos da Terra Media Commander||": 1.45,
+  "Inscription of Abundance|Contos da Terra Media Commander||": 1.58,
+  "Lignify|Contos da Terra Media Commander||": 4.36,
+>>>>>>> main
   "Orchard Strider|Contos da Terra Media Commander||": 0.26,
   "Overwhelming Stampede|Contos da Terra Media Commander||": 14.99,
   "Paradise Druid|Contos da Terra Media Commander||": 2.6,
@@ -719,22 +1090,37 @@
   "Reclamation Sage|Contos da Terra Media Commander||": 0.9,
   "Seeds of Renewal|Contos da Terra Media Commander||": 0.45,
   "Sylvan Offering|Contos da Terra Media Commander||": 1.57,
+<<<<<<< HEAD
   "Tireless Provisioner|Contos da Terra Media Commander||": 59.95,
   "Wood Elves|Contos da Terra Media Commander||": 3.45,
   "Woodfall Primus|Contos da Terra Media Commander||": 2.93,
   "Anguished Unmaking|Contos da Terra Media Commander||": 10.49,
+=======
+  "Tireless Provisioner|Contos da Terra Media Commander||": 59.62,
+  "Wood Elves|Contos da Terra Media Commander||": 3.45,
+  "Woodfall Primus|Contos da Terra Media Commander||": 2.93,
+  "Anguished Unmaking|Contos da Terra Media Commander||": 10.75,
+>>>>>>> main
   "Extract from Darkness|Contos da Terra Media Commander||": 0.5,
   "Growth Spiral|Contos da Terra Media Commander||": 1.99,
   "Hostage Taker|Contos da Terra Media Commander||": 2.38,
   "Mortify|Contos da Terra Media Commander||": 0.85,
+<<<<<<< HEAD
   "Notion Thief|Contos da Terra Media Commander||": 10.99,
+=======
+  "Notion Thief|Contos da Terra Media Commander||": 10.75,
+>>>>>>> main
   "Savvy Hunter|Contos da Terra Media Commander||": 0.35,
   "Supreme Verdict|Contos da Terra Media Commander||": 12.8,
   "Arcane Signet|Contos da Terra Media Commander||": 7.19,
   "Basalt Monolith|Contos da Terra Media Commander||": 33.95,
   "Chromatic Lantern|Contos da Terra Media Commander||": 11.99,
   "Commander's Sphere|Contos da Terra Media Commander||": 0.98,
+<<<<<<< HEAD
   "Door of Destinies|Contos da Terra Media Commander||": 39.75,
+=======
+  "Door of Destinies|Contos da Terra Media Commander||": 39.74,
+>>>>>>> main
   "Everflowing Chalice|Contos da Terra Media Commander||": 3.95,
   "Heirloom Blade|Contos da Terra Media Commander||": 0.75,
   "Herald's Horn|Contos da Terra Media Commander||": 29.6,
@@ -742,6 +1128,7 @@
   "Mind Stone|Contos da Terra Media Commander||": 1.98,
   "Pristine Talisman|Contos da Terra Media Commander||": 1.6,
   "Sol Ring|Contos da Terra Media Commander||": 7.99,
+<<<<<<< HEAD
   "Talisman of Conviction|Contos da Terra Media Commander||": 5.95,
   "Talisman of Progress|Contos da Terra Media Commander||": 7.99,
   "Thought Vessel|Contos da Terra Media Commander||": 13.75,
@@ -752,10 +1139,23 @@
   "Whispersilk Cloak|Contos da Terra Media Commander||": 14.25,
   "Worn Powerstone|Contos da Terra Media Commander||": 4.85,
   "Access Tunnel|Contos da Terra Media Commander||": 6.3,
+=======
+  "Talisman of Conviction|Contos da Terra Media Commander||": 5.36,
+  "Talisman of Progress|Contos da Terra Media Commander||": 7.99,
+  "Thought Vessel|Contos da Terra Media Commander||": 12.59,
+  "Trading Post|Contos da Terra Media Commander||": 1.95,
+  "Vanquisher's Banner|Contos da Terra Media Commander||": 31,
+  "Wayfarer's Bauble|Contos da Terra Media Commander||": 2.5,
+  "Well of Lost Dreams|Contos da Terra Media Commander||": 9.9,
+  "Whispersilk Cloak|Contos da Terra Media Commander||": 14.25,
+  "Worn Powerstone|Contos da Terra Media Commander||": 2.5,
+  "Access Tunnel|Contos da Terra Media Commander||": 7,
+>>>>>>> main
   "Ash Barrens|Contos da Terra Media Commander||": 1.4,
   "Battlefield Forge|Contos da Terra Media Commander||": 7.51,
   "Brushland|Contos da Terra Media Commander||": 17.72,
   "Canopy Vista|Contos da Terra Media Commander||": 4.95,
+<<<<<<< HEAD
   "Choked Estuary|Contos da Terra Media Commander||": 5.4,
   "Clifftop Retreat|Contos da Terra Media Commander||": 3.74,
   "Command Tower|Contos da Terra Media Commander||": 3.92,
@@ -764,6 +1164,16 @@
   "Dragonskull Summit|Contos da Terra Media Commander||": 11.99,
   "Drowned Catacomb|Contos da Terra Media Commander||": 14.3,
   "Evolving Wilds|Contos da Terra Media Commander||": 0.1,
+=======
+  "Choked Estuary|Contos da Terra Media Commander||": 5.36,
+  "Clifftop Retreat|Contos da Terra Media Commander||": 3.74,
+  "Command Tower|Contos da Terra Media Commander||": 3.92,
+  "Crumbling Necropolis|Contos da Terra Media Commander||": 14.17,
+  "Desolate Lighthouse|Contos da Terra Media Commander||": 1.22,
+  "Dragonskull Summit|Contos da Terra Media Commander||": 11.7,
+  "Drowned Catacomb|Contos da Terra Media Commander||": 14.3,
+  "Evolving Wilds|Contos da Terra Media Commander||": 0.15,
+>>>>>>> main
   "Exotic Orchard|Contos da Terra Media Commander||": 1.9,
   "Field of Ruin|Contos da Terra Media Commander||": 0.5,
   "Flooded Grove|Contos da Terra Media Commander||": 5.95,
@@ -771,27 +1181,45 @@
   "Fortified Village|Contos da Terra Media Commander||": 2.9,
   "Frostboil Snarl|Contos da Terra Media Commander||": 4.74,
   "Furycalm Snarl|Contos da Terra Media Commander||": 2,
+<<<<<<< HEAD
   "Ghost Quarter|Contos da Terra Media Commander||": 5.9,
+=======
+  "Ghost Quarter|Contos da Terra Media Commander||": 5.75,
+>>>>>>> main
   "Glacial Fortress|Contos da Terra Media Commander||": 4.05,
   "Graypelt Refuge|Contos da Terra Media Commander||": 0.4,
   "Hinterland Harbor|Contos da Terra Media Commander||": 4.75,
   "Isolated Chapel|Contos da Terra Media Commander||": 7.75,
   "Lonely Sandbar|Contos da Terra Media Commander||": 0.5,
+<<<<<<< HEAD
   "Murmuring Bosk|Contos da Terra Media Commander||": 3.49,
+=======
+  "Murmuring Bosk|Contos da Terra Media Commander||": 3.01,
+>>>>>>> main
   "Necroblossom Snarl|Contos da Terra Media Commander||": 7.75,
   "Path of Ancestry|Contos da Terra Media Commander||": 1.79,
   "Port Town|Contos da Terra Media Commander||": 2.49,
   "Prairie Stream|Contos da Terra Media Commander||": 2.99,
+<<<<<<< HEAD
   "Rejuvenating Springs|Contos da Terra Media Commander||": 41.31,
   "Rogue's Passage|Contos da Terra Media Commander||": 3.99,
   "Sandsteppe Citadel|Contos da Terra Media Commander||": 1.95,
   "Scattered Groves|Contos da Terra Media Commander||": 3.92,
   "Scoured Barrens|Contos da Terra Media Commander||": 0.55,
   "Secluded Courtyard|Contos da Terra Media Commander||": 4.75,
+=======
+  "Rejuvenating Springs|Contos da Terra Media Commander||": 44.75,
+  "Rogue's Passage|Contos da Terra Media Commander||": 3.99,
+  "Sandsteppe Citadel|Contos da Terra Media Commander||": 1.95,
+  "Scattered Groves|Contos da Terra Media Commander||": 3.56,
+  "Scoured Barrens|Contos da Terra Media Commander||": 0.55,
+  "Secluded Courtyard|Contos da Terra Media Commander||": 4.36,
+>>>>>>> main
   "Shineshadow Snarl|Contos da Terra Media Commander||": 4.55,
   "Smoldering Marsh|Contos da Terra Media Commander||": 4.95,
   "Sulfur Falls|Contos da Terra Media Commander||": 7.2,
   "Sulfurous Springs|Contos da Terra Media Commander||": 14.89,
+<<<<<<< HEAD
   "Sunken Hollow|Contos da Terra Media Commander||": 3.5,
   "Sunpetal Grove|Contos da Terra Media Commander||": 7.75,
   "Terramorphic Expanse|Contos da Terra Media Commander||": 0.45,
@@ -803,6 +1231,19 @@
   "Vineglimmer Snarl|Contos da Terra Media Commander||": 1.95,
   "Wind-Scarred Crag|Contos da Terra Media Commander||": 0.45,
   "Windbrisk Heights|Contos da Terra Media Commander||": 1.79,
+=======
+  "Sunken Hollow|Contos da Terra Media Commander||": 3.59,
+  "Sunpetal Grove|Contos da Terra Media Commander||": 7.75,
+  "Terramorphic Expanse|Contos da Terra Media Commander||": 0.45,
+  "Thornwood Falls|Contos da Terra Media Commander||": 0.25,
+  "Throne of the High City|Contos da Terra Media Commander||": 1.38,
+  "Tranquil Cove|Contos da Terra Media Commander||": 0.45,
+  "Tranquil Thicket|Contos da Terra Media Commander||": 0.5,
+  "Underground River|Contos da Terra Media Commander||": 19.5,
+  "Vineglimmer Snarl|Contos da Terra Media Commander||": 1.76,
+  "Wind-Scarred Crag|Contos da Terra Media Commander||": 0.45,
+  "Windbrisk Heights|Contos da Terra Media Commander||": 1.6,
+>>>>>>> main
   "Woodland Cemetery|Contos da Terra Media Commander||": 8.95,
   "Woodland Stream|Contos da Terra Media Commander||": 0.25,
   "Explore|Contos da Terra Media Commander (Borderless Hildebrandt Brothers)||": 15,
@@ -816,25 +1257,37 @@
   "Dark Tutelage|Contos Encantados||": 0.25,
   "Season of Growth|Contos Encantados||": 0.5,
   "Sleep|Core Set 2019||": 0.15,
-  "Switcheroo|Core Set 2019||": 0.1,
-  "Child of Night|Core Set 2019||": 0.05,
+  "Switcheroo|Core Set 2019||": 0.12,
+  "Child of Night|Core Set 2019||": 0.06,
   "Shock|Core Set 2019||": 0.09,
   "Colossal Majesty|Core Set 2019||": 3.75,
   "Prodigious Growth|Core Set 2019||": 0.7,
+<<<<<<< HEAD
   "Meteor Golem|Core Set 2019||": 0.07,
+=======
+  "Meteor Golem|Core Set 2019||": 0.09,
+>>>>>>> main
   "Llanowar Elves|Core Set 2019||": 2.35,
   "Angel of Vitality|Core Set 2020||": 1.9,
   "Herald of the Sun|Core Set 2020||": 0.08,
   "Loyal Pegasus|Core Set 2020||": 0.07,
+<<<<<<< HEAD
   "Master Splicer|Core Set 2020||": 0.05,
   "Soulmender|Core Set 2020||": 0.08,
   "Air Elemental|Core Set 2020||": 0.05,
   "Brineborn Cutthroat|Core Set 2020||": 0.09,
+=======
+  "Master Splicer|Core Set 2020||": 0.06,
+  "Soulmender|Core Set 2020||": 0.08,
+  "Air Elemental|Core Set 2020||": 0.05,
+  "Brineborn Cutthroat|Core Set 2020||": 0.1,
+>>>>>>> main
   "Portal of Sanctuary|Core Set 2020||": 0.1,
   "Renowned Weaponsmith|Core Set 2020||": 0.1,
   "Scholar of the Ages|Core Set 2020||": 0.1,
   "Yarok's Wavecrasher|Core Set 2020||": 0.05,
   "Bloodsoaked Altar|Core Set 2020||": 0.07,
+<<<<<<< HEAD
   "Gravedigger|Core Set 2020||": 0.05,
   "Gruesome Scourger|Core Set 2020||": 0.07,
   "Thought Distortion|Core Set 2020||": 0.15,
@@ -845,19 +1298,37 @@
   "Uncaged Fury|Core Set 2020||": 0.1,
   "Barkhide Troll|Core Set 2020||": 0.1,
   "Growth Cycle|Core Set 2020||": 0.06,
+=======
+  "Gravedigger|Core Set 2020||": 0.06,
+  "Gruesome Scourger|Core Set 2020||": 0.07,
+  "Thought Distortion|Core Set 2020||": 0.15,
+  "Vengeful Warchief|Core Set 2020||": 0.06,
+  "Flame Sweep|Core Set 2020||": 0.1,
+  "Mask of Immolation|Core Set 2020||": 0.08,
+  "Rapacious Dragon|Core Set 2020||": 0.11,
+  "Uncaged Fury|Core Set 2020||": 0.1,
+  "Barkhide Troll|Core Set 2020||": 0.1,
+  "Growth Cycle|Core Set 2020||": 0.07,
+>>>>>>> main
   "Howling Giant|Core Set 2020||": 0.05,
   "Loaming Shaman|Core Set 2020||": 0.1,
   "Might of the Masses|Core Set 2020||": 0.08,
-  "Overcome|Core Set 2020||": 0.05,
-  "Overgrowth Elemental|Core Set 2020||": 0.09,
+  "Overcome|Core Set 2020||": 0.06,
+  "Overgrowth Elemental|Core Set 2020||": 0.1,
   "Pulse of Murasa|Core Set 2020||": 0.23,
   "Wolfrider's Saddle|Core Set 2020||": 0.08,
   "Woodland Champion|Core Set 2020||": 0.15,
   "Empyrean Eagle|Core Set 2020||Foil": 4.95,
   "Marauder's Axe|Core Set 2020||": 0.05,
+<<<<<<< HEAD
   "Waker of Waves|Core Set 2021||": 0.2,
   "Village Rites|Core Set 2021||": 1.29,
   "Brash Taunter|Core Set 2021||": 9,
+=======
+  "Waker of Waves|Core Set 2021||": 0.24,
+  "Village Rites|Core Set 2021||": 1.29,
+  "Brash Taunter|Core Set 2021||": 9.9,
+>>>>>>> main
   "Chandra, Heart of Fire|Core Set 2021||": 0.8,
   "Hellkite Punisher|Core Set 2021||": 0.1,
   "Garruk's Uprising|Core Set 2021||": 5.61,
@@ -867,7 +1338,11 @@
   "Sandsteppe Outcast|Destino Reescrito||": 0.1,
   "Jeskai Sage|Destino Reescrito||": 0.1,
   "Sultai Skullkeeper|Destino Reescrito||": 0.05,
+<<<<<<< HEAD
   "Will of the Naga|Destino Reescrito||": 0.09,
+=======
+  "Will of the Naga|Destino Reescrito||": 0.1,
+>>>>>>> main
   "Alesha's Vanguard|Destino Reescrito||": 0.08,
   "Defiant Ogre|Destino Reescrito||": 0.08,
   "Feral Krushok|Destino Reescrito||": 0.08,
@@ -876,6 +1351,7 @@
   "Map the Wastes|Destino Reescrito||": 0.09,
   "Grim Contest|Destino Reescrito||": 0.08,
   "The Thirteenth Doctor|Doctor Who||Foil": 8.49,
+<<<<<<< HEAD
   "Ecstatic Beauty|Doctor Who||": 5.54,
   "Weeping Angel|Doctor Who||": 7.2,
   "Throes of Chaos|Doctor Who||": 0.25,
@@ -888,6 +1364,20 @@
   "Fact or Fiction|Dominaria Remastered||": 0.5,
   "Nightscape Familiar|Dominaria Remastered||": 0.63,
   "Oversold Cemetery|Dominaria Remastered||": 13.5,
+=======
+  "Ecstatic Beauty|Doctor Who||": 5.47,
+  "Weeping Angel|Doctor Who||": 7.2,
+  "Throes of Chaos|Doctor Who||": 0.25,
+  "Arcane Signet|Doctor Who||": 6,
+  "Foreboding Ruins|Doctor Who||": 3.6,
+  "Past in Flames|Doctor Who||Foil": 2,
+  "Arcane Flight|Dominaria||": 0.06,
+  "Unwind|Dominaria||": 3.14,
+  "Ghitu Lavarunner|Dominaria||": 0.2,
+  "Fact or Fiction|Dominaria Remastered||": 0.5,
+  "Nightscape Familiar|Dominaria Remastered||": 0.63,
+  "Oversold Cemetery|Dominaria Remastered||": 13.12,
+>>>>>>> main
   "Sneak Attack|Dominaria Remastered||": 59.99,
   "Wild Dogs|Dominaria Remastered||Foil": 0.2,
   "Mind Stone|Dominaria Remastered||": 1.75,
@@ -902,7 +1392,11 @@
   "Vohar, Vodalian Desecrator|Dominaria Unida (Stained Glass)||": 0.18,
   "Scion of Darkness|Double Masters 2022||": 0.7,
   "Shadowborn Apostle|Double Masters 2022||": 1.43,
+<<<<<<< HEAD
   "Backdraft Hellkite|Double Masters 2022||": 3.8,
+=======
+  "Backdraft Hellkite|Double Masters 2022||": 3,
+>>>>>>> main
   "Grapple with the Past|Double Masters 2022||": 0.09,
   "Kolaghan's Command|Double Masters 2022||": 3.32,
   "Thraximundar|Double Masters 2022||": 0.5,
@@ -941,12 +1435,20 @@
   "Seam Rip|Edge of Eternities||": 0.57,
   "The Seriema|Edge of Eternities||": 1.44,
   "Starfighter Pilot|Edge of Eternities||": 0.06,
+<<<<<<< HEAD
   "Sunstar Chaplain|Edge of Eternities||": 0.37,
+=======
+  "Sunstar Chaplain|Edge of Eternities||": 0.38,
+>>>>>>> main
   "Sunstar Expansionist|Edge of Eternities||": 0.15,
   "Wedgelight Rammer|Edge of Eternities||": 0.09,
   "Zealous Display|Edge of Eternities||": 0.08,
   "Divert Disaster|Edge of Eternities||": 0.08,
+<<<<<<< HEAD
   "Emissary Escort|Edge of Eternities||Foil": 0.43,
+=======
+  "Emissary Escort|Edge of Eternities||Foil": 0.44,
+>>>>>>> main
   "Gigastorm Titan|Edge of Eternities||": 0.13,
   "Illvoi Light Jammer|Edge of Eternities||": 0.08,
   "Illvoi Operative|Edge of Eternities||": 0.07,
@@ -974,14 +1476,22 @@
   "Hymn of the Faller|Edge of Eternities||": 0.2,
   "Monoist Sentry|Edge of Eternities||": 0.08,
   "Perigee Beckoner|Edge of Eternities||": 0.15,
+<<<<<<< HEAD
   "Scrounge for Eternity|Edge of Eternities||": 0.23,
+=======
+  "Scrounge for Eternity|Edge of Eternities||": 0.24,
+>>>>>>> main
   "Swarm Culler|Edge of Eternities||": 0.1,
   "Virus Beetle|Edge of Eternities||": 0.08,
   "Voidforged Titan|Edge of Eternities||": 0.13,
   "Xu-Ifit, Osteoharmonist|Edge of Eternities||": 0.71,
   "Bombard|Edge of Eternities||": 0.05,
   "Cut Propulsion|Edge of Eternities||": 0.13,
+<<<<<<< HEAD
   "Kavaron Harrier|Edge of Eternities||": 0.2,
+=======
+  "Kavaron Harrier|Edge of Eternities||": 0.21,
+>>>>>>> main
   "Kavaron Skywarden|Edge of Eternities||": 0.07,
   "Kavaron Turbodrone|Edge of Eternities||": 0.09,
   "Lithobraking|Edge of Eternities||": 0.13,
@@ -997,12 +1507,18 @@
   "Territorial Bruntar|Edge of Eternities||": 0.08,
   "Weapons Manufacturing|Edge of Eternities||": 6.98,
   "Zookeeper Mechan|Edge of Eternities||": 0.08,
+<<<<<<< HEAD
   "Bioengineered Future|Edge of Eternities||": 0.99,
   "Biosynthic Burst|Edge of Eternities||": 0.14,
+=======
+  "Bioengineered Future|Edge of Eternities||": 1,
+  "Biosynthic Burst|Edge of Eternities||": 0.15,
+>>>>>>> main
   "Broodguard Elite|Edge of Eternities||": 0.11,
   "Drix Fatemaker|Edge of Eternities||": 0.08,
   "Fungal Colossus|Edge of Eternities||": 0.13,
   "Galactic Wayfarer|Edge of Eternities||": 0.07,
+<<<<<<< HEAD
   "Gene Pollinator|Edge of Eternities||": 0.12,
   "Icecave Crasher|Edge of Eternities||": 0.11,
   "Intrepid Tenderfoot|Edge of Eternities||": 0.08,
@@ -1012,6 +1528,17 @@
   "Meltstrider's Gear|Edge of Eternities||": 0.08,
   "Meltstrider's Resolve|Edge of Eternities||": 0.2,
   "Mightform Harmonizer|Edge of Eternities||": 18.78,
+=======
+  "Gene Pollinator|Edge of Eternities||": 0.14,
+  "Icecave Crasher|Edge of Eternities||": 0.11,
+  "Intrepid Tenderfoot|Edge of Eternities||": 0.08,
+  "Lashwhip Predator|Edge of Eternities||": 0.1,
+  "Loading Zone|Edge of Eternities||": 2.69,
+  "Meltstrider Eulogist|Edge of Eternities||": 0.21,
+  "Meltstrider's Gear|Edge of Eternities||": 0.08,
+  "Meltstrider's Resolve|Edge of Eternities||": 0.21,
+  "Mightform Harmonizer|Edge of Eternities||": 18.79,
+>>>>>>> main
   "Seedship Agrarian|Edge of Eternities||": 0.13,
   "Seedship Impact|Edge of Eternities||": 0.16,
   "Shattered Wings|Edge of Eternities||": 0.07,
@@ -1020,16 +1547,27 @@
   "Syr Vondam, the Lucent|Edge of Eternities||": 0.09,
   "Pinnacle Kill-Ship|Edge of Eternities||": 0.08,
   "Survey Mechan|Edge of Eternities||": 0.15,
+<<<<<<< HEAD
   "Thrumming Hivepool|Edge of Eternities||Foil": 7,
   "Virulent Silencer|Edge of Eternities||": 0.21,
+=======
+  "Virulent Silencer|Edge of Eternities||": 0.22,
+>>>>>>> main
   "Command Bridge|Edge of Eternities||": 0.08,
   "Rust Harvester|Edge of Eternities (Surreal Space Cards)||Foil": 3.7,
   "Godless Shrine|Edge of Eternities (Viewport Lands)||": 35.13,
   "Stomping Ground|Edge of Eternities (Viewport Lands)||Foil": 54,
+<<<<<<< HEAD
   "Gavel of the Righteous|Edge of Eternities Commander||": 0.24,
   "Flame Jab|Entardecer||": 0.2,
   "Favor of the Overbeing|Entardecer||": 5.95,
   "Circle of Protection: Red|Era Glacial||": 1.57,
+=======
+  "Gavel of the Righteous|Edge of Eternities Commander||": 1.3,
+  "Flame Jab|Entardecer||": 0.23,
+  "Favor of the Overbeing|Entardecer||": 5.47,
+  "Circle of Protection: Red|Era Glacial||": 1.76,
+>>>>>>> main
   "Fyndhorn Elves|Era Glacial||": 9.9,
   "Infuse|Era Glacial||": 0.4,
   "Songs of the Damned|Era Glacial||": 13,
@@ -1045,7 +1583,11 @@
   "Locket of Yesterdays|Espiral Temporal||": 4.39,
   "Sidewinder Sliver|Espiral Temporal Remasterizada||": 0.5,
   "Sinew Sliver|Espiral Temporal Remasterizada||": 0.45,
+<<<<<<< HEAD
   "Dreamscape Artist|Espiral Temporal Remasterizada||": 0.11,
+=======
+  "Dreamscape Artist|Espiral Temporal Remasterizada||": 0.12,
+>>>>>>> main
   "Piracy Charm|Espiral Temporal Remasterizada||": 0.2,
   "Think Twice|Espiral Temporal Remasterizada||": 0.05,
   "Mirri the Cursed|Espiral Temporal Remasterizada||": 0.75,
@@ -1090,7 +1632,11 @@
   "Strong Back|Fallout||": 14.5,
   "Super Mutant Scavenger|Fallout||": 0.79,
   "Well Rested|Fallout||": 20.48,
+<<<<<<< HEAD
   "Almost Perfect|Fallout||": 2.4,
+=======
+  "Almost Perfect|Fallout||": 2.45,
+>>>>>>> main
   "Armory Paladin|Fallout||": 1.94,
   "Cait, Cage Brawler|Fallout||": 1.17,
   "Cass, Hand of Vengeance|Fallout||": 1.48,
@@ -1104,10 +1650,17 @@
   "Silver Shroud Costume|Fallout||": 48.34,
   "Junktown|Fallout||": 2.19,
   "Sunscorched Divide|Fallout||": 4,
+<<<<<<< HEAD
   "All That Glitters|Fallout||": 2.57,
   "Mantle of the Ancients|Fallout||": 6.75,
   "Path to Exile|Fallout||": 10.99,
   "Puresteel Paladin|Fallout||": 8.46,
+=======
+  "All That Glitters|Fallout||": 2.45,
+  "Mantle of the Ancients|Fallout||": 6.75,
+  "Path to Exile|Fallout||": 10.99,
+  "Puresteel Paladin|Fallout||": 9.9,
+>>>>>>> main
   "Single Combat|Fallout||": 1.99,
   "Valorous Stance|Fallout||": 0.15,
   "Blasphemous Act|Fallout||": 15.2,
@@ -1116,6 +1669,7 @@
   "Unexpected Windfall|Fallout||": 18.94,
   "Abundant Growth|Fallout||": 1.75,
   "Fertile Ground|Fallout||": 0.68,
+<<<<<<< HEAD
   "Heroic Intervention|Fallout||": 68,
   "Rancor|Fallout||": 9.9,
   "Squirrel Nest|Fallout||": 0.23,
@@ -1135,6 +1689,27 @@
   "Talisman of Curiosity|Fallout||": 4.16,
   "Thought Vessel|Fallout||": 14,
   "Ash Barrens|Fallout||": 0.9,
+=======
+  "Heroic Intervention|Fallout||": 64.62,
+  "Rancor|Fallout||": 9.9,
+  "Squirrel Nest|Fallout||": 0.25,
+  "Wild Growth|Fallout||": 5,
+  "Behemoth Sledge|Fallout||": 0.28,
+  "Corpsejack Menace|Fallout||": 1.14,
+  "Arcane Signet|Fallout||": 6,
+  "Basilisk Collar|Fallout||": 21.99,
+  "Bloodforged Battle-axe|Fallout||": 3.48,
+  "Brass Knuckles|Fallout||": 0.15,
+  "Champion's Helm|Fallout||": 9.95,
+  "Explorer's Scope|Fallout||": 0.5,
+  "Fireshrieker|Fallout||": 1.78,
+  "Masterwork of Ingenuity|Fallout||": 3.99,
+  "Sol Ring|Fallout||": 9.74,
+  "Swiftfoot Boots|Fallout||": 14.99,
+  "Talisman of Curiosity|Fallout||": 3.78,
+  "Thought Vessel|Fallout||": 14,
+  "Ash Barrens|Fallout||": 0.96,
+>>>>>>> main
   "Buried Ruin|Fallout||": 1.99,
   "Canopy Vista|Fallout||": 2.95,
   "Cinder Glade|Fallout||": 2.69,
@@ -1144,7 +1719,10 @@
   "Exotic Orchard|Fallout||": 1.49,
   "Jungle Shrine|Fallout||": 1.62,
   "Mossfire Valley|Fallout||": 1.65,
+<<<<<<< HEAD
   "Nomad Outpost|Fallout||": 1,
+=======
+>>>>>>> main
   "Path of Ancestry|Fallout||": 0.95,
   "Roadside Reliquary|Fallout||": 0.29,
   "Rogue's Passage|Fallout||": 2.45,
@@ -1153,7 +1731,11 @@
   "Scavenger Grounds|Fallout||": 4.21,
   "Sheltered Thicket|Fallout||": 1.47,
   "Sungrass Prairie|Fallout||": 0.95,
+<<<<<<< HEAD
   "Sunpetal Grove|Fallout||": 7.95,
+=======
+  "Sunpetal Grove|Fallout||": 7.31,
+>>>>>>> main
   "Temple of Abandon|Fallout||": 0.99,
   "Temple of Plenty|Fallout||": 0.98,
   "Temple of the False God|Fallout||": 0.9,
@@ -1164,10 +1746,15 @@
   "Tifa's Limit Break|FINAL FANTASY||": 0.69,
   "Hope Estheim|FINAL FANTASY||": 1.34,
   "Iron Giant|FINAL FANTASY||": 0.09,
+<<<<<<< HEAD
   "Blitzball Stadium|FINAL FANTASY Commander||": 2.22,
   "The Warring Triad|FINAL FANTASY Commander||": 7.8,
   "Jungle Shrine|FINAL FANTASY Commander||": 0.9,
   "Seaside Citadel|FINAL FANTASY Commander||": 1.25,
+=======
+  "Blitzball Stadium|FINAL FANTASY Commander||": 2.23,
+  "The Warring Triad|FINAL FANTASY Commander||": 7.82,
+>>>>>>> main
   "Forgotten Ancient|Flagelo||": 7.95,
   "Sefris of the Hidden Ways|Forgotten Realms Commander||": 3,
   "Doomed Necromancer|Forgotten Realms Commander||": 4,
@@ -1175,7 +1762,11 @@
   "Hibernation Sliver|Fortaleza||": 13,
   "Mogg Maniac|Fortaleza||": 6.98,
   "Spined Sliver|Fortaleza||": 6.29,
+<<<<<<< HEAD
   "Sire of Seven Deaths|Foundations||": 105,
+=======
+  "Sire of Seven Deaths|Foundations||": 100,
+>>>>>>> main
   "Cat Collector|Foundations||": 0.15,
   "Claws Out|Foundations||": 0.12,
   "Felidar Savior|Foundations||": 0.07,
@@ -1184,9 +1775,15 @@
   "Luminous Rebuke|Foundations||": 0.08,
   "Prideful Parent|Foundations||": 0.09,
   "Squad Rallier|Foundations||": 0.1,
+<<<<<<< HEAD
   "Vanguard Seraph|Foundations||": 0.09,
   "Arcane Epiphany|Foundations||": 0.12,
   "Archmage of Runes|Foundations||": 22.5,
+=======
+  "Vanguard Seraph|Foundations||": 0.1,
+  "Arcane Epiphany|Foundations||": 0.12,
+  "Archmage of Runes|Foundations||": 12,
+>>>>>>> main
   "Elementalist Adept|Foundations||": 0.12,
   "Faebloom Trick|Foundations||": 0.26,
   "Grappling Kraken|Foundations||": 0.1,
@@ -1206,13 +1803,20 @@
   "Tinybones, Bauble Burglar|Foundations||": 5.99,
   "Vampire Gourmand|Foundations||": 0.15,
   "Chandra, Flameshaper|Foundations||": 6.74,
+<<<<<<< HEAD
   "Courageous Goblin|Foundations||": 0.09,
   "Goblin Boarders|Foundations||": 0.09,
   "Gorehorn Raider|Foundations||": 0.09,
   "Incinerating Blast|Foundations||": 0.09,
+=======
+  "Courageous Goblin|Foundations||": 0.1,
+  "Goblin Boarders|Foundations||": 0.1,
+  "Gorehorn Raider|Foundations||": 0.09,
+  "Incinerating Blast|Foundations||": 0.1,
+>>>>>>> main
   "Strongbox Raider|Foundations||": 0.09,
   "Ambush Wolf|Foundations||": 0.08,
-  "Beast-Kin Ranger|Foundations||": 0.09,
+  "Beast-Kin Ranger|Foundations||": 0.1,
   "Cackling Prowler|Foundations||": 0.04,
   "Spinner of Souls|Foundations||": 2.19,
   "Sylvan Scavenging|Foundations||": 0.64,
@@ -1222,7 +1826,11 @@
   "Quick-Draw Katana|Foundations||": 0.03,
   "Ravenous Amulet|Foundations||": 0.07,
   "Angel of Finality|Foundations||": 0.08,
+<<<<<<< HEAD
   "Cathar Commando|Foundations||": 0.1,
+=======
+  "Cathar Commando|Foundations||": 0.12,
+>>>>>>> main
   "Day of Judgment|Foundations||": 5.99,
   "Healer's Hawk|Foundations||": 0.13,
   "Healer's Hawk|Foundations||Foil": 0.19,
@@ -1233,7 +1841,11 @@
   "An Offer You Can't Refuse|Foundations||": 8.89,
   "Run Away Together|Foundations||": 0.09,
   "Think Twice|Foundations||": 0.05,
+<<<<<<< HEAD
   "Tolarian Terror|Foundations||": 0.73,
+=======
+  "Tolarian Terror|Foundations||": 0.61,
+>>>>>>> main
   "Burglar Rat|Foundations||": 0.1,
   "Eaten Alive|Foundations||": 0.1,
   "Fake Your Own Death|Foundations||": 0.05,
@@ -1254,13 +1866,22 @@
   "Sure Strike|Foundations||": 0.05,
   "Thrill of Possibility|Foundations||": 0.13,
   "Bite Down|Foundations||": 0.1,
+<<<<<<< HEAD
   "Bite Down|Foundations||Foil": 0.32,
+=======
+  "Bite Down|Foundations||Foil": 0.35,
+>>>>>>> main
   "Blanchwood Armor|Foundations||": 0.13,
   "Bushwhack|Foundations||": 0.26,
   "Dwynen's Elite|Foundations||": 0.14,
   "Elvish Archdruid|Foundations||": 3.85,
+<<<<<<< HEAD
   "Ghalta, Primal Hunger|Foundations||": 6.45,
   "Gnarlid Colony|Foundations||": 0.09,
+=======
+  "Ghalta, Primal Hunger|Foundations||": 6.29,
+  "Gnarlid Colony|Foundations||": 0.1,
+>>>>>>> main
   "Grow from the Ashes|Foundations||": 0.1,
   "Snakeskin Veil|Foundations||": 0.29,
   "Wary Thespian|Foundations||": 0.08,
@@ -1268,7 +1889,11 @@
   "Wildwood Scourge|Foundations||": 0.15,
   "Balmor, Battlemage Captain|Foundations||": 0.15,
   "Good-Fortune Unicorn|Foundations||": 0.15,
+<<<<<<< HEAD
   "Lathril, Blade of the Elves|Foundations||": 3.99,
+=======
+  "Lathril, Blade of the Elves|Foundations||": 4,
+>>>>>>> main
   "Campus Guide|Foundations||": 0.05,
   "Goldvein Pick|Foundations||": 0.14,
   "Blossoming Sands|Foundations||": 0.1,
@@ -1291,19 +1916,33 @@
   "Trusty Machete|Game Night 2022||": 0.25,
   "Ledev Guardian|Guildas de Ravnica||": 0.04,
   "Disdainful Stroke|Guildas de Ravnica||": 0.1,
+<<<<<<< HEAD
   "Enhanced Surveillance|Guildas de Ravnica||": 0.08,
   "Vedalken Mesmerist|Guildas de Ravnica||": 0.04,
   "Fearless Halberdier|Guildas de Ravnica||": 0.04,
   "Circuitous Route|Guildas de Ravnica||": 1.47,
+=======
+  "Enhanced Surveillance|Guildas de Ravnica||": 0.09,
+  "Vedalken Mesmerist|Guildas de Ravnica||": 0.04,
+  "Fearless Halberdier|Guildas de Ravnica||": 0.04,
+  "Circuitous Route|Guildas de Ravnica||": 1.8,
+>>>>>>> main
   "Nightveil Predator|Guildas de Ravnica||": 0.14,
   "Disposal Mummy|Hora da Devastacao||": 0.08,
   "Mummy Paramount|Hora da Devastacao||": 0.1,
   "Khenra Eternal|Hora da Devastacao||": 0.08,
   "Moaning Wall|Hora da Devastacao||": 0.08,
+<<<<<<< HEAD
   "Blur of Blades|Hora da Devastacao||": 0.09,
   "Crash Through|Hora da Devastacao||": 0.1,
   "Defiant Khenra|Hora da Devastacao||": 0.05,
   "Firebrand Archer|Hora da Devastacao||": 0.17,
+=======
+  "Blur of Blades|Hora da Devastacao||": 0.1,
+  "Crash Through|Hora da Devastacao||": 0.1,
+  "Defiant Khenra|Hora da Devastacao||": 0.05,
+  "Firebrand Archer|Hora da Devastacao||": 0.2,
+>>>>>>> main
   "Granitic Titan|Hora da Devastacao||": 0.08,
   "Open Fire|Hora da Devastacao||": 0.08,
   "Puncturing Blow|Hora da Devastacao||": 0.08,
@@ -1320,21 +1959,36 @@
   "Gemrazer|Ikoria: Terra de Colossos||": 1.46,
   "Glowstone Recluse|Ikoria: Terra de Colossos||": 0.17,
   "Migration Path|Ikoria: Terra de Colossos||": 0.5,
+<<<<<<< HEAD
   "Survivors' Bond|Ikoria: Terra de Colossos||": 0.07,
   "Zagoth Crystal|Ikoria: Terra de Colossos||": 0.18,
+=======
+  "Survivors' Bond|Ikoria: Terra de Colossos||": 0.08,
+  "Zagoth Crystal|Ikoria: Terra de Colossos||": 0.2,
+>>>>>>> main
   "The Ozolith|Ikoria: Terra de Colossos (Variantes)||": 209.95,
   "Harvest Pyre|Innistrad||": 0.17,
   "Infernal Plunge|Innistrad||": 0.47,
   "Kessig Wolf|Innistrad||": 0.08,
+<<<<<<< HEAD
   "Caravan Vigil|Innistrad||": 0.2,
   "Parallel Lives|Innistrad||": 115.63,
   "Ghost Quarter|Innistrad||": 1.29,
+=======
+  "Caravan Vigil|Innistrad||": 0.17,
+  "Parallel Lives|Innistrad||": 115.63,
+  "Ghost Quarter|Innistrad||": 2.9,
+>>>>>>> main
   "Wretched Throng|Innistrad Remastered||": 0.09,
   "Abrade|Innistrad Remastered||": 0.25,
   "Voldaren Epicure|Innistrad Remastered||": 1.98,
   "Spore Crawler|Innistrad Remastered||": 0.1,
   "Odric, Lunarch Marshal|Innistrad Remastered (Borderless)||": 4.9,
+<<<<<<< HEAD
   "Hullbreaker Horror|Innistrad Remastered (Borderless)||": 49.9,
+=======
+  "Hullbreaker Horror|Innistrad Remastered (Borderless)||": 59.99,
+>>>>>>> main
   "Forbidden Alchemy|Innistrad Remastered (Retro Frame)||": 0.6,
   "Fading Hope|Innistrad: Cacada a Meia-noite||": 1.49,
   "Firmament Sage|Innistrad: Cacada a Meia-noite||": 0.04,
@@ -1343,7 +1997,11 @@
   "Stormrider Spirit|Innistrad: Cacada a Meia-noite||": 0.09,
   "Burn Down the House|Innistrad: Cacada a Meia-noite||": 2.7,
   "Burn the Accursed|Innistrad: Cacada a Meia-noite||": 0.05,
+<<<<<<< HEAD
   "Cathartic Pyre|Innistrad: Cacada a Meia-noite||": 1.25,
+=======
+  "Cathartic Pyre|Innistrad: Cacada a Meia-noite||": 1.23,
+>>>>>>> main
   "Electric Revelation|Innistrad: Cacada a Meia-noite||": 0.09,
   "Lambholt Harrier|Innistrad: Cacada a Meia-noite||": 0.04,
   "Mounted Dreadknight|Innistrad: Cacada a Meia-noite||": 0.09,
@@ -1360,12 +2018,17 @@
   "Dreamshackle Geist|Innistrad: Voto Carmesim||": 0.29,
   "Hullbreaker Horror|Innistrad: Voto Carmesim||": 39.48,
   "Serpentine Ambush|Innistrad: Voto Carmesim||": 0.04,
+<<<<<<< HEAD
   "Wash Away|Innistrad: Voto Carmesim||": 9.5,
+=======
+  "Wash Away|Innistrad: Voto Carmesim||": 6.75,
+>>>>>>> main
   "Abrade|Innistrad: Voto Carmesim||": 0.24,
   "Blood Petal Celebrant|Innistrad: Voto Carmesim||": 0.09,
   "Creepy Puppeteer|Innistrad: Voto Carmesim||": 0.1,
   "End the Festivities|Innistrad: Voto Carmesim||": 5.5,
   "Ascendant Packleader|Innistrad: Voto Carmesim||": 0.42,
+<<<<<<< HEAD
   "Flourishing Hunter|Innistrad: Voto Carmesim||": 0.09,
   "Glorious Sunrise|Innistrad: Voto Carmesim||": 2.91,
   "Witch's Web|Innistrad: Voto Carmesim||": 0.08,
@@ -1429,6 +2092,18 @@
   "Snarling Undorak|Investida||": 0.06,
   "Treespring Lorian|Investida||": 0.08,
   "Vitality Charm|Investida||": 0.9,
+=======
+  "Flourishing Hunter|Innistrad: Voto Carmesim||": 0.06,
+  "Glorious Sunrise|Innistrad: Voto Carmesim||": 2.91,
+  "Witch's Web|Innistrad: Voto Carmesim||": 0.08,
+  "Midnight Clock|Innistrad: Voto Carmesim (Commander)||": 2.99,
+  "Marble Diamond|Innistrad: Voto Carmesim (Commander)||": 0.32,
+  "Sky Diamond|Innistrad: Voto Carmesim (Commander)||": 0.49,
+  "Myriad Landscape|Innistrad: Voto Carmesim (Commander)||": 1.19,
+  "Armadillo Cloak|Invasao||": 15.95,
+  "Shock|Investida||": 0.39,
+  "Explosive Vegetation|Investida||": 2.71,
+>>>>>>> main
   "Deadeye Tracker|Ixalan||": 0.3,
   "Star of Extinction|Ixalan||": 2.5,
   "Gilded Sentinel|Ixalan||": 0.05,
@@ -1478,7 +2153,7 @@
   "Flaying Tendrils|Juramento das Sentinelas||": 0.1,
   "Havoc Sower|Juramento das Sentinelas||": 0.08,
   "Kozilek's Shrieker|Juramento das Sentinelas||": 0.05,
-  "Oblivion Strike|Juramento das Sentinelas||": 0.09,
+  "Oblivion Strike|Juramento das Sentinelas||": 0.1,
   "Reaver Drone|Juramento das Sentinelas||": 0.1,
   "Witness the End|Juramento das Sentinelas||": 0.08,
   "Malakir Soothsayer|Juramento das Sentinelas||": 0.08,
@@ -1531,12 +2206,20 @@
   "Ravenform|Kaldheim||": 0.2,
   "Elderfang Disciple|Kaldheim||": 0.13,
   "Vengeful Reaper|Kaldheim||": 0.1,
+<<<<<<< HEAD
   "Village Rites|Kaldheim||": 2.72,
+=======
+  "Village Rites|Kaldheim||": 2.99,
+>>>>>>> main
   "Seize the Spoils|Kaldheim||": 0.5,
   "Smashing Success|Kaldheim||": 0.08,
   "Rune of Might|Kaldheim||": 0.25,
   "Sarulf, Realm Eater|Kaldheim||": 1.08,
+<<<<<<< HEAD
   "Volatile Fjord|Kaldheim||": 5,
+=======
+  "Volatile Fjord|Kaldheim||": 6.39,
+>>>>>>> main
   "Blade-Blizzard Kitsune|Kamigawa: Dinastia Neon||": 0.1,
   "Regent's Authority|Kamigawa: Dinastia Neon||": 0.06,
   "Seven-Tail Mentor|Kamigawa: Dinastia Neon||": 0.08,
@@ -1565,7 +2248,10 @@
   "Cranial Archive|Khans de Tarkir||": 0.15,
   "Bloodfell Caves|Khans de Tarkir||": 0.19,
   "Jungle Hollow|Khans de Tarkir||": 0.15,
+<<<<<<< HEAD
   "Opulent Palace|Khans de Tarkir||": 0.5,
+=======
+>>>>>>> main
   "Haazda Snare Squad|Labirinto do Dragao||": 0.1,
   "Wind Drake|Labirinto do Dragao||": 0.08,
   "Vorel of the Hull Clade|Labirinto do Dragao||": 0.88,
@@ -1574,6 +2260,7 @@
   "Persistent Petitioners|Lealdade em Ravnica||": 1.25,
   "Quench|Lealdade em Ravnica||": 0.04,
   "Pestilent Spirit|Lealdade em Ravnica||": 0.35,
+<<<<<<< HEAD
   "Lavinia, Azorius Renegade|Lealdade em Ravnica||": 0.95,
   "Zegana, Utopian Speaker|Lealdade em Ravnica||": 0.39,
   "Scuttlegator|Lealdade em Ravnica||": 0.05,
@@ -1587,6 +2274,20 @@
   "Root Sliver|Legioes||": 15.95,
   "Sanar, Innovative First-Year|Lorwyn Eclipsed||": 0.49,
   "Kodama's Reach|Lorwyn Eclipsed Commander||": 4.73,
+=======
+  "Lavinia, Azorius Renegade|Lealdade em Ravnica||": 1.99,
+  "Zegana, Utopian Speaker|Lealdade em Ravnica||": 0.38,
+  "Scuttlegator|Lealdade em Ravnica||": 0.06,
+  "Plated Sliver|Legioes||": 5.79,
+  "Ward Sliver|Legioes||": 6.95,
+  "Shifting Sliver|Legioes||": 10.99,
+  "Crypt Sliver|Legioes||": 6.12,
+  "Blade Sliver|Legioes||": 4.46,
+  "Hunter Sliver|Legioes||": 8.23,
+  "Quick Sliver|Legioes||": 4.92,
+  "Root Sliver|Legioes||": 15.95,
+  "Sanar, Innovative First-Year|Lorwyn Eclipsed||": 0.5,
+>>>>>>> main
   "Prophetic Ravings|Lua Arcana||": 0.08,
   "Bramble Creeper|Magic 2010||": 0.14,
   "Condemn|Magic 2011||": 0.49,
@@ -1608,11 +2309,14 @@
   "Mark of Mutiny|Magic 2013||": 0.11,
   "Farseek|Magic 2013||": 3.65,
   "Jayemdae Tome|Magic 2013||": 0.08,
-  "Primal Clay|Magic 2013||": 0.09,
+  "Primal Clay|Magic 2013||": 0.1,
   "Bonescythe Sliver|Magic 2014||": 4.08,
   "Master of Diversion|Magic 2014||": 0.09,
   "Sentinel Sliver|Magic 2014||": 1,
+<<<<<<< HEAD
   "Galerider Sliver|Magic 2014||": 10.9,
+=======
+>>>>>>> main
   "Merfolk Spy|Magic 2014||": 0.12,
   "Negate|Magic 2014||": 0.1,
   "Seacoast Drake|Magic 2014||": 0.15,
@@ -1625,7 +2329,11 @@
   "Young Pyromancer|Magic 2014||": 0.99,
   "Elvish Mystic|Magic 2014||": 4.1,
   "Giant Spider|Magic 2014||": 0.09,
+<<<<<<< HEAD
   "Manaweft Sliver|Magic 2014||": 2.21,
+=======
+  "Manaweft Sliver|Magic 2014||": 1.92,
+>>>>>>> main
   "Predatory Sliver|Magic 2014||": 2.45,
   "Sporemound|Magic 2014||": 0.25,
   "Ephemeral Shields|Magic 2015||": 0.14,
@@ -1666,21 +2374,37 @@
   "Amazing Acrobatics|Marvel's Spider-Man||": 0.13,
   "Beetle, Legacy Criminal|Marvel's Spider-Man||": 0.15,
   "Doc Ock, Sinister Scientist|Marvel's Spider-Man||": 0.14,
+<<<<<<< HEAD
   "Doc Ock's Henchmen|Marvel's Spider-Man||": 0.14,
   "Madame Web, Clairvoyant|Marvel's Spider-Man||": 0.2,
   "Mysterio's Phantasm|Marvel's Spider-Man||": 0.15,
   "Oscorp Research Team|Marvel's Spider-Man||": 0.14,
+=======
+  "Doc Ock's Henchmen|Marvel's Spider-Man||": 0.15,
+  "Madame Web, Clairvoyant|Marvel's Spider-Man||": 0.2,
+  "Mysterio's Phantasm|Marvel's Spider-Man||": 0.15,
+  "Oscorp Research Team|Marvel's Spider-Man||": 0.15,
+>>>>>>> main
   "Robotics Mastery|Marvel's Spider-Man||": 0.15,
   "School Daze|Marvel's Spider-Man||": 0.15,
   "Unstable Experiment|Marvel's Spider-Man||": 0.14,
   "Whoosh!|Marvel's Spider-Man||": 0.14,
   "Alien Symbiosis|Marvel's Spider-Man||": 0.16,
+<<<<<<< HEAD
   "Black Cat, Cunning Thief|Marvel's Spider-Man||": 0.88,
   "Gwenom, Remorseless|Marvel's Spider-Man||": 19.74,
   "Inner Demons Gangsters|Marvel's Spider-Man||": 0.11,
   "Merciless Enforcers|Marvel's Spider-Man||": 0.1,
   "Prison Break|Marvel's Spider-Man||": 0.15,
   "Risky Research|Marvel's Spider-Man||": 0.14,
+=======
+  "Black Cat, Cunning Thief|Marvel's Spider-Man||": 0.89,
+  "Gwenom, Remorseless|Marvel's Spider-Man||": 19.75,
+  "Inner Demons Gangsters|Marvel's Spider-Man||": 0.11,
+  "Merciless Enforcers|Marvel's Spider-Man||": 0.1,
+  "Prison Break|Marvel's Spider-Man||": 0.15,
+  "Risky Research|Marvel's Spider-Man||": 0.15,
+>>>>>>> main
   "Scorpion, Seething Striker|Marvel's Spider-Man||": 0.15,
   "Scorpion's Sting|Marvel's Spider-Man||": 0.14,
   "Swarm, Being of Bees|Marvel's Spider-Man||": 0.1,
@@ -1698,6 +2422,7 @@
   "Taxi Driver|Marvel's Spider-Man||": 0.1,
   "Wisecrack|Marvel's Spider-Man||": 0.15,
   "Ezekiel Sims, Spider-Totem|Marvel's Spider-Man||": 0.15,
+<<<<<<< HEAD
   "Grow Extra Arms|Marvel's Spider-Man||": 0.14,
   "Guy in the Chair|Marvel's Spider-Man||": 0.14,
   "Kraven's Cats|Marvel's Spider-Man||": 0.09,
@@ -1707,18 +2432,38 @@
   "Professional Wrestler|Marvel's Spider-Man||": 0.15,
   "Radioactive Spider|Marvel's Spider-Man||Foil": 2.9,
   "Sandman, Shifting Scoundrel|Marvel's Spider-Man||": 1.4,
+=======
+  "Grow Extra Arms|Marvel's Spider-Man||": 0.15,
+  "Guy in the Chair|Marvel's Spider-Man||": 0.14,
+  "Kraven's Cats|Marvel's Spider-Man||": 0.09,
+  "Kraven's Last Hunt|Marvel's Spider-Man||": 0.21,
+  "Lizard, Connors's Curse|Marvel's Spider-Man||": 0.46,
+  "Pictures of Spider-Man|Marvel's Spider-Man||": 0.23,
+  "Professional Wrestler|Marvel's Spider-Man||": 0.15,
+  "Radioactive Spider|Marvel's Spider-Man||Foil": 2.9,
+  "Sandman, Shifting Scoundrel|Marvel's Spider-Man||": 1.45,
+>>>>>>> main
   "Scout the City|Marvel's Spider-Man||": 0.15,
   "Spider-Man, Brooklyn Visionary|Marvel's Spider-Man||": 0.2,
   "Spiders-Man, Heroic Horde|Marvel's Spider-Man||": 0.2,
   "Supportive Parents|Marvel's Spider-Man||": 0.15,
+<<<<<<< HEAD
   "Web of Life and Destiny|Marvel's Spider-Man||": 8.75,
   "Green Goblin, Revenant|Marvel's Spider-Man||": 0.22,
+=======
+  "Web of Life and Destiny|Marvel's Spider-Man||": 8.9,
+  "Green Goblin, Revenant|Marvel's Spider-Man||": 0.23,
+>>>>>>> main
   "Kraven the Hunter|Marvel's Spider-Man||": 0.2,
   "Morbius the Living Vampire|Marvel's Spider-Man||": 0.15,
   "Pumpkin Bombardment|Marvel's Spider-Man||": 0.15,
   "Rhino, Barreling Brute|Marvel's Spider-Man||": 0.15,
   "Shriek, Treblemaker|Marvel's Spider-Man||": 0.2,
+<<<<<<< HEAD
   "SP//dr, Piloted by Peni|Marvel's Spider-Man||": 0.22,
+=======
+  "SP//dr, Piloted by Peni|Marvel's Spider-Man||": 0.23,
+>>>>>>> main
   "Spider Manifestation|Marvel's Spider-Man||": 0.24,
   "Spider-Girl, Legacy Hero|Marvel's Spider-Man||": 0.2,
   "Spider-Woman, Stunning Savior|Marvel's Spider-Man||": 6.6,
@@ -1733,12 +2478,20 @@
   "Steel Wrecking Ball|Marvel's Spider-Man||": 0.15,
   "Subway Train|Marvel's Spider-Man||": 0.1,
   "Daily Bugle Building|Marvel's Spider-Man||": 0.2,
+<<<<<<< HEAD
   "Multiversal Passage|Marvel's Spider-Man||": 65,
+=======
+  "Multiversal Passage|Marvel's Spider-Man||": 60,
+>>>>>>> main
   "Savage Mansion|Marvel's Spider-Man||": 0.15,
   "University Campus|Marvel's Spider-Man||": 0.15,
   "Urban Retreat|Marvel's Spider-Man||": 1.94,
   "Vibrant Cityscape|Marvel's Spider-Man||": 0.15,
+<<<<<<< HEAD
   "Symbiote Spider-Man|Marvel's Spider-Man (Web-Slinger)||": 4.89,
+=======
+  "Symbiote Spider-Man|Marvel's Spider-Man (Web-Slinger)||": 4.9,
+>>>>>>> main
   "Brainstorm|Mascaras de Mercadia||": 23.99,
   "Ancestral Mask|Mascaras de Mercadia||": 20.95,
   "Llanowar Elves|Media Inserts (EN)||Foil": 69.99,
@@ -1750,7 +2503,11 @@
   "Concussive Bolt|Mirrodin Sitiada||": 0.14,
   "Dross Ripper|Mirrodin Sitiada||": 0.12,
   "Training Drone|Mirrodin Sitiada||": 0.15,
+<<<<<<< HEAD
   "Lancer Sliver|Modern Horizons||": 0.09,
+=======
+  "Lancer Sliver|Modern Horizons||": 0.11,
+>>>>>>> main
   "Shelter|Modern Horizons||": 0.15,
   "Dregscape Sliver|Modern Horizons||": 0.25,
   "Aria of Flame|Modern Horizons||": 1.61,
@@ -1759,21 +2516,34 @@
   "Hollowhead Sliver|Modern Horizons||": 0.15,
   "Spiteful Sliver|Modern Horizons||": 1.99,
   "Tempered Sliver|Modern Horizons||": 0.15,
+<<<<<<< HEAD
   "Cloudshredder Sliver|Modern Horizons||": 12.95,
   "Lavabelly Sliver|Modern Horizons||": 0.22,
+=======
+  "Cloudshredder Sliver|Modern Horizons||": 10,
+  "Lavabelly Sliver|Modern Horizons||": 0.25,
+>>>>>>> main
   "Recalibrate|Modern Horizons 2||": 0.04,
   "Unmarked Grave|Modern Horizons 2||": 18.9,
   "Harmonic Prodigy|Modern Horizons 2||": 70,
   "Jade Avenger|Modern Horizons 2||": 0.04,
   "Chrome Courier|Modern Horizons 2||": 0.04,
+<<<<<<< HEAD
   "Goblin Anarchomancer|Modern Horizons 2||": 2.4,
+=======
+  "Goblin Anarchomancer|Modern Horizons 2||": 2.45,
+>>>>>>> main
   "Nettlecyst|Modern Horizons 2||": 13.13,
   "Chainer, Nightmare Adept|Modern Horizons 2||": 2,
   "Vile Entomber|Modern Horizons 2 (Moldura Antiga)||": 3.5,
   "Ornithopter of Paradise|Modern Horizons 2 (Moldura Antiga)||": 2.99,
   "Breaker of Creation|Modern Horizons 3||": 0.23,
   "Eldrazi Ravager|Modern Horizons 3||": 0.12,
+<<<<<<< HEAD
   "Strix Serenade|Modern Horizons 3||": 14.95,
+=======
+  "Strix Serenade|Modern Horizons 3||": 11.15,
+>>>>>>> main
   "Crabomination|Modern Horizons 3||": 0.07,
   "Skoa, Embermage|Modern Horizons 3||": 0.1,
   "Gift of the Viper|Modern Horizons 3||": 0.11,
@@ -1789,11 +2559,16 @@
   "Lion Umbra|Modern Horizons 3 (Retro Frame)||": 0.49,
   "Nesting Grounds|Modern Horizons 3 (Retro Frame)||": 0.69,
   "Liliana, Death's Majesty|Modern Horizons 3 Commander||": 4.99,
+<<<<<<< HEAD
   "Goldspan Dragon|Modern Horizons 3 Commander||": 61.6,
+=======
+  "Goldspan Dragon|Modern Horizons 3 Commander||": 56,
+>>>>>>> main
   "Growth Spiral|Modern Horizons 3 Commander||": 1.8,
   "Arcane Signet|Modern Horizons 3 Commander||": 6,
   "Corrupted Crossroads|Modern Horizons 3 Commander||": 0.5,
   "Frostboil Snarl|Modern Horizons 3 Commander||": 2.95,
+<<<<<<< HEAD
   "Mystic Monastery|Modern Horizons 3 Commander||Foil Especial / Foil Etched": 0,
   "Reliquary Tower|Modern Horizons 3 Commander||": 12.9,
   "Ruins of Oran-Rief|Modern Horizons 3 Commander||": 0.39,
@@ -1801,15 +2576,25 @@
   "Secluded Courtyard|Modern Horizons 3 Commander||Foil Especial / Foil Etched": 0,
   "Unclaimed Territory|Modern Horizons 3 Commander||Foil Especial / Foil Etched": 0,
   "Sylvan Bounty|Modern Masters 2015||": 0.05,
+=======
+  "Reliquary Tower|Modern Horizons 3 Commander||": 12.9,
+  "Ruins of Oran-Rief|Modern Horizons 3 Commander||": 0.39,
+  "Sylvan Bounty|Modern Masters 2015||": 0.06,
+>>>>>>> main
   "Vines of Vastwood|Modern Masters 2015||": 14.9,
   "Delirium Skeins|Modern Masters 2017||": 0.21,
   "Dragon Fodder|Modern Masters 2017||": 0.11,
   "Madcap Skills|Modern Masters 2017||": 0.14,
   "Seal of Primordium|Modern Masters 2017||": 0.2,
   "Jin-Gitaxias, Core Augur|Multiverse Legends||": 47.49,
+<<<<<<< HEAD
   "Sheoldred, Whispering One|Multiverse Legends||": 73.15,
   "Rona, Sheoldred's Faithful|Multiverse Legends||": 0.1,
   "Harmonic Sliver|Mystery Booster||Foil": 2.5,
+=======
+  "Sheoldred, Whispering One|Multiverse Legends||": 76.99,
+  "Rona, Sheoldred's Faithful|Multiverse Legends||": 0.1,
+>>>>>>> main
   "Anger|Mystery Booster 2||": 19.95,
   "Everlasting Lich|Mystery Booster Convention Edition||": 0.8,
   "Geometric Weird|Mystery Booster Convention Edition||": 0.8,
@@ -1829,7 +2614,11 @@
   "Nyxborn Wolf|Nascidos dos Deuses||": 0.05,
   "Setessan Starbreaker|Nascidos dos Deuses||": 0.08,
   "Swordwise Centaur|Nascidos dos Deuses||": 0.1,
+<<<<<<< HEAD
   "Flame Rift|Nemesis||": 5.59,
+=======
+  "Flame Rift|Nemesis||": 5.24,
+>>>>>>> main
   "Acrobatic Cheerleader|Noctumbra: A Casa dos Horrores||": 0.05,
   "Fear of Abduction|Noctumbra: A Casa dos Horrores||": 0.09,
   "Fear of Immobility|Noctumbra: A Casa dos Horrores||": 0.03,
@@ -1890,17 +2679,29 @@
   "Scorching Dragonfire|Noctumbra: A Casa dos Horrores||": 0.09,
   "Ticket Booth // Tunnel of Hate|Noctumbra: A Casa dos Horrores||": 0.06,
   "Break Down the Door|Noctumbra: A Casa dos Horrores||": 0.1,
+<<<<<<< HEAD
   "Coordinated Clobbering|Noctumbra: A Casa dos Horrores||": 0.1,
+=======
+  "Coordinated Clobbering|Noctumbra: A Casa dos Horrores||": 0.09,
+>>>>>>> main
   "Cryptid Inspector|Noctumbra: A Casa dos Horrores||": 0.03,
   "Flesh Burrower|Noctumbra: A Casa dos Horrores||": 0.03,
   "Frantic Strength|Noctumbra: A Casa dos Horrores||": 0.03,
   "Horrid Vigor|Noctumbra: A Casa dos Horrores||": 0.1,
   "Rootwise Survivor|Noctumbra: A Casa dos Horrores||": 0.1,
+<<<<<<< HEAD
   "Spineseeker Centipede|Noctumbra: A Casa dos Horrores||Foil": 0.18,
   "Under the Skin|Noctumbra: A Casa dos Horrores||Foil": 0.32,
   "Wary Watchdog|Noctumbra: A Casa dos Horrores||": 0.05,
   "Broodspinner|Noctumbra: A Casa dos Horrores||": 0.13,
   "Fear of Infinity|Noctumbra: A Casa dos Horrores||": 0.09,
+=======
+  "Spineseeker Centipede|Noctumbra: A Casa dos Horrores||Foil": 0.16,
+  "Under the Skin|Noctumbra: A Casa dos Horrores||Foil": 0.32,
+  "Wary Watchdog|Noctumbra: A Casa dos Horrores||": 0.04,
+  "Broodspinner|Noctumbra: A Casa dos Horrores||": 0.11,
+  "Fear of Infinity|Noctumbra: A Casa dos Horrores||": 0.08,
+>>>>>>> main
   "Gremlin Tamer|Noctumbra: A Casa dos Horrores||": 0.13,
   "Growing Dread|Noctumbra: A Casa dos Horrores||": 0.07,
   "Nashi, Searcher in the Dark|Noctumbra: A Casa dos Horrores||": 0.35,
@@ -1924,7 +2725,11 @@
   "Florian, Voldaren Scion|Noctumbra: A Casa dos Horrores Commander||": 1.95,
   "Golgari Signet|Noctumbra: A Casa dos Horrores Commander||": 1.49,
   "Rakdos Signet|Noctumbra: A Casa dos Horrores Commander||": 8.99,
+<<<<<<< HEAD
   "Talisman of Resilience|Noctumbra: A Casa dos Horrores Commander||": 1.98,
+=======
+  "Talisman of Resilience|Noctumbra: A Casa dos Horrores Commander||": 1.76,
+>>>>>>> main
   "Evolving Wilds|Noctumbra: A Casa dos Horrores Commander||": 0.1,
   "Metamorphosis Fanatic|Noctumbra: A Casa dos Horrores Commander (Extended Art)||": 64.99,
   "Exhume|Noctumbra: A Casa dos Horrores Commander (Promo)||Foil": 49.25,
@@ -1938,11 +2743,19 @@
   "Glissa's Scorn|Nova Phyrexia||": 0.13,
   "Banish from Edoras|O Senhor dos Aneis: Contos da Terra Media||": 0.09,
   "The Battle of Bywater|O Senhor dos Aneis: Contos da Terra Media||Foil": 28,
+<<<<<<< HEAD
   "Bill the Pony|O Senhor dos Aneis: Contos da Terra Media||": 0.16,
   "Dawn of a New Age|O Senhor dos Aneis: Contos da Terra Media||Foil": 15,
   "Dúnedain Blade|O Senhor dos Aneis: Contos da Terra Media||": 0.09,
   "Eagles of the North|O Senhor dos Aneis: Contos da Terra Media||": 0.75,
   "Eastfarthing Farmer|O Senhor dos Aneis: Contos da Terra Media||": 0.14,
+=======
+  "Bill the Pony|O Senhor dos Aneis: Contos da Terra Media||": 0.18,
+  "Dawn of a New Age|O Senhor dos Aneis: Contos da Terra Media||Foil": 15,
+  "Dúnedain Blade|O Senhor dos Aneis: Contos da Terra Media||": 0.11,
+  "Eagles of the North|O Senhor dos Aneis: Contos da Terra Media||": 1,
+  "Eastfarthing Farmer|O Senhor dos Aneis: Contos da Terra Media||": 0.15,
+>>>>>>> main
   "East-Mark Cavalier|O Senhor dos Aneis: Contos da Terra Media||": 0.1,
   "Éowyn, Lady of Rohan|O Senhor dos Aneis: Contos da Terra Media||": 0.3,
   "Errand-Rider of Gondor|O Senhor dos Aneis: Contos da Terra Media||": 0.09,
@@ -1951,14 +2764,23 @@
   "Faramir, Field Commander|O Senhor dos Aneis: Contos da Terra Media||": 0.2,
   "Fog on the Barrow-Downs|O Senhor dos Aneis: Contos da Terra Media||": 0.1,
   "Forge Anew|O Senhor dos Aneis: Contos da Terra Media||": 25.36,
+<<<<<<< HEAD
   "Frodo, Sauron's Bane|O Senhor dos Aneis: Contos da Terra Media||": 1,
   "Hobbit's Sting|O Senhor dos Aneis: Contos da Terra Media||": 0.14,
+=======
+  "Frodo, Sauron's Bane|O Senhor dos Aneis: Contos da Terra Media||": 1.1,
+  "Hobbit's Sting|O Senhor dos Aneis: Contos da Terra Media||": 0.15,
+>>>>>>> main
   "Landroval, Horizon Witness|O Senhor dos Aneis: Contos da Terra Media||": 0.14,
   "Lost to Legend|O Senhor dos Aneis: Contos da Terra Media||": 0.23,
   "Nimble Hobbit|O Senhor dos Aneis: Contos da Terra Media||": 0.1,
   "Now for Wrath, Now for Ruin!|O Senhor dos Aneis: Contos da Terra Media||": 0.13,
   "Protector of Gondor|O Senhor dos Aneis: Contos da Terra Media||": 0.1,
+<<<<<<< HEAD
   "Reprieve|O Senhor dos Aneis: Contos da Terra Media||": 7.74,
+=======
+  "Reprieve|O Senhor dos Aneis: Contos da Terra Media||": 7.75,
+>>>>>>> main
   "Rosie Cotton of South Lane|O Senhor dos Aneis: Contos da Terra Media||": 0.5,
   "Samwise the Stouthearted|O Senhor dos Aneis: Contos da Terra Media||": 0.29,
   "Second Breakfast|O Senhor dos Aneis: Contos da Terra Media||": 0.13,
@@ -1968,15 +2790,25 @@
   "Stalwarts of Osgiliath|O Senhor dos Aneis: Contos da Terra Media||": 0.1,
   "Tale of Tinúviel|O Senhor dos Aneis: Contos da Terra Media||": 0.25,
   "Took Reaper|O Senhor dos Aneis: Contos da Terra Media||": 0.1,
+<<<<<<< HEAD
   "War of the Last Alliance|O Senhor dos Aneis: Contos da Terra Media||": 4.5,
   "Westfold Rider|O Senhor dos Aneis: Contos da Terra Media||": 0.13,
   "You Cannot Pass!|O Senhor dos Aneis: Contos da Terra Media||": 0.16,
+=======
+  "War of the Last Alliance|O Senhor dos Aneis: Contos da Terra Media||": 4.53,
+  "Westfold Rider|O Senhor dos Aneis: Contos da Terra Media||": 0.13,
+  "You Cannot Pass!|O Senhor dos Aneis: Contos da Terra Media||": 0.19,
+>>>>>>> main
   "Arwen's Gift|O Senhor dos Aneis: Contos da Terra Media||": 0.13,
   "The Bath Song|O Senhor dos Aneis: Contos da Terra Media||": 0.3,
   "Bewitching Leechcraft|O Senhor dos Aneis: Contos da Terra Media||": 0.1,
   "Bill Ferny, Bree Swindler|O Senhor dos Aneis: Contos da Terra Media||": 0.15,
   "Birthday Escape|O Senhor dos Aneis: Contos da Terra Media||": 0.2,
+<<<<<<< HEAD
   "Borne Upon a Wind|O Senhor dos Aneis: Contos da Terra Media||": 35,
+=======
+  "Borne Upon a Wind|O Senhor dos Aneis: Contos da Terra Media||": 37.5,
+>>>>>>> main
   "Captain of Umbar|O Senhor dos Aneis: Contos da Terra Media||": 0.1,
   "Council's Deliberation|O Senhor dos Aneis: Contos da Terra Media||": 0.18,
   "Deceive the Messenger|O Senhor dos Aneis: Contos da Terra Media||": 0.12,
@@ -1988,16 +2820,27 @@
   "Grey Havens Navigator|O Senhor dos Aneis: Contos da Terra Media||": 0.05,
   "Hithlain Knots|O Senhor dos Aneis: Contos da Terra Media||": 0.13,
   "Horses of the Bruinen|O Senhor dos Aneis: Contos da Terra Media||": 0.15,
+<<<<<<< HEAD
   "Ioreth of the Healing House|O Senhor dos Aneis: Contos da Terra Media||": 0.27,
   "Isolation at Orthanc|O Senhor dos Aneis: Contos da Terra Media||": 0.1,
   "Ithilien Kingfisher|O Senhor dos Aneis: Contos da Terra Media||": 0.1,
   "Knights of Dol Amroth|O Senhor dos Aneis: Contos da Terra Media||": 0.11,
+=======
+  "Ioreth of the Healing House|O Senhor dos Aneis: Contos da Terra Media||": 0.25,
+  "Isolation at Orthanc|O Senhor dos Aneis: Contos da Terra Media||": 0.1,
+  "Ithilien Kingfisher|O Senhor dos Aneis: Contos da Terra Media||": 0.1,
+  "Knights of Dol Amroth|O Senhor dos Aneis: Contos da Terra Media||": 0.12,
+>>>>>>> main
   "Lórien Revealed|O Senhor dos Aneis: Contos da Terra Media||": 26.65,
   "Lost Isle Calling|O Senhor dos Aneis: Contos da Terra Media||": 0.99,
   "Meneldor, Swift Savior|O Senhor dos Aneis: Contos da Terra Media||": 0.13,
   "Nimrodel Watcher|O Senhor dos Aneis: Contos da Terra Media||": 0.1,
   "Pelargir Survivor|O Senhor dos Aneis: Contos da Terra Media||": 0.1,
+<<<<<<< HEAD
   "Press the Enemy|O Senhor dos Aneis: Contos da Terra Media||Foil": 6.93,
+=======
+  "Press the Enemy|O Senhor dos Aneis: Contos da Terra Media||Foil": 7.02,
+>>>>>>> main
   "Rangers of Ithilien|O Senhor dos Aneis: Contos da Terra Media||": 0.5,
   "Saruman the White|O Senhor dos Aneis: Contos da Terra Media||": 0.25,
   "Saruman's Trickery|O Senhor dos Aneis: Contos da Terra Media||": 0.22,
@@ -2008,8 +2851,13 @@
   "Treason of Isengard|O Senhor dos Aneis: Contos da Terra Media||": 0.1,
   "The Watcher in the Water|O Senhor dos Aneis: Contos da Terra Media||": 6.37,
   "Willow-Wind|O Senhor dos Aneis: Contos da Terra Media||": 0.1,
+<<<<<<< HEAD
   "Bitter Downfall|O Senhor dos Aneis: Contos da Terra Media||": 0.14,
   "The Black Breath|O Senhor dos Aneis: Contos da Terra Media||": 0.14,
+=======
+  "Bitter Downfall|O Senhor dos Aneis: Contos da Terra Media||": 0.16,
+  "The Black Breath|O Senhor dos Aneis: Contos da Terra Media||": 0.15,
+>>>>>>> main
   "Cirith Ungol Patrol|O Senhor dos Aneis: Contos da Terra Media||": 0.1,
   "Claim the Precious|O Senhor dos Aneis: Contos da Terra Media||": 0.15,
   "Dunland Crebain|O Senhor dos Aneis: Contos da Terra Media||": 0.15,
@@ -2024,12 +2872,21 @@
   "Isildur's Fateful Strike|O Senhor dos Aneis: Contos da Terra Media||": 1.02,
   "Lash of the Balrog|O Senhor dos Aneis: Contos da Terra Media||": 0.15,
   "Lobelia Sackville-Baggins|O Senhor dos Aneis: Contos da Terra Media||": 1.39,
+<<<<<<< HEAD
   "March from the Black Gate|O Senhor dos Aneis: Contos da Terra Media||": 0.25,
   "Mirkwood Bats|O Senhor dos Aneis: Contos da Terra Media||": 3.84,
   "Mordor Muster|O Senhor dos Aneis: Contos da Terra Media||": 0.15,
   "Mordor Trebuchet|O Senhor dos Aneis: Contos da Terra Media||": 0.1,
   "Morgul-Knife Wound|O Senhor dos Aneis: Contos da Terra Media||": 0.13,
   "Nasty End|O Senhor dos Aneis: Contos da Terra Media||": 0.26,
+=======
+  "March from the Black Gate|O Senhor dos Aneis: Contos da Terra Media||": 0.24,
+  "Mirkwood Bats|O Senhor dos Aneis: Contos da Terra Media||": 4.2,
+  "Mordor Muster|O Senhor dos Aneis: Contos da Terra Media||": 0.15,
+  "Mordor Trebuchet|O Senhor dos Aneis: Contos da Terra Media||": 0.1,
+  "Morgul-Knife Wound|O Senhor dos Aneis: Contos da Terra Media||": 0.13,
+  "Nasty End|O Senhor dos Aneis: Contos da Terra Media||": 0.25,
+>>>>>>> main
   "Oath of the Grey Host|O Senhor dos Aneis: Contos da Terra Media||": 0.18,
   "One Ring to Rule Them All|O Senhor dos Aneis: Contos da Terra Media||": 9.74,
   "Orcish Medicine|O Senhor dos Aneis: Contos da Terra Media||": 0.16,
@@ -2044,12 +2901,21 @@
   "Voracious Fell Beast|O Senhor dos Aneis: Contos da Terra Media||": 0.15,
   "Battle-Scarred Goblin|O Senhor dos Aneis: Contos da Terra Media||": 0.13,
   "Book of Mazarbul|O Senhor dos Aneis: Contos da Terra Media||": 0.16,
+<<<<<<< HEAD
   "Breaking of the Fellowship|O Senhor dos Aneis: Contos da Terra Media||": 0.14,
   "Cast into the Fire|O Senhor dos Aneis: Contos da Terra Media||": 5.92,
   "Display of Power|O Senhor dos Aneis: Contos da Terra Media||": 2.59,
   "Éomer, Marshal of Rohan|O Senhor dos Aneis: Contos da Terra Media||": 2.9,
   "Éomer of the Riddermark|O Senhor dos Aneis: Contos da Terra Media||": 0.14,
   "Erebor Flamesmith|O Senhor dos Aneis: Contos da Terra Media||": 0.3,
+=======
+  "Breaking of the Fellowship|O Senhor dos Aneis: Contos da Terra Media||": 0.15,
+  "Cast into the Fire|O Senhor dos Aneis: Contos da Terra Media||": 5.92,
+  "Display of Power|O Senhor dos Aneis: Contos da Terra Media||": 2.59,
+  "Éomer, Marshal of Rohan|O Senhor dos Aneis: Contos da Terra Media||": 2.9,
+  "Éomer of the Riddermark|O Senhor dos Aneis: Contos da Terra Media||": 0.16,
+  "Erebor Flamesmith|O Senhor dos Aneis: Contos da Terra Media||": 0.2,
+>>>>>>> main
   "Erkenbrand, Lord of Westfold|O Senhor dos Aneis: Contos da Terra Media||": 0.15,
   "Fall of Cair Andros|O Senhor dos Aneis: Contos da Terra Media||": 1.25,
   "Fear, Fire, Foes!|O Senhor dos Aneis: Contos da Terra Media||": 0.3,
@@ -2061,7 +2927,11 @@
   "Gimli's Fury|O Senhor dos Aneis: Contos da Terra Media||": 0.13,
   "Glóin, Dwarf Emissary|O Senhor dos Aneis: Contos da Terra Media||": 4.95,
   "Goblin Fireleaper|O Senhor dos Aneis: Contos da Terra Media||": 0.13,
+<<<<<<< HEAD
   "Grishnákh, Brash Instigator|O Senhor dos Aneis: Contos da Terra Media||": 0.18,
+=======
+  "Grishnákh, Brash Instigator|O Senhor dos Aneis: Contos da Terra Media||": 0.2,
+>>>>>>> main
   "Haradrim Spearmaster|O Senhor dos Aneis: Contos da Terra Media||": 0.1,
   "Hew the Entwood|O Senhor dos Aneis: Contos da Terra Media||": 2.99,
   "Improvised Club|O Senhor dos Aneis: Contos da Terra Media||": 0.2,
@@ -2085,24 +2955,41 @@
   "Celeborn the Wise|O Senhor dos Aneis: Contos da Terra Media||": 0.13,
   "Chance-Met Elves|O Senhor dos Aneis: Contos da Terra Media||": 0.13,
   "Delighted Halfling|O Senhor dos Aneis: Contos da Terra Media||": 115.99,
+<<<<<<< HEAD
   "Dúnedain Rangers|O Senhor dos Aneis: Contos da Terra Media||": 0.16,
   "Elven Farsight|O Senhor dos Aneis: Contos da Terra Media||": 0.22,
   "Enraged Huorn|O Senhor dos Aneis: Contos da Terra Media||": 0.1,
   "Ent's Fury|O Senhor dos Aneis: Contos da Terra Media||": 0.14,
+=======
+  "Dúnedain Rangers|O Senhor dos Aneis: Contos da Terra Media||": 0.18,
+  "Elven Farsight|O Senhor dos Aneis: Contos da Terra Media||": 0.25,
+  "Enraged Huorn|O Senhor dos Aneis: Contos da Terra Media||": 0.1,
+  "Ent's Fury|O Senhor dos Aneis: Contos da Terra Media||": 0.15,
+>>>>>>> main
   "Fall of Gil-galad|O Senhor dos Aneis: Contos da Terra Media||": 1,
   "Fangorn, Tree Shepherd|O Senhor dos Aneis: Contos da Terra Media||Foil": 1.99,
   "Galadhrim Bow|O Senhor dos Aneis: Contos da Terra Media||": 0.13,
   "Galadhrim Guide|O Senhor dos Aneis: Contos da Terra Media||": 0.1,
+<<<<<<< HEAD
   "Generous Ent|O Senhor dos Aneis: Contos da Terra Media||": 6.8,
   "Gift of Strands|O Senhor dos Aneis: Contos da Terra Media||": 0.16,
   "Glorfindel, Dauntless Rescuer|O Senhor dos Aneis: Contos da Terra Media||": 0.15,
   "Legolas, Master Archer|O Senhor dos Aneis: Contos da Terra Media||": 3.54,
   "Long List of the Ents|O Senhor dos Aneis: Contos da Terra Media||": 0.17,
   "Lothlórien Lookout|O Senhor dos Aneis: Contos da Terra Media||": 0.14,
+=======
+  "Generous Ent|O Senhor dos Aneis: Contos da Terra Media||": 5.48,
+  "Gift of Strands|O Senhor dos Aneis: Contos da Terra Media||": 0.18,
+  "Glorfindel, Dauntless Rescuer|O Senhor dos Aneis: Contos da Terra Media||": 0.15,
+  "Legolas, Master Archer|O Senhor dos Aneis: Contos da Terra Media||": 3.54,
+  "Long List of the Ents|O Senhor dos Aneis: Contos da Terra Media||": 0.17,
+  "Lothlórien Lookout|O Senhor dos Aneis: Contos da Terra Media||": 0.15,
+>>>>>>> main
   "Many Partings|O Senhor dos Aneis: Contos da Terra Media||": 0.25,
   "Meriadoc Brandybuck|O Senhor dos Aneis: Contos da Terra Media||": 0.16,
   "Mirkwood Spider|O Senhor dos Aneis: Contos da Terra Media||": 0.18,
   "Mirrormere Guardian|O Senhor dos Aneis: Contos da Terra Media||": 0.1,
+<<<<<<< HEAD
   "Mushroom Watchdogs|O Senhor dos Aneis: Contos da Terra Media||": 0.14,
   "Peregrin Took|O Senhor dos Aneis: Contos da Terra Media||": 0.99,
   "Pippin's Bravery|O Senhor dos Aneis: Contos da Terra Media||": 0.1,
@@ -2111,21 +2998,41 @@
   "Revive the Shire|O Senhor dos Aneis: Contos da Terra Media||": 0.15,
   "The Ring Goes South|O Senhor dos Aneis: Contos da Terra Media||": 1.5,
   "Shortcut to Mushrooms|O Senhor dos Aneis: Contos da Terra Media||": 0.2,
+=======
+  "Mushroom Watchdogs|O Senhor dos Aneis: Contos da Terra Media||": 0.15,
+  "Peregrin Took|O Senhor dos Aneis: Contos da Terra Media||": 0.86,
+  "Pippin's Bravery|O Senhor dos Aneis: Contos da Terra Media||": 0.1,
+  "Quickbeam, Upstart Ent|O Senhor dos Aneis: Contos da Terra Media||": 0.18,
+  "Radagast the Brown|O Senhor dos Aneis: Contos da Terra Media||": 7.4,
+  "Revive the Shire|O Senhor dos Aneis: Contos da Terra Media||": 0.15,
+  "The Ring Goes South|O Senhor dos Aneis: Contos da Terra Media||": 1.5,
+  "Shortcut to Mushrooms|O Senhor dos Aneis: Contos da Terra Media||": 0.21,
+>>>>>>> main
   "Shower of Arrows|O Senhor dos Aneis: Contos da Terra Media||": 0.13,
   "Stew the Coneys|O Senhor dos Aneis: Contos da Terra Media||": 0.18,
   "Wose Pathfinder|O Senhor dos Aneis: Contos da Terra Media||": 0.1,
   "Aragorn, Company Leader|O Senhor dos Aneis: Contos da Terra Media||": 1.8,
   "Arwen Undómiel|O Senhor dos Aneis: Contos da Terra Media||": 0.25,
+<<<<<<< HEAD
   "The Balrog, Durin's Bane|O Senhor dos Aneis: Contos da Terra Media||": 5.86,
   "Bilbo, Retired Burglar|O Senhor dos Aneis: Contos da Terra Media||": 0.2,
   "Butterbur, Bree Innkeeper|O Senhor dos Aneis: Contos da Terra Media||": 0.14,
   "Denethor, Ruling Steward|O Senhor dos Aneis: Contos da Terra Media||": 0.27,
   "Doors of Durin|O Senhor dos Aneis: Contos da Terra Media||": 3.99,
   "Elrond, Master of Healing|O Senhor dos Aneis: Contos da Terra Media||": 3.34,
+=======
+  "The Balrog, Durin's Bane|O Senhor dos Aneis: Contos da Terra Media||": 5.98,
+  "Bilbo, Retired Burglar|O Senhor dos Aneis: Contos da Terra Media||": 0.2,
+  "Butterbur, Bree Innkeeper|O Senhor dos Aneis: Contos da Terra Media||": 0.15,
+  "Denethor, Ruling Steward|O Senhor dos Aneis: Contos da Terra Media||": 0.27,
+  "Doors of Durin|O Senhor dos Aneis: Contos da Terra Media||": 3.99,
+  "Elrond, Master of Healing|O Senhor dos Aneis: Contos da Terra Media||": 2.42,
+>>>>>>> main
   "Faramir, Prince of Ithilien|O Senhor dos Aneis: Contos da Terra Media||": 2.7,
   "Friendly Rivalry|O Senhor dos Aneis: Contos da Terra Media||": 0.18,
   "Frodo Baggins|O Senhor dos Aneis: Contos da Terra Media||": 0.16,
   "Galadriel of Lothlórien|O Senhor dos Aneis: Contos da Terra Media||": 3.8,
+<<<<<<< HEAD
   "Gandalf the Grey|O Senhor dos Aneis: Contos da Terra Media||": 4.2,
   "Gandalf's Sanction|O Senhor dos Aneis: Contos da Terra Media||": 0.25,
   "Gimli, Mournful Avenger|O Senhor dos Aneis: Contos da Terra Media||": 1.15,
@@ -2135,12 +3042,24 @@
   "Legolas, Counter of Kills|O Senhor dos Aneis: Contos da Terra Media||": 0.3,
   "Lotho, Corrupt Shirriff|O Senhor dos Aneis: Contos da Terra Media||": 71.39,
   "Mauhúr, Uruk-hai Captain|O Senhor dos Aneis: Contos da Terra Media||": 0.3,
+=======
+  "Gandalf the Grey|O Senhor dos Aneis: Contos da Terra Media||": 4.25,
+  "Gandalf's Sanction|O Senhor dos Aneis: Contos da Terra Media||": 0.25,
+  "Gimli, Mournful Avenger|O Senhor dos Aneis: Contos da Terra Media||": 1.11,
+  "Gwaihir the Windlord|O Senhor dos Aneis: Contos da Terra Media||": 0.18,
+  "King of the Oathbreakers|O Senhor dos Aneis: Contos da Terra Media||": 1,
+  "King of the Oathbreakers|O Senhor dos Aneis: Contos da Terra Media||Foil": 2,
+  "Legolas, Counter of Kills|O Senhor dos Aneis: Contos da Terra Media||": 0.38,
+  "Lotho, Corrupt Shirriff|O Senhor dos Aneis: Contos da Terra Media||": 69.98,
+  "Mauhúr, Uruk-hai Captain|O Senhor dos Aneis: Contos da Terra Media||": 0.25,
+>>>>>>> main
   "Merry, Esquire of Rohan|O Senhor dos Aneis: Contos da Terra Media||": 3,
   "The Mouth of Sauron|O Senhor dos Aneis: Contos da Terra Media||": 0.18,
   "Old Man Willow|O Senhor dos Aneis: Contos da Terra Media||": 0.2,
   "Pippin, Guard of the Citadel|O Senhor dos Aneis: Contos da Terra Media||": 7.44,
   "Prince Imrahil the Fair|O Senhor dos Aneis: Contos da Terra Media||": 0.18,
   "Ringsight|O Senhor dos Aneis: Contos da Terra Media||": 0.9,
+<<<<<<< HEAD
   "Rise of the Witch-King|O Senhor dos Aneis: Contos da Terra Media||": 0.3,
   "Saruman of Many Colors|O Senhor dos Aneis: Contos da Terra Media||": 6.94,
   "Sauron's Ransom|O Senhor dos Aneis: Contos da Terra Media||": 6.21,
@@ -2154,12 +3073,31 @@
   "Tom Bombadil|O Senhor dos Aneis: Contos da Terra Media||": 13.46,
   "Uglúk of the White Hand|O Senhor dos Aneis: Contos da Terra Media||": 0.2,
   "Barrow-Blade|O Senhor dos Aneis: Contos da Terra Media||": 0.16,
+=======
+  "Rise of the Witch-King|O Senhor dos Aneis: Contos da Terra Media||": 0.28,
+  "Saruman of Many Colors|O Senhor dos Aneis: Contos da Terra Media||": 6.94,
+  "Sauron's Ransom|O Senhor dos Aneis: Contos da Terra Media||": 6.21,
+  "Shadow Summoning|O Senhor dos Aneis: Contos da Terra Media||": 0.16,
+  "Shadowfax, Lord of Horses|O Senhor dos Aneis: Contos da Terra Media||": 0.25,
+  "Shagrat, Loot Bearer|O Senhor dos Aneis: Contos da Terra Media||": 0.79,
+  "Sharkey, Tyrant of the Shire|O Senhor dos Aneis: Contos da Terra Media||": 0.54,
+  "Shelob, Child of Ungoliant|O Senhor dos Aneis: Contos da Terra Media||": 7.98,
+  "Strider, Ranger of the North|O Senhor dos Aneis: Contos da Terra Media||": 0.15,
+  "Théoden, King of Rohan|O Senhor dos Aneis: Contos da Terra Media||": 0.23,
+  "Tom Bombadil|O Senhor dos Aneis: Contos da Terra Media||": 14.24,
+  "Uglúk of the White Hand|O Senhor dos Aneis: Contos da Terra Media||": 0.2,
+  "Barrow-Blade|O Senhor dos Aneis: Contos da Terra Media||": 0.18,
+>>>>>>> main
   "Ent-Draught Basin|O Senhor dos Aneis: Contos da Terra Media||": 0.12,
   "Glamdring|O Senhor dos Aneis: Contos da Terra Media||": 11.99,
   "Horn of the Mark|O Senhor dos Aneis: Contos da Terra Media||": 2.8,
   "Inherited Envelope|O Senhor dos Aneis: Contos da Terra Media||": 0.15,
   "Lembas|O Senhor dos Aneis: Contos da Terra Media||": 6,
+<<<<<<< HEAD
   "Mirror of Galadriel|O Senhor dos Aneis: Contos da Terra Media||": 0.14,
+=======
+  "Mirror of Galadriel|O Senhor dos Aneis: Contos da Terra Media||": 0.15,
+>>>>>>> main
   "Phial of Galadriel|O Senhor dos Aneis: Contos da Terra Media||": 2.06,
   "Shire Scarecrow|O Senhor dos Aneis: Contos da Terra Media||": 0.1,
   "Stone of Erech|O Senhor dos Aneis: Contos da Terra Media||": 1.39,
@@ -2169,18 +3107,30 @@
   "The Grey Havens|O Senhor dos Aneis: Contos da Terra Media||": 0.74,
   "Mines of Moria|O Senhor dos Aneis: Contos da Terra Media||": 6.3,
   "Rivendell|O Senhor dos Aneis: Contos da Terra Media||": 12.95,
+<<<<<<< HEAD
   "The Shire|O Senhor dos Aneis: Contos da Terra Media||": 9.81,
   "Shire Terrace|O Senhor dos Aneis: Contos da Terra Media||": 0.39,
   "Plains (#262)|O Senhor dos Aneis: Contos da Terra Media||": 0.25,
   "Plains (#263)|O Senhor dos Aneis: Contos da Terra Media||": 0.25,
+=======
+  "The Shire|O Senhor dos Aneis: Contos da Terra Media||": 9.34,
+  "Shire Terrace|O Senhor dos Aneis: Contos da Terra Media||": 0.5,
+  "Plains (#262)|O Senhor dos Aneis: Contos da Terra Media||": 0.3,
+  "Plains (#263)|O Senhor dos Aneis: Contos da Terra Media||": 0.29,
+>>>>>>> main
   "Island (#264)|O Senhor dos Aneis: Contos da Terra Media||": 0.25,
   "Island (#265)|O Senhor dos Aneis: Contos da Terra Media||": 0.32,
   "Swamp (#266)|O Senhor dos Aneis: Contos da Terra Media||": 0.37,
   "Swamp (#267)|O Senhor dos Aneis: Contos da Terra Media||": 0.36,
   "Mountain (#268)|O Senhor dos Aneis: Contos da Terra Media||": 0.24,
   "Mountain (#269)|O Senhor dos Aneis: Contos da Terra Media||": 0.24,
+<<<<<<< HEAD
   "Forest (#270)|O Senhor dos Aneis: Contos da Terra Media||": 0.25,
   "Forest (#271)|O Senhor dos Aneis: Contos da Terra Media||": 0.25,
+=======
+  "Forest (#270)|O Senhor dos Aneis: Contos da Terra Media||": 0.36,
+  "Forest (#271)|O Senhor dos Aneis: Contos da Terra Media||": 0.32,
+>>>>>>> main
   "Plains (#272)|O Senhor dos Aneis: Contos da Terra Media||": 2.19,
   "Plains (#273)|O Senhor dos Aneis: Contos da Terra Media||": 2.8,
   "Island (#274)|O Senhor dos Aneis: Contos da Terra Media||": 1.49,
@@ -2191,10 +3141,17 @@
   "Mountain (#279)|O Senhor dos Aneis: Contos da Terra Media||": 1.81,
   "Forest (#280)|O Senhor dos Aneis: Contos da Terra Media||": 2.48,
   "Forest (#281)|O Senhor dos Aneis: Contos da Terra Media||": 2,
+<<<<<<< HEAD
   "Saradoc, Master of Buckland|O Senhor dos Aneis: Contos da Terra Media||": 3.19,
   "Elvish Mariner|O Senhor dos Aneis: Contos da Terra Media||": 8.55,
   "Ringwraiths|O Senhor dos Aneis: Contos da Terra Media||": 6.48,
   "Aragorn and Arwen, Wed|O Senhor dos Aneis: Contos da Terra Media||Foil": 44.9,
+=======
+  "Saradoc, Master of Buckland|O Senhor dos Aneis: Contos da Terra Media||": 2.5,
+  "Elvish Mariner|O Senhor dos Aneis: Contos da Terra Media||": 8.55,
+  "Ringwraiths|O Senhor dos Aneis: Contos da Terra Media||": 6.48,
+  "Aragorn and Arwen, Wed|O Senhor dos Aneis: Contos da Terra Media||Foil": 44.75,
+>>>>>>> main
   "Sauron, the Lidless Eye|O Senhor dos Aneis: Contos da Terra Media||Foil": 29.99,
   "Frodo, Determined Hero|O Senhor dos Aneis: Contos da Terra Media||": 12.49,
   "Gandalf, White Rider|O Senhor dos Aneis: Contos da Terra Media||": 15.5,
@@ -2204,8 +3161,13 @@
   "Fires of Mount Doom|O Senhor dos Aneis: Contos da Terra Media||": 1.83,
   "Goblin Assailant|O Senhor dos Aneis: Contos da Terra Media||": 0.15,
   "Galadriel, Gift-Giver|O Senhor dos Aneis: Contos da Terra Media||": 25.69,
+<<<<<<< HEAD
   "The Balrog, Flame of Udûn|O Senhor dos Aneis: Contos da Terra Media||": 4.49,
   "Bilbo's Ring|O Senhor dos Aneis: Contos da Terra Media||": 59.9,
+=======
+  "The Balrog, Flame of Udûn|O Senhor dos Aneis: Contos da Terra Media||": 3.96,
+  "Bilbo's Ring|O Senhor dos Aneis: Contos da Terra Media||": 69.9,
+>>>>>>> main
   "Nazgûl (#333)|O Senhor dos Aneis: Contos da Terra Media||": 84.48,
   "Nazgûl (#334)|O Senhor dos Aneis: Contos da Terra Media||": 84.89,
   "Barad-dûr|O Senhor dos Aneis: Contos da Terra Media (Borderless Lands)||": 15,
@@ -2230,7 +3192,11 @@
   "Prince Imrahil the Fair|O Senhor dos Aneis: Contos da Terra Media (Borderless Scene)||": 0.25,
   "Knights of Dol Amroth|O Senhor dos Aneis: Contos da Terra Media (Borderless Scene)||": 0.11,
   "Legolas, Master Archer|O Senhor dos Aneis: Contos da Terra Media (Borderless Scene)||": 5,
+<<<<<<< HEAD
   "Merry, Esquire of Rohan|O Senhor dos Aneis: Contos da Terra Media (Borderless Scene)||": 9.95,
+=======
+  "Merry, Esquire of Rohan|O Senhor dos Aneis: Contos da Terra Media (Borderless Scene)||": 9.2,
+>>>>>>> main
   "Rosie Cotton of South Lane|O Senhor dos Aneis: Contos da Terra Media (Borderless Scene)||": 0.92,
   "The Grey Havens|O Senhor dos Aneis: Contos da Terra Media (Borderless Scene)||": 0.75,
   "Lost Isle Calling|O Senhor dos Aneis: Contos da Terra Media (Borderless Scene)||": 3,
@@ -2246,7 +3212,11 @@
   "Gandalf, Friend of the Shire|O Senhor dos Aneis: Contos da Terra Media (Promo)||Foil": 5,
   "Bilbo, Retired Burglar|O Senhor dos Aneis: Contos da Terra Media (Promo)||Foil": 1.64,
   "Frodo Baggins|O Senhor dos Aneis: Contos da Terra Media (Promo)||Foil": 2,
+<<<<<<< HEAD
   "Frodo, Sauron's Bane|O Senhor dos Aneis: Contos da Terra Media (Promo)||Foil": 2.4,
+=======
+  "Frodo, Sauron's Bane|O Senhor dos Aneis: Contos da Terra Media (Promo)||Foil": 2.49,
+>>>>>>> main
   "Boromir, Warden of the Tower|O Senhor dos Aneis: Contos da Terra Media (Showcase Ring)||": 38.9,
   "Faramir, Field Commander|O Senhor dos Aneis: Contos da Terra Media (Showcase Ring)||": 0.27,
   "Frodo, Sauron's Bane|O Senhor dos Aneis: Contos da Terra Media (Showcase Ring)||": 1.95,
@@ -2399,17 +3369,29 @@
   "Shire Scarecrow|O Senhor dos Aneis: Contos da Terra Media (Showcase Scrolls)||": 0.68,
   "The Grey Havens|O Senhor dos Aneis: Contos da Terra Media (Showcase Scrolls)||": 1.8,
   "Careful Study|Odisseia||": 24.5,
+<<<<<<< HEAD
   "Innocent Blood|Odisseia||": 7.95,
+=======
+  "Innocent Blood|Odisseia||": 7.31,
+>>>>>>> main
   "Aven Fisher|Oitava Edicao - Kit Basico||": 0.14,
   "Coastal Hornclaw|Oitava Edicao - Kit Basico||": 0.14,
   "Guttersnipe|Open House||": 25,
   "The Key to the Vault|Os Fora da Lei de Encruzilhada do Trovao||": 1.69,
+<<<<<<< HEAD
   "Insatiable Avarice|Os Fora da Lei de Encruzilhada do Trovao||": 74.74,
+=======
+  "Insatiable Avarice|Os Fora da Lei de Encruzilhada do Trovao||": 74.79,
+>>>>>>> main
   "Obeka, Splitter of Seconds|Os Fora da Lei de Encruzilhada do Trovao||": 1.15,
   "Rakdos Joins Up|Os Fora da Lei de Encruzilhada do Trovao||": 1.7,
   "Rakdos Joins Up|Os Fora da Lei de Encruzilhada do Trovao (Extended Art)||": 3,
   "Felix Five-Boots|Os Fora da Lei de Encruzilhada do Trovao Commander||Foil": 11.75,
+<<<<<<< HEAD
   "Lock and Load|Os Fora da Lei de Encruzilhada do Trovao Commander||": 8.5,
+=======
+  "Lock and Load|Os Fora da Lei de Encruzilhada do Trovao Commander||": 8,
+>>>>>>> main
   "Arcane Signet|Os Fora da Lei de Encruzilhada do Trovao Commander||": 5.9,
   "Restless Bones|Pacto das Guildas||": 0.14,
   "Blind Hunter|Pacto das Guildas||": 0.25,
@@ -2423,7 +3405,11 @@
   "Contagious Vorrac|Phyrexia: Tudo sera um||": 0.13,
   "Copper Longlegs|Phyrexia: Tudo sera um||": 0.1,
   "Plague Nurse|Phyrexia: Tudo sera um||": 0.08,
+<<<<<<< HEAD
   "Thirsting Roots|Phyrexia: Tudo sera um||": 0.89,
+=======
+  "Thirsting Roots|Phyrexia: Tudo sera um||": 4.29,
+>>>>>>> main
   "Basilica Skullbomb|Phyrexia: Tudo sera um||": 0.04,
   "Prosthetic Injector|Phyrexia: Tudo sera um||": 0.13,
   "Terramorphic Expanse|Phyrexia: Tudo sera um||": 0.15,
@@ -2444,13 +3430,18 @@
   "Corpsejack Menace|Prerelease Events||Foil": 1.9,
   "Megantic Sliver|Prerelease Events||Foil": 0.75,
   "Brainwash|Quarta Edicao||": 0.17,
+<<<<<<< HEAD
   "Dark Ritual|Quarta Edicao||": 10,
+=======
+  "Dark Ritual|Quarta Edicao||": 9.9,
+>>>>>>> main
   "Eternal Warrior|Quarta Edicao||": 0.17,
   "Gray Ogre|Quarta Edicao||": 0.17,
   "Holy Armor|Quarta Edicao||": 0.17,
-  "Instill Energy|Quarta Edicao||": 10.25,
+  "Instill Energy|Quarta Edicao||": 9.86,
   "Prodigal Sorcerer|Quarta Edicao||": 0.24,
   "Raise Dead|Quarta Edicao||": 0.24,
+<<<<<<< HEAD
   "Black Knight|Quarta Edicao (BB)||": 35,
   "Black Vise|Quarta Edicao (BB)||": 39.9,
   "Bog Imp|Quarta Edicao (BB)||": 0.08,
@@ -2489,6 +3480,12 @@
   "Sulfurous Springs|Quinta Edicao||": 37.49,
   "Simic Signet|Ravnica Remasterizada||": 1.3,
   "Farseek|Ravnica Remasterizada (Moldura Retro)||": 6.5,
+=======
+  "Dark Ritual|Quinta Edicao||": 34.32,
+  "Nature's Lore|Quinta Edicao||": 9.9,
+  "Sulfurous Springs|Quinta Edicao||": 37.49,
+  "Simic Signet|Ravnica Remasterizada||": 1.38,
+>>>>>>> main
   "Dreadbore|Ravnica Remasterizada (Moldura Retro)||": 1.9,
   "Putrefy|Ravnica Remasterizada (Moldura Retro)||": 0.25,
   "Chromatic Lantern|Ravnica Remasterizada (Moldura Retro)||": 14,
@@ -2502,6 +3499,7 @@
   "Viashino Fangtail|Ravnica: A Cidade das Guildas||": 0.14,
   "Transluminant|Ravnica: A Cidade das Guildas||": 0.15,
   "Savra, Queen of the Golgari|Ravnica: A Cidade das Guildas||": 3.48,
+<<<<<<< HEAD
   "Shambling Shell|Ravnica: A Cidade das Guildas||": 0.21,
   "Nighthawk Scavenger|Renascer de Zendikar||": 2.97,
   "Expedition Champion|Renascer de Zendikar||": 0.08,
@@ -2510,6 +3508,16 @@
   "Isperia's Skywatch|Retorno a Ravnica||": 0.08,
   "Annihilating Fire|Retorno a Ravnica||": 0.08,
   "Electrickery|Retorno a Ravnica||": 0.39,
+=======
+  "Shambling Shell|Ravnica: A Cidade das Guildas||": 0.18,
+  "Nighthawk Scavenger|Renascer de Zendikar||": 2.97,
+  "Expedition Champion|Renascer de Zendikar||": 0.08,
+  "Iridescent Hornbeetle|Renascer de Zendikar||": 0.1,
+  "Rabid Bite|Renascer de Zendikar||": 0.08,
+  "Isperia's Skywatch|Retorno a Ravnica||": 0.08,
+  "Annihilating Fire|Retorno a Ravnica||": 0.08,
+  "Electrickery|Retorno a Ravnica||": 0.45,
+>>>>>>> main
   "Pursuit of Flight|Retorno a Ravnica||": 0.08,
   "Street Spasm|Retorno a Ravnica||": 0.1,
   "Tenement Crasher|Retorno a Ravnica||": 0.08,
@@ -2523,8 +3531,13 @@
   "Terrifying Presence|Retorno de Avacyn||": 0.08,
   "Bastion Enforcer|Revolta do Eter||": 0.05,
   "Daring Demolition|Revolta do Eter||": 0.08,
+<<<<<<< HEAD
   "Ironclad Revolutionary|Revolta do Eter||": 0.14,
   "Lathnu Sailback|Revolta do Eter||": 0.09,
+=======
+  "Ironclad Revolutionary|Revolta do Eter||": 0.15,
+  "Lathnu Sailback|Revolta do Eter||": 0.1,
+>>>>>>> main
   "Aetherstream Leopard|Revolta do Eter||": 0.08,
   "Hidden Herbalists|Revolta do Eter||": 0.15,
   "Lifecraft Awakening|Revolta do Eter||": 0.15,
@@ -2544,16 +3557,26 @@
   "Ognis, the Dragon's Lash|Ruas de Nova Capenna||": 0.35,
   "Luxior, Giada's Gift|Ruas de Nova Capenna||": 10.89,
   "Nashi, Moon Sage's Scion|Secret Lair Drop Series: Secret Lair 30th Anniversary Countdown Kit||": 34.44,
+<<<<<<< HEAD
   "Explore|Secret Lair Drop Series: Secret Lair Prize||": 1.78,
+=======
+  "Explore|Secret Lair Drop Series: Secret Lair Prize||": 2.76,
+>>>>>>> main
   "Duress|Setima Edicao||": 7.61,
   "Ostracize|Setima Edicao||": 0.23,
   "Cathartic Reunion|Signature Spellbook: Chandra||": 0.51,
   "Past in Flames|Signature Spellbook: Chandra||": 2.55,
   "Catalog|Sombras em Innistrad||": 0.1,
   "Ever After|Sombras em Innistrad||": 0.89,
+<<<<<<< HEAD
   "Incorrigible Youths|Sombras em Innistrad||": 0.11,
   "Magmatic Chasm|Sombras em Innistrad||": 0.1,
   "Sanguinary Mage|Sombras em Innistrad||": 0.07,
+=======
+  "Incorrigible Youths|Sombras em Innistrad||": 0.13,
+  "Magmatic Chasm|Sombras em Innistrad||": 0.1,
+  "Sanguinary Mage|Sombras em Innistrad||": 0.08,
+>>>>>>> main
   "Grimoire of the Dead|Starter Commander Decks||": 3.1,
   "Rakdos Signet|Starter Commander Decks||": 6,
   "Talisman of Indulgence|Starter Commander Decks||": 14.75,
@@ -2561,13 +3584,21 @@
   "Endless Sands|Stellar Sights||": 2.99,
   "Meteor Crater|Stellar Sights||": 6.95,
   "Plaza of Heroes|Stellar Sights||": 32.9,
+<<<<<<< HEAD
   "Spell Pierce|Store Championship||": 3.59,
   "Cultivate|Strixhaven: Arquivo Mistico||": 4.27,
+=======
+  "Spell Pierce|Store Championship||": 3.44,
+>>>>>>> main
   "Eager First-Year|Strixhaven: Escola de Magos||": 0.08,
   "Secret Rendezvous|Strixhaven: Escola de Magos||": 0.25,
   "Leech Fanatic|Strixhaven: Escola de Magos||": 0.08,
   "Plumb the Forbidden|Strixhaven: Escola de Magos||": 4.2,
+<<<<<<< HEAD
   "Illustrious Historian|Strixhaven: Escola de Magos||": 0.05,
+=======
+  "Illustrious Historian|Strixhaven: Escola de Magos||": 0.06,
+>>>>>>> main
   "Retriever Phoenix|Strixhaven: Escola de Magos||": 0.1,
   "Storm-Kiln Artist|Strixhaven: Escola de Magos||": 11.99,
   "Torrent Sculptor|Strixhaven: Escola de Magos||": 0.25,
@@ -2619,7 +3650,11 @@
   "Yathan Tombguard|Tarkir: Dragonstorm||": 0.08,
   "Breaching Dragonstorm|Tarkir: Dragonstorm||": 0.09,
   "Devoted Duelist|Tarkir: Dragonstorm||": 0.07,
+<<<<<<< HEAD
   "Dracogenesis|Tarkir: Dragonstorm||": 24.99,
+=======
+  "Dracogenesis|Tarkir: Dragonstorm||": 25,
+>>>>>>> main
   "Fire-Rim Form|Tarkir: Dragonstorm||": 0.07,
   "Iridescent Tiger|Tarkir: Dragonstorm||": 0.1,
   "Meticulous Artisan|Tarkir: Dragonstorm||": 0.07,
@@ -2650,7 +3685,11 @@
   "Sultai Devotee|Tarkir: Dragonstorm||": 0.1,
   "Trade Route Envoy|Tarkir: Dragonstorm||": 0.09,
   "Traveling Botanist|Tarkir: Dragonstorm||": 0.08,
+<<<<<<< HEAD
   "Awaken the Honored Dead|Tarkir: Dragonstorm||": 0.98,
+=======
+  "Awaken the Honored Dead|Tarkir: Dragonstorm||": 0.79,
+>>>>>>> main
   "Defibrillating Current|Tarkir: Dragonstorm||": 0.07,
   "Disruptive Stormbrood // Petty Revenge|Tarkir: Dragonstorm||": 0.15,
   "Felothar, Dawn of the Abzan|Tarkir: Dragonstorm||": 0.33,
@@ -2669,7 +3708,11 @@
   "Sonic Shrieker|Tarkir: Dragonstorm||": 0.08,
   "Temur Battlecrier|Tarkir: Dragonstorm||Foil": 0.99,
   "Whirlwing Stormbrood // Dynamic Soar|Tarkir: Dragonstorm||": 0.14,
+<<<<<<< HEAD
   "Zurgo, Thunder's Decree|Tarkir: Dragonstorm||": 1.44,
+=======
+  "Zurgo, Thunder's Decree|Tarkir: Dragonstorm||": 1.45,
+>>>>>>> main
   "Dragonfire Blade|Tarkir: Dragonstorm||": 4.9,
   "Dragonstorm Globe|Tarkir: Dragonstorm||": 0.14,
   "Embermouth Sentinel|Tarkir: Dragonstorm||": 0.07,
@@ -2678,25 +3721,39 @@
   "Blossoming Sands|Tarkir: Dragonstorm||": 0.1,
   "Dismal Backwater|Tarkir: Dragonstorm||": 0.13,
   "Evolving Wilds|Tarkir: Dragonstorm||": 0.1,
+<<<<<<< HEAD
   "Frontier Bivouac|Tarkir: Dragonstorm||Foil": 0.99,
+=======
+>>>>>>> main
   "Maelstrom of the Spirit Dragon|Tarkir: Dragonstorm||": 4.5,
   "Mistrise Village|Tarkir: Dragonstorm||": 37.4,
   "Opulent Palace|Tarkir: Dragonstorm||": 0.4,
   "Rugged Highlands|Tarkir: Dragonstorm||": 0.1,
   "Sandsteppe Citadel|Tarkir: Dragonstorm||": 0.25,
+<<<<<<< HEAD
   "Sandsteppe Citadel|Tarkir: Dragonstorm||Foil": 0.49,
+=======
+>>>>>>> main
   "Swiftwater Cliffs|Tarkir: Dragonstorm||": 0.1,
   "Tranquil Cove|Tarkir: Dragonstorm||": 0.1,
   "Naga Fleshcrafter|Tarkir: Dragonstorm (Borderless Clan)||": 2.89,
   "Stillness in Motion|Tarkir: Dragonstorm (Borderless Clan)||": 0.8,
+<<<<<<< HEAD
   "Death Begets Life|Tarkir: Dragonstorm (Borderless Clan)||Foil": 24.34,
+=======
+  "Death Begets Life|Tarkir: Dragonstorm (Borderless Clan)||Foil": 24.35,
+>>>>>>> main
   "Kotis, the Fangkeeper|Tarkir: Dragonstorm (Borderless Clan)||": 4.49,
   "Riling Dawnbreaker // Signaling Roar|Tarkir: Dragonstorm (Draconic Frame)||Foil": 0.6,
   "Bloomvine Regent // Claim Territory|Tarkir: Dragonstorm (Reversible Dragons)||": 5.05,
   "Diviner of Mist|Tarkir: Dragonstorm Commander||": 5.61,
   "Afterlife from the Loam|Tarkir: Dragonstorm Commander||": 11.95,
   "Teval's Judgment|Tarkir: Dragonstorm Commander||": 66.04,
+<<<<<<< HEAD
   "Welcome the Dead|Tarkir: Dragonstorm Commander||": 3.71,
+=======
+  "Welcome the Dead|Tarkir: Dragonstorm Commander||": 4.23,
+>>>>>>> main
   "Floral Evoker|Tarkir: Dragonstorm Commander||": 0.48,
   "Steward of the Harvest|Tarkir: Dragonstorm Commander||": 8.46,
   "Will of the Sultai|Tarkir: Dragonstorm Commander||": 12.7,
@@ -2705,32 +3762,53 @@
   "Life from the Loam|Tarkir: Dragonstorm Commander||": 18.7,
   "Casualties of War|Tarkir: Dragonstorm Commander||": 1.15,
   "Arcane Signet|Tarkir: Dragonstorm Commander||": 5.95,
+<<<<<<< HEAD
   "Sol Ring|Tarkir: Dragonstorm Commander||": 7.5,
   "Command Tower|Tarkir: Dragonstorm Commander||": 1.81,
+=======
+  "Sol Ring|Tarkir: Dragonstorm Commander||": 8.95,
+  "Command Tower|Tarkir: Dragonstorm Commander||": 2.47,
+>>>>>>> main
   "Amphin Mutineer|Tarkir: Dragonstorm Commander||": 0.63,
   "Forbidden Alchemy|Tarkir: Dragonstorm Commander||": 0.09,
   "Hedron Crab|Tarkir: Dragonstorm Commander||": 10.26,
   "River Kelpie|Tarkir: Dragonstorm Commander||": 0.79,
   "Treasure Cruise|Tarkir: Dragonstorm Commander||": 0.49,
   "Wonder|Tarkir: Dragonstorm Commander||": 9.22,
+<<<<<<< HEAD
   "Dauthi Voidwalker|Tarkir: Dragonstorm Commander||": 37.91,
   "Disciple of Bolas|Tarkir: Dragonstorm Commander||": 1.98,
+=======
+  "Dauthi Voidwalker|Tarkir: Dragonstorm Commander||": 38.96,
+  "Disciple of Bolas|Tarkir: Dragonstorm Commander||": 1.96,
+>>>>>>> main
   "Junji, the Midnight Sky|Tarkir: Dragonstorm Commander||": 6.67,
   "Lethal Scheme|Tarkir: Dragonstorm Commander||": 1.31,
   "Living Death|Tarkir: Dragonstorm Commander||": 22.5,
   "Lord of the Forsaken|Tarkir: Dragonstorm Commander||": 1.66,
   "Necromantic Selection|Tarkir: Dragonstorm Commander||": 2.77,
   "Necropolis Fiend|Tarkir: Dragonstorm Commander||": 0.25,
+<<<<<<< HEAD
   "Noxious Gearhulk|Tarkir: Dragonstorm Commander||": 1.66,
+=======
+  "Noxious Gearhulk|Tarkir: Dragonstorm Commander||": 1.76,
+>>>>>>> main
   "Ob Nixilis, the Fallen|Tarkir: Dragonstorm Commander||": 14.95,
   "Phyrexian Reclamation|Tarkir: Dragonstorm Commander||": 13.61,
   "Reassembling Skeleton|Tarkir: Dragonstorm Commander||": 0.29,
   "Stitcher's Supplier|Tarkir: Dragonstorm Commander||": 3.13,
   "Tasigur, the Golden Fang|Tarkir: Dragonstorm Commander||": 0.48,
+<<<<<<< HEAD
   "Victimize|Tarkir: Dragonstorm Commander||": 2.61,
   "Woe Strider|Tarkir: Dragonstorm Commander||": 1.7,
   "Scourge of the Throne|Tarkir: Dragonstorm Commander||": 4.66,
   "Avenger of Zendikar|Tarkir: Dragonstorm Commander||": 7.51,
+=======
+  "Victimize|Tarkir: Dragonstorm Commander||": 2.75,
+  "Woe Strider|Tarkir: Dragonstorm Commander||": 1.7,
+  "Scourge of the Throne|Tarkir: Dragonstorm Commander||": 4.39,
+  "Avenger of Zendikar|Tarkir: Dragonstorm Commander||": 7.95,
+>>>>>>> main
   "Conduit of Worlds|Tarkir: Dragonstorm Commander||": 28.25,
   "Crawling Sensation|Tarkir: Dragonstorm Commander||": 0.14,
   "Cultivate|Tarkir: Dragonstorm Commander||": 3.7,
@@ -2739,7 +3817,11 @@
   "Harrow|Tarkir: Dragonstorm Commander||": 0.29,
   "Multani, Yavimaya's Avatar|Tarkir: Dragonstorm Commander||": 1.6,
   "Rampant Growth|Tarkir: Dragonstorm Commander||": 2.55,
+<<<<<<< HEAD
   "Sakura-Tribe Elder|Tarkir: Dragonstorm Commander||": 3.55,
+=======
+  "Sakura-Tribe Elder|Tarkir: Dragonstorm Commander||": 3.5,
+>>>>>>> main
   "Satyr Wayfinder|Tarkir: Dragonstorm Commander||": 0.1,
   "Shigeki, Jukai Visionary|Tarkir: Dragonstorm Commander||": 2.11,
   "Springbloom Druid|Tarkir: Dragonstorm Commander||": 0.44,
@@ -2747,27 +3829,45 @@
   "Timeless Witness|Tarkir: Dragonstorm Commander||": 1.84,
   "Consuming Aberration|Tarkir: Dragonstorm Commander||": 0.38,
   "Grisly Salvage|Tarkir: Dragonstorm Commander||": 0.25,
+<<<<<<< HEAD
   "Jarad, Golgari Lich Lord|Tarkir: Dragonstorm Commander||": 3.71,
   "Lord of Extinction|Tarkir: Dragonstorm Commander||": 7.51,
   "Meren of Clan Nel Toth|Tarkir: Dragonstorm Commander||": 5.61,
+=======
+  "Jarad, Golgari Lich Lord|Tarkir: Dragonstorm Commander||": 4.29,
+  "Lord of Extinction|Tarkir: Dragonstorm Commander||": 7.51,
+  "Meren of Clan Nel Toth|Tarkir: Dragonstorm Commander||": 5.8,
+>>>>>>> main
   "Nyx Weaver|Tarkir: Dragonstorm Commander||": 0.15,
   "Putrefy|Tarkir: Dragonstorm Commander||": 0.15,
   "Skull Prophet|Tarkir: Dragonstorm Commander||": 0.1,
   "Blade of Selves|Tarkir: Dragonstorm Commander||": 11.95,
   "Millikin|Tarkir: Dragonstorm Commander||": 0.15,
   "Cephalid Coliseum|Tarkir: Dragonstorm Commander||": 1.26,
+<<<<<<< HEAD
   "Command Beacon|Tarkir: Dragonstorm Commander||": 27.9,
+=======
+  "Command Beacon|Tarkir: Dragonstorm Commander||": 27.43,
+>>>>>>> main
   "Contaminated Aquifer|Tarkir: Dragonstorm Commander||": 1.8,
   "Crypt of Agadeem|Tarkir: Dragonstorm Commander||": 13.15,
   "Darkwater Catacombs|Tarkir: Dragonstorm Commander||": 2.17,
   "Dreamroot Cascade|Tarkir: Dragonstorm Commander||": 10.5,
   "Drownyard Temple|Tarkir: Dragonstorm Commander||": 0.15,
+<<<<<<< HEAD
   "Exotic Orchard|Tarkir: Dragonstorm Commander||": 1.81,
+=======
+  "Exotic Orchard|Tarkir: Dragonstorm Commander||": 1.9,
+>>>>>>> main
   "Fetid Pools|Tarkir: Dragonstorm Commander||": 2.01,
   "Foreboding Landscape|Tarkir: Dragonstorm Commander||": 0.15,
   "Golgari Rot Farm|Tarkir: Dragonstorm Commander||": 0.9,
   "Haunted Mire|Tarkir: Dragonstorm Commander||": 2.26,
+<<<<<<< HEAD
   "Hinterland Harbor|Tarkir: Dragonstorm Commander||": 4.66,
+=======
+  "Hinterland Harbor|Tarkir: Dragonstorm Commander||": 4.75,
+>>>>>>> main
   "Llanowar Wastes|Tarkir: Dragonstorm Commander||": 8.94,
   "Memorial to Folly|Tarkir: Dragonstorm Commander||": 0.15,
   "Myriad Landscape|Tarkir: Dragonstorm Commander||": 1.75,
@@ -2776,6 +3876,7 @@
   "Terramorphic Expanse|Tarkir: Dragonstorm Commander||": 0.15,
   "Woodland Cemetery|Tarkir: Dragonstorm Commander||": 5.5,
   "Kotis, Sibsig Champion|Tarkir: Dragonstorm Commander (Borderless)||": 4.74,
+<<<<<<< HEAD
   "Teval, the Balanced Scale|Tarkir: Dragonstorm Commander (Borderless)||Foil": 38.95,
   "April O'Neil, Kunoichi Trainee|Teenage Mutant Ninja Turtles||": 0.19,
   "Dimensional Exile|Teenage Mutant Ninja Turtles||": 0.28,
@@ -2791,6 +3892,23 @@
   "Donatello's Technique|Teenage Mutant Ninja Turtles||": 1,
   "Fugitive Droid|Teenage Mutant Ninja Turtles||": 0.31,
   "Kitsune, Dragon's Daughter|Teenage Mutant Ninja Turtles||": 4.66,
+=======
+  "Teval, the Balanced Scale|Tarkir: Dragonstorm Commander (Borderless)||Foil": 38.45,
+  "April O'Neil, Kunoichi Trainee|Teenage Mutant Ninja Turtles||": 0.2,
+  "Dimensional Exile|Teenage Mutant Ninja Turtles||": 0.28,
+  "East Wind Avatar|Teenage Mutant Ninja Turtles||": 0.12,
+  "Jennika, Bad Apple Big Sister|Teenage Mutant Ninja Turtles||": 0.15,
+  "Leader's Talent|Teenage Mutant Ninja Turtles||": 6.34,
+  "Leonardo, Big Brother|Teenage Mutant Ninja Turtles||": 2.78,
+  "Make Your Move|Teenage Mutant Ninja Turtles||": 0.09,
+  "Mighty Mutanimals|Teenage Mutant Ninja Turtles||": 0.27,
+  "Turtles Forever|Teenage Mutant Ninja Turtles||": 6.89,
+  "Uneasy Alliance|Teenage Mutant Ninja Turtles||": 0.12,
+  "Buzz Bots|Teenage Mutant Ninja Turtles||": 0.15,
+  "Donatello's Technique|Teenage Mutant Ninja Turtles||": 1.3,
+  "Fugitive Droid|Teenage Mutant Ninja Turtles||": 0.31,
+  "Kitsune, Dragon's Daughter|Teenage Mutant Ninja Turtles||": 4.9,
+>>>>>>> main
   "Negate|Teenage Mutant Ninja Turtles||": 0.11,
   "Retro-Mutation|Teenage Mutant Ninja Turtles||": 0.12,
   "Return to the Sewers|Teenage Mutant Ninja Turtles||": 0.12,
@@ -2802,12 +3920,21 @@
   "Ninja Teen|Teenage Mutant Ninja Turtles||": 8.34,
   "Pain 101|Teenage Mutant Ninja Turtles||": 0.15,
   "Shredder's Armor|Teenage Mutant Ninja Turtles||": 0.31,
+<<<<<<< HEAD
   "Shredder's Technique|Teenage Mutant Ninja Turtles||": 1.2,
   "Splinter's Technique|Teenage Mutant Ninja Turtles||": 19.79,
   "Squirrelanoids|Teenage Mutant Ninja Turtles||": 0.15,
   "Stomped by the Foot|Teenage Mutant Ninja Turtles||": 0.11,
   "Improvised Arsenal|Teenage Mutant Ninja Turtles||": 12.34,
   "Jennika's Technique|Teenage Mutant Ninja Turtles||": 0.2,
+=======
+  "Shredder's Technique|Teenage Mutant Ninja Turtles||": 1.23,
+  "Splinter's Technique|Teenage Mutant Ninja Turtles||": 19.79,
+  "Squirrelanoids|Teenage Mutant Ninja Turtles||": 0.15,
+  "Stomped by the Foot|Teenage Mutant Ninja Turtles||": 0.11,
+  "Improvised Arsenal|Teenage Mutant Ninja Turtles||": 13.2,
+  "Jennika's Technique|Teenage Mutant Ninja Turtles||": 0.21,
+>>>>>>> main
   "Mouser Foundry|Teenage Mutant Ninja Turtles||": 0.16,
   "Null Group Biological Assets|Teenage Mutant Ninja Turtles||": 0.12,
   "Rock Soldiers|Teenage Mutant Ninja Turtles||": 0.15,
@@ -2816,6 +3943,7 @@
   "Guac & Marshmallow Pizza|Teenage Mutant Ninja Turtles||": 0.17,
   "Michelangelo, Game Master|Teenage Mutant Ninja Turtles||": 0.1,
   "Mutant Chain Reaction|Teenage Mutant Ninja Turtles||": 0.11,
+<<<<<<< HEAD
   "Novel Nunchaku|Teenage Mutant Ninja Turtles||": 0.18,
   "Primordial Pachyderm|Teenage Mutant Ninja Turtles||": 0.1,
   "West Wind Avatar|Teenage Mutant Ninja Turtles||": 0.19,
@@ -2835,12 +3963,34 @@
   "Escape Tunnel|Teenage Mutant Ninja Turtles||": 0.24,
   "Illegitimate Business|Teenage Mutant Ninja Turtles||": 0.15,
   "Turtle Lair|Teenage Mutant Ninja Turtles||": 0.16,
+=======
+  "Novel Nunchaku|Teenage Mutant Ninja Turtles||": 0.2,
+  "Primordial Pachyderm|Teenage Mutant Ninja Turtles||": 0.12,
+  "West Wind Avatar|Teenage Mutant Ninja Turtles||": 0.21,
+  "Zoo Escapees|Teenage Mutant Ninja Turtles||": 0.1,
+  "Baxter Stockman|Teenage Mutant Ninja Turtles||": 0.22,
+  "Foot Elite|Teenage Mutant Ninja Turtles||": 0.12,
+  "Go Ninja Go|Teenage Mutant Ninja Turtles||": 0.31,
+  "Karai's Technique|Teenage Mutant Ninja Turtles||": 0.34,
+  "Mechanized Ninja Cavalry|Teenage Mutant Ninja Turtles||": 0.15,
+  "Mouser Mark III|Teenage Mutant Ninja Turtles||": 0.15,
+  "The Neutrinos|Teenage Mutant Ninja Turtles||": 0.33,
+  "Punk Frogs|Teenage Mutant Ninja Turtles||": 0.15,
+  "Putrid Pals|Teenage Mutant Ninja Turtles||": 0.15,
+  "Raph & Leo, Sibling Rivals|Teenage Mutant Ninja Turtles||": 9.84,
+  "Omni-Cheese Pizza|Teenage Mutant Ninja Turtles||": 0.17,
+  "Dimension X|Teenage Mutant Ninja Turtles||": 0.15,
+  "Escape Tunnel|Teenage Mutant Ninja Turtles||": 0.24,
+  "Illegitimate Business|Teenage Mutant Ninja Turtles||": 0.15,
+  "Turtle Lair|Teenage Mutant Ninja Turtles||": 0.2,
+>>>>>>> main
   "The Last Ronin's Technique|Teenage Mutant Ninja Turtles (Sewer Frame)||": 1.87,
   "Don & Leo, Problem Solvers|Teenage Mutant Ninja Turtles (Sewer Frame)||": 13.44,
   "Karai's Technique|Teenage Mutant Ninja Turtles (Sewer Frame)||": 0.85,
   "Clot Sliver|Tempestade||": 1.99,
   "Counterspell|Tempestade||": 18.5,
   "Diabolic Edict|Tempestade||": 4.9,
+<<<<<<< HEAD
   "Heart Sliver|Tempestade||": 7.56,
   "Talon Sliver|Tempestade||": 3.6,
   "Winged Sliver|Tempestade||": 5.61,
@@ -2849,12 +3999,23 @@
   "Not Dead After All|Terras Selvagens de Eldraine||": 1.9,
   "Virtue of Courage // Embereth Blaze|Terras Selvagens de Eldraine||Foil": 8.49,
   "Territorial Witchstalker|Terras Selvagens de Eldraine||": 0.09,
+=======
+  "Heart Sliver|Tempestade||": 7.16,
+  "Talon Sliver|Tempestade||": 2.7,
+  "Winged Sliver|Tempestade||": 5.61,
+  "Ambush Party|Terras Natais||": 0.25,
+  "Rimefur Reindeer|Terras Selvagens de Eldraine||": 0.06,
+  "Not Dead After All|Terras Selvagens de Eldraine||": 2,
+  "Virtue of Courage // Embereth Blaze|Terras Selvagens de Eldraine||Foil": 8.49,
+  "Territorial Witchstalker|Terras Selvagens de Eldraine||": 0.05,
+>>>>>>> main
   "Likeness Looter|Terras Selvagens de Eldraine||": 10.77,
   "Evolving Wilds|Terras Selvagens de Eldraine||": 0.1,
   "Lich-Knights' Conquest|Terras Selvagens de Eldraine (Promo)||": 4.95,
   "Arcane Denial|Terras Selvagens de Eldraine Commander||": 16.5,
   "Dig Through Time|Terras Selvagens de Eldraine Commander||": 0.9,
   "Distant Melody|Terras Selvagens de Eldraine Commander||": 3.5,
+<<<<<<< HEAD
   "Fact or Fiction|Terras Selvagens de Eldraine Commander||": 0.5,
   "Frantic Search|Terras Selvagens de Eldraine Commander||": 1.99,
   "Keep Watch|Terras Selvagens de Eldraine Commander||": 4.9,
@@ -2864,6 +4025,16 @@
   "Snap|Terras Selvagens de Eldraine Commander||": 14.9,
   "Thrilling Encore|Terras Selvagens de Eldraine Commander||": 2.4,
   "Bojuka Bog|Terras Selvagens de Eldraine Commander||": 9,
+=======
+  "Fact or Fiction|Terras Selvagens de Eldraine Commander||": 0.6,
+  "Frantic Search|Terras Selvagens de Eldraine Commander||": 1.99,
+  "Keep Watch|Terras Selvagens de Eldraine Commander||": 4.9,
+  "Opt|Terras Selvagens de Eldraine Commander||": 0.25,
+  "Repulse|Terras Selvagens de Eldraine Commander||": 0.14,
+  "Snap|Terras Selvagens de Eldraine Commander||": 14.9,
+  "Thrilling Encore|Terras Selvagens de Eldraine Commander||": 2.4,
+  "Bojuka Bog|Terras Selvagens de Eldraine Commander||": 9.3,
+>>>>>>> main
   "Sunken Hollow|Terras Selvagens de Eldraine Commander||": 2.85,
   "Temple of the False God|Terras Selvagens de Eldraine Commander||": 0.9,
   "The Great Aurora|The List||": 1,
@@ -2871,9 +4042,13 @@
   "Whip of Erebos|Theros||": 16,
   "Ill-Tempered Cyclops|Theros||": 0.09,
   "Fade into Antiquity|Theros||": 0.1,
-  "Traveler's Amulet|Theros||": 0.05,
+  "Traveler's Amulet|Theros||": 0.06,
   "Dreadful Apathy|Theros Alem da Morte||": 0.04,
+<<<<<<< HEAD
   "Flicker of Fate|Theros Alem da Morte||": 0.09,
+=======
+  "Flicker of Fate|Theros Alem da Morte||": 0.11,
+>>>>>>> main
   "Sunmane Pegasus|Theros Alem da Morte||": 0.04,
   "Triumphant Surge|Theros Alem da Morte||": 0.04,
   "Omen of the Sea|Theros Alem da Morte||": 0.1,
@@ -2881,12 +4056,20 @@
   "Pharika's Libation|Theros Alem da Morte||": 0.1,
   "Temple Thief|Theros Alem da Morte||": 0.04,
   "Arena Trickster|Theros Alem da Morte||": 0.04,
+<<<<<<< HEAD
   "Thrill of Possibility|Theros Alem da Morte||": 0.09,
+=======
+  "Thrill of Possibility|Theros Alem da Morte||": 0.1,
+>>>>>>> main
   "Inspire Awe|Theros Alem da Morte||": 0.04,
   "Loathsome Chimera|Theros Alem da Morte||": 0.04,
   "Nylea's Huntmaster|Theros Alem da Morte||": 0.04,
   "Setessan Training|Theros Alem da Morte||": 0.04,
+<<<<<<< HEAD
   "Wings of Hubris|Theros Alem da Morte||": 0.07,
+=======
+  "Wings of Hubris|Theros Alem da Morte||": 0.09,
+>>>>>>> main
   "Thrill of Possibility|Theros Alem da Morte (Promo)||": 0.25,
   "Ardenvale Paladin|Trono de Eldraine||": 0.07,
   "Fortifying Provisions|Trono de Eldraine||": 0.08,
@@ -2894,7 +4077,11 @@
   "Prized Griffin|Trono de Eldraine||": 0.05,
   "Fae of Wishes // Granted|Trono de Eldraine||": 0.19,
   "Moonlit Scavengers|Trono de Eldraine||": 0.05,
+<<<<<<< HEAD
   "Opt|Trono de Eldraine||": 0.2,
+=======
+  "Opt|Trono de Eldraine||": 0.15,
+>>>>>>> main
   "Unexplained Vision|Trono de Eldraine||": 0.05,
   "Barge In|Trono de Eldraine||": 0.08,
   "Blow Your House Down|Trono de Eldraine||": 0.08,
@@ -2902,34 +4089,57 @@
   "Ferocity of the Wilds|Trono de Eldraine||": 0.05,
   "Ogre Errant|Trono de Eldraine||": 0.05,
   "Rimrock Knight // Boulder Rush|Trono de Eldraine||": 0.06,
+<<<<<<< HEAD
   "Torbran, Thane of Red Fell|Trono de Eldraine||": 5.63,
   "Garenbrig Carver // Shield's Might|Trono de Eldraine||": 0.05,
   "Garenbrig Paladin|Trono de Eldraine||": 0.05,
   "Maraleaf Rider|Trono de Eldraine||": 0.05,
   "Wolf's Quarry|Trono de Eldraine||": 0.06,
+=======
+  "Torbran, Thane of Red Fell|Trono de Eldraine||": 4.89,
+  "Garenbrig Carver // Shield's Might|Trono de Eldraine||": 0.05,
+  "Garenbrig Paladin|Trono de Eldraine||": 0.05,
+  "Maraleaf Rider|Trono de Eldraine||": 0.05,
+  "Wolf's Quarry|Trono de Eldraine||": 0.07,
+>>>>>>> main
   "Golden Egg|Trono de Eldraine||": 0.1,
   "Henge Walker|Trono de Eldraine||": 0.04,
   "Locthwain Gargoyle|Trono de Eldraine||": 0.04,
   "Reanimate|Ultimas Noticias||": 44.9,
   "Bedevil|Ultimas Noticias||": 1.95,
+<<<<<<< HEAD
   "Prey Upon|Ultimate Masters||": 0.07,
   "Sole Performer|Unfinity||": 0.21,
   "Booster Tutor|Unsanctioned||": 3.15,
   "War-Wing Siren|Viagem para Nyx||": 0.09,
+=======
+  "Prey Upon|Ultimate Masters||": 0.08,
+  "Sole Performer|Unfinity||": 0.21,
+  "Booster Tutor|Unsanctioned||": 3.15,
+  "War-Wing Siren|Viagem para Nyx||": 0.1,
+>>>>>>> main
   "Nyx Infusion|Viagem para Nyx||": 0.08,
   "Returned Reveler|Viagem para Nyx||": 0.1,
   "Rotted Hulk|Viagem para Nyx||": 0.05,
   "Bladetusk Boar|Viagem para Nyx||": 0.09,
   "Flamespeaker's Will|Viagem para Nyx||": 0.1,
+<<<<<<< HEAD
   "Lightning Diadem|Viagem para Nyx||": 0.09,
+=======
+  "Lightning Diadem|Viagem para Nyx||": 0.1,
+>>>>>>> main
   "Font of Fertility|Viagem para Nyx||": 0.34,
   "Nature's Panoply|Viagem para Nyx||": 0.1,
   "Pheres-Band Thunderhoof|Viagem para Nyx||": 0.08,
   "Frenzy Sliver|Visao do Futuro||": 0.25,
   "Virulent Sliver|Visao do Futuro||": 1.99,
   "Breathstealer's Crypt|Visoes||": 57.25,
+<<<<<<< HEAD
   "Tremor|Visoes||": 0.25,
   "Vanishing|Visoes||": 1.09,
+=======
+  "Tremor|Visoes||": 0.23,
+>>>>>>> main
   "Venomthrope|Warhammer 40.000||": 16.3,
   "Cranial Plating|Warhammer 40.000||": 2,
   "Cultivate|Wizards Play Network 2023||": 3,
