@@ -13,7 +13,6 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
-
     <link rel="stylesheet" href="style.css" />
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -51,6 +50,19 @@
                 />
               </form>
             </div>
+
+            <button
+              class="btn-filter text-decoration-none d-flex align-items-center gap-2"
+              style="
+                background: var(--accent-purple);
+                color: #fff;
+                border: none;
+                box-shadow: 0 4px 12px rgba(191, 90, 242, 0.3);
+              "
+              onclick="openSyncModal()"
+            >
+              <i class="bi bi-cloud-arrow-up-fill"></i> Sync
+            </button>
             <a
               href="decks.html"
               class="btn-filter text-decoration-none d-flex align-items-center gap-2"
@@ -61,12 +73,61 @@
                 box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
               "
             >
-              <i class="bi bi-inboxes-fill"></i> Meus Decks
+              <i class="bi bi-inboxes-fill"></i> Decks
             </a>
           </div>
         </div>
       </div>
     </nav>
+
+    <div class="modal fade" id="syncModal" tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header border-0 pb-0 pt-4 px-4">
+            <h5 class="modal-title fw-bold fs-4">Sincronizar LigaMagic</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body p-4">
+            <div class="alert alert-dark border-glass mb-4 text-muted small">
+              <i class="bi bi-shield-lock text-success me-2"></i> Vá na
+              página de
+              <a
+                href="https://www.ligamagic.com.br/colecao/print.php?id=350393&tcg=1"
+                target="_blank"
+                class="text-primary text-decoration-none"
+                >Impressão da sua Coleção</a
+              >, aperte <strong>Ctrl+U</strong>, depois <strong>Ctrl+A</strong> e
+              <strong>Ctrl+C</strong> para copiar o código fonte. Cole abaixo:
+            </div>
+            <textarea
+              id="syncHtmlInput"
+              class="form-control-dark w-100 mb-3"
+              style="height: 200px; font-family: monospace; font-size: 0.8rem"
+              placeholder="<!DOCTYPE html><html>..."
+            ></textarea>
+
+            <div id="syncLoading" class="d-none text-center py-3">
+              <div class="spinner-border text-purple mb-2" role="status"></div>
+              <div class="text-muted small">Analisando o HTML e atualizando o cofre...</div>
+            </div>
+
+            <button
+              id="btnRunSync"
+              class="btn-filter w-100 py-3"
+              style="
+                background: var(--accent-purple);
+                color: #fff;
+                font-size: 1.1rem;
+                border-radius: var(--radius-md);
+              "
+              onclick="runSync()"
+            >
+              Iniciar Sincronização
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="modal fade" id="searchModal" tabindex="-1">
       <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
@@ -260,7 +321,7 @@
                     Índice de Concentração de Riqueza
                   </h6>
                   <span class="text-muted small" id="paretoText"
-                    >Calculando a Regra de Pareto...</span
+                    >Calculando o Princípio de Pareto...</span
                   >
                 </div>
               </div>
@@ -452,34 +513,6 @@
                   style="letter-spacing: -0.02em"
                   >Explorador de Inventário</span
                 >
-                <div class="ios-commander-pill d-flex gap-3 align-items-center shadow-sm">
-                  <div class="form-check form-switch m-0 d-flex align-items-center gap-2">
-                    <input
-                      class="form-check-input m-0"
-                      type="checkbox"
-                      id="commanderModeToggle"
-                      onchange="toggleCommanderMode()"
-                    />
-                    <label
-                      class="form-check-label text-muted small fw-medium"
-                      for="commanderModeToggle"
-                      style="padding-top: 2px"
-                      >Commander Mode</label
-                    >
-                  </div>
-                  <div
-                    id="colorFilters"
-                    class="d-flex gap-1"
-                    style="opacity: 0.4; pointer-events: none; transition: var(--spring)"
-                  >
-                    <div class="color-btn c-w" onclick="toggleColor('W')">W</div>
-                    <div class="color-btn c-u" onclick="toggleColor('U')">U</div>
-                    <div class="color-btn c-b" onclick="toggleColor('B')">B</div>
-                    <div class="color-btn c-r" onclick="toggleColor('R')">R</div>
-                    <div class="color-btn c-g" onclick="toggleColor('G')">G</div>
-                    <div class="color-btn c-c" onclick="toggleColor('C')">C</div>
-                  </div>
-                </div>
               </div>
               <div class="ios-filter-grid mt-2">
                 <select id="filterSet" class="ios-select" onchange="applyInventoryFilters()">
@@ -555,6 +588,7 @@
       </div>
     </div>
 
+    <script src="utils.js"></script>
     <script src="script.js"></script>
   </body>
 </html>

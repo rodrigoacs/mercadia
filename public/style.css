@@ -1,65 +1,366 @@
+/* ==========================================================================
+   MERCADIA ENTERPRISE - APPLE HIG "LIQUID Glass" STYLESHEET
+   ========================================================================== */
+
 :root {
-  --bg-body: #F2F2F7;
-  --bg-panel: #FFFFFF;
-  --bg-glass: rgba(255, 255, 255, 0.75);
-  --bg-input: #E5E5EA;
+  /* Paleta de Cores Nativas iOS (Dark Mode) */
+  --bg-base: #000000;
+  --bg-glass: rgba(28, 28, 30, 0.45);
+  --bg-glass-hover: rgba(44, 44, 46, 0.65);
+  --bg-input: rgba(255, 255, 255, 0.08);
 
-  --border-color: rgba(60, 60, 67, 0.18);
+  --border-glass: rgba(255, 255, 255, 0.05);
+  --border-glass-top: rgba(255, 255, 255, 0.15);
+  /* Reflexo de luz na quina */
 
-  --text-main: #000000;
-  --text-muted: #8E8E93;
-  --text-on-accent: #FFFFFF;
+  --text-main: #FFFFFF;
+  --text-muted: rgba(235, 235, 245, 0.6);
+  /* iOS Secondary Label */
 
-  --accent-primary: #007AFF;
-  --accent-secondary: #34C759;
-  --accent-danger: #FF3B30;
-  --accent-warning: #FF9500;
+  --accent-primary: #0A84FF;
+  --accent-success: #32D74B;
+  --accent-danger: #FF453A;
+  --accent-warning: #FFD60A;
+  --accent-purple: #BF5AF2;
 
-  --shadow-subtle: 0 4px 24px rgba(0, 0, 0, 0.04);
-  --shadow-hover: 0 10px 32px rgba(0, 0, 0, 0.08);
+  /* Raios de Borda Suaves (Squircle) */
+  --radius-xl: 32px;
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 10px;
 
-  --radius-lg: 16px;
-  --radius-md: 12px;
-  --radius-sm: 8px;
-
-  --spring: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-  --font-main: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  /* Animações de Mola (Spring Physics) */
+  --spring: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --spring-fast: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-body: #000000;
-    --bg-panel: #1C1C1E;
-    --bg-glass: rgba(28, 28, 30, 0.75);
-    --bg-input: #2C2C2E;
+/* 1. MESH GRADIENT & BASE */
+body {
+  background-color: var(--bg-base);
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+}
 
-    --border-color: rgba(84, 84, 88, 0.65);
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  width: 60vw;
+  height: 60vh;
+  border-radius: 50%;
+  filter: blur(140px);
+  z-index: -1;
+  animation: ambientLight 25s infinite alternate ease-in-out;
+  pointer-events: none;
+}
 
-    --text-main: #FFFFFF;
-    --text-muted: #98989D;
-    --text-on-accent: #FFFFFF;
+body::before {
+  background: rgba(10, 132, 255, 0.15);
+  top: -10%;
+  left: -10%;
+}
 
-    --accent-primary: #0A84FF;
-    --accent-secondary: #30D158;
-    --accent-danger: #FF453A;
-    --accent-warning: #FF9F0A;
+body::after {
+  background: rgba(191, 90, 242, 0.12);
+  bottom: -20%;
+  right: -10%;
+  animation-delay: -12s;
+}
 
-    --shadow-subtle: 0 4px 24px rgba(0, 0, 0, 0.4);
-    --shadow-hover: 0 10px 32px rgba(0, 0, 0, 0.6);
+@keyframes ambientLight {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate(80px, 60px) scale(1.1);
   }
 }
 
-.text-white {
+/* 2. TIPOGRAFIA APPLE HIG */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.navbar-brand,
+.big-number {
+  letter-spacing: -0.04em;
+  font-weight: 800;
+}
+
+/* 3. NAVEGAÇÃO LIQUID GLASS */
+.navbar {
+  background: rgba(18, 18, 18, 0.6);
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  border-bottom: 1px solid var(--border-glass);
+  padding: 16px 0;
+  z-index: 1030;
+}
+
+.navbar-brand {
+  font-size: 1.4rem;
+  color: var(--text-main);
+  background: linear-gradient(135deg, #fff 0%, #a5a5a5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 4. PAINÉIS (O CORAÇÃO DO LIQUID GLASS) */
+.ui-panel {
+  background: var(--bg-glass);
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  border: 1px solid var(--border-glass);
+  border-top: 1px solid var(--border-glass-top);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  transition: var(--spring);
+  height: 100%;
+}
+
+.ui-panel:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border-glass);
+  padding-bottom: 12px;
+  flex-wrap: wrap;
+  /* Ajuda no mobile caso fique apertado */
+  gap: 10px;
+}
+
+.panel-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.panel-body {
+  flex-grow: 1;
+}
+
+.big-number {
+  font-size: 1.8rem;
+  color: var(--text-main);
+  line-height: 1.1;
+}
+
+/* 5. BOTÕES E CONTROLES (SQUIRCLES) */
+.btn-filter,
+.form-control-dark {
+  background: var(--bg-input);
+  color: var(--text-main);
+  border: 1px solid var(--border-glass);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-sm);
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: var(--spring-fast);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.btn-filter:hover,
+.form-control-dark:focus {
+  background: rgba(255, 255, 255, 0.15);
+  transform: scale(1.02);
+  outline: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-action-icon {
+  background: var(--bg-input);
+  border: 1px solid var(--border-glass);
+  color: var(--text-main);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--spring-fast);
+  cursor: pointer;
+}
+
+.btn-action-icon:hover {
+  background: var(--accent-primary);
+  color: #fff;
+  border-color: var(--accent-primary);
+  transform: scale(1.1);
+}
+
+/* CORREÇÃO DO IOS SELECT: Mata a seta horrorosa nativa e o fundo branco */
+.ios-select {
+  background-color: var(--bg-input);
+  color: var(--text-main);
+  border: 1px solid var(--border-glass);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-sm);
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: var(--spring-fast);
+
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 14px;
+  padding-right: 36px !important;
+  /* Espaço para a seta customizada */
+}
+
+.ios-select option {
+  background-color: #1C1C1E;
+  /* Cinza iOS escuro */
+  color: #FFFFFF;
+}
+
+/* CORREÇÃO DO SEGMENTED CONTROL (7D, 30D, MAX) */
+.btn-group-filter {
+  display: inline-flex;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-sm);
+  padding: 4px;
+  gap: 4px;
+}
+
+.btn-group-filter .btn-filter {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 4px 14px;
+  font-size: 0.8rem;
+  margin: 0;
+  border-radius: 6px;
+  /* Borda leve pro botão deslizar dentro */
+}
+
+.btn-group-filter .btn-filter.active {
+  background: var(--text-main);
+  color: #000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* CORREÇÃO DO GRID DE FILTROS DO INVENTÁRIO */
+.ios-filter-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  width: 100%;
+}
+
+.ios-filter-grid>select {
+  flex: 1 1 150px;
+  /* Cresce e encolhe, mas tenta manter 150px min */
+  min-width: 0;
+}
+
+/* 6. TABELAS E LISTAS (REFINADAS) */
+.table {
+  color: var(--text-main);
+  border-collapse: separate;
+  border-spacing: 0 4px;
+}
+
+.table th {
+  border-bottom: 1px solid var(--border-glass);
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-bottom: 12px;
+}
+
+.table td {
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  padding: 12px 8px;
+  vertical-align: middle;
+}
+
+.table tbody tr {
+  transition: background 0.2s ease;
+  border-radius: var(--radius-sm);
+}
+
+.table tbody tr:hover td {
+  background: var(--bg-input);
+}
+
+/* A Mágica de Tabela Fluida no Apple HIG */
+.table-responsive {
+  -webkit-overflow-scrolling: touch;
+  /* Scroll suave de momentum no iOS */
+  scrollbar-width: none;
+  /* Esconde barra de rolagem grossa no Firefox */
+}
+
+.table-responsive::-webkit-scrollbar {
+  display: none;
+  /* Esconde barra no Chrome Safari para ficar Apple Clean */
+}
+
+/* 7. BADGES E TAGS */
+.badge-tech {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-main);
+  backdrop-filter: blur(10px);
+}
+
+.badge-extra {
+  background: linear-gradient(135deg, rgba(191, 90, 242, 0.2), rgba(10, 132, 255, 0.2));
+  border: 1px solid rgba(191, 90, 242, 0.3);
+  color: #E5B3FF;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* 8. CORES SEMÂNTICAS E CONTROLES DE ALINHAMENTO */
+.text-main {
   color: var(--text-main) !important;
 }
 
-.bg-dark {
-  background-color: var(--bg-panel) !important;
-  border: 1px solid var(--border-color);
+.text-muted {
+  color: var(--text-muted) !important;
 }
 
 .text-success {
-  color: var(--accent-secondary) !important;
+  color: var(--accent-success) !important;
 }
 
 .text-danger {
@@ -70,437 +371,247 @@
   color: var(--accent-warning) !important;
 }
 
-.text-muted {
-  color: var(--text-muted) !important;
+.text-primary {
+  color: var(--accent-primary) !important;
 }
 
-.border-color {
-  border-color: var(--border-color) !important;
-}
-
-body {
-  font-family: var(--font-main);
-  background-color: var(--bg-body);
-  color: var(--text-main);
-  margin: 0;
-  padding: 0;
-  padding-bottom: 60px;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  letter-spacing: -0.015em;
-}
-
-.navbar {
-  background-color: var(--bg-glass);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 0.5px solid var(--border-color);
-  padding: 12px 0;
-  z-index: 1030;
-}
-
-.navbar-brand {
-  font-weight: 700;
-  letter-spacing: -0.5px;
-  font-size: 1.25rem;
-  color: var(--text-main);
-}
-
-.form-control-dark {
-  background-color: var(--bg-input);
-  border: 1px solid transparent;
-  color: var(--text-main);
-  font-size: 1rem;
-  border-radius: var(--radius-sm);
-  padding: 8px 16px;
-  min-height: 44px;
-  transition: var(--spring);
-  appearance: none;
-}
-
-.form-control-dark:focus {
-  background-color: var(--bg-panel);
-  border-color: var(--accent-primary);
-  box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.15);
-  color: var(--text-main);
-  outline: none;
-}
-
-.search-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 380px;
-}
-
-.search-icon {
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--text-muted);
-  width: 18px;
-  height: 18px;
-  pointer-events: none;
-}
-
-.ui-panel {
-  background: var(--bg-panel);
-  border: 0.5px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-subtle);
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  transition: var(--spring);
-  overflow: hidden;
-}
-
-.ui-panel:hover {
-  box-shadow: var(--shadow-hover);
-  transform: translateY(-2px);
-}
-
-.panel-header {
-  padding: 16px 20px;
-  border-bottom: 0.5px solid var(--border-color);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  background-color: transparent;
-}
-
-.panel-title {
-  color: var(--text-muted);
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.panel-body {
-  padding: 20px;
-  flex-grow: 1;
-  position: relative;
-  min-width: 0;
-}
-
-#paretoRow .ui-panel {
-  border-left: 5px solid var(--accent-secondary) !important;
-  background-color: var(--bg-panel) !important;
-  background-image: none !important;
-}
-
-.ios-commander-pill {
-  background-color: var(--bg-input);
-  padding: 8px 16px;
-  border-radius: 30px;
-  border: 0.5px solid var(--border-color);
-}
-
-.ios-filter-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 12px;
-  width: 100%;
-  padding-bottom: 20px;
-  border-bottom: 0.5px solid var(--border-color);
-}
-
-.ios-select {
-  background-color: var(--bg-input);
-  color: var(--text-main);
-  border: 0.5px solid transparent;
-  border-radius: 10px;
-  padding: 12px 14px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238E8E93' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 14px;
-  transition: var(--spring);
-  cursor: pointer;
-}
-
-.ios-select:focus,
-.ios-select:hover {
-  outline: none;
-  border-color: var(--border-color);
-  background-color: var(--bg-panel);
-}
-
-.big-number {
-  font-size: clamp(1.5rem, 3vw, 2rem);
-  font-weight: 700;
-  color: var(--text-main);
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.highlight-value {
-  font-size: clamp(1.8rem, 4vw, 2.5rem);
-  color: var(--text-main);
-  font-weight: 800;
+/* CORREÇÃO: + e - Saindo do Lugar */
+.var-up,
+.var-down {
+  white-space: nowrap !important;
 }
 
 .var-up {
-  color: var(--accent-secondary);
-  font-weight: 600;
-  font-size: 1rem;
+  color: var(--accent-success) !important;
 }
 
 .var-down {
-  color: var(--accent-danger);
-  font-weight: 600;
-  font-size: 1rem;
+  color: var(--accent-danger) !important;
 }
 
-.table {
-  --bs-table-bg: transparent;
-  --bs-table-hover-bg: var(--bg-input);
-  margin-bottom: 0;
-  color: var(--text-main);
-  border-color: var(--border-color);
+/* 9. SCROLLBAR INVISÍVEL (ESTILO MAC) */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
 
-.table th {
-  border-bottom: 0.5px solid var(--border-color);
-  color: var(--text-muted);
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  padding: 12px 16px;
-  white-space: nowrap;
-  background-color: var(--bg-glass);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  position: sticky;
-  top: 0;
-  z-index: 5;
-}
-
-.table td {
-  border-bottom: 0.5px solid var(--border-color);
-  padding: 12px 16px;
-  font-size: 0.9rem;
-  color: var(--text-main);
-  vertical-align: middle;
-  white-space: nowrap;
-}
-
-.table-hover tbody tr {
-  transition: background-color 0.2s ease;
-  cursor: pointer;
-}
-
-.col-card-name {
-  max-width: 180px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 600;
-  color: var(--text-main);
-  display: block;
-}
-
-@media (min-width: 992px) {
-  .col-card-name {
-    max-width: 300px;
-  }
-}
-
-.badge-tech {
-  background: var(--bg-input);
-  color: var(--text-muted);
-  font-size: 0.7rem;
-  font-weight: 500;
-  padding: 4px 8px;
-  border-radius: var(--radius-sm);
-  border: none;
-}
-
-.badge-extra {
-  background: rgba(0, 122, 255, 0.1);
-  color: var(--accent-primary);
-  font-size: 0.65rem;
-  font-weight: 700;
-  padding: 3px 6px;
-  border-radius: var(--radius-sm);
-  border: none;
-}
-
-.chart-container-main {
-  position: relative;
-  height: 260px;
-  width: 100%;
-}
-
-.chart-container-sm {
-  position: relative;
-  height: 200px;
-  width: 100%;
-}
-
-@media (min-width: 768px) {
-  .chart-container-main {
-    height: 340px;
-  }
-}
-
-.btn-filter,
-.btn-action-icon {
-  background: var(--bg-input);
-  border: none;
-  color: var(--text-main);
-  transition: var(--spring);
-  border-radius: var(--radius-sm);
-}
-
-.btn-filter {
-  font-size: 0.85rem;
-  font-weight: 500;
-  padding: 8px 16px;
-  min-height: 36px;
-  white-space: nowrap;
-}
-
-.btn-filter:hover {
-  background: rgba(0, 122, 255, 0.15);
-  color: var(--accent-primary);
-}
-
-.btn-filter.active {
-  background: var(--accent-primary);
-  color: var(--text-on-accent);
-  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
-}
-
-.btn-group-filter {
-  display: flex;
-  gap: 8px;
-}
-
-.btn-action-icon {
-  min-width: 44px;
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2rem;
-  cursor: pointer;
+::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.btn-action-icon:hover {
-  background: var(--bg-input);
-  color: var(--accent-primary);
-  transform: scale(1.05);
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
 }
 
-.modal-content {
-  background-color: var(--bg-glass);
-  backdrop-filter: blur(40px) saturate(200%);
-  -webkit-backdrop-filter: blur(40px) saturate(200%);
-  border: 0.5px solid var(--border-color);
-  border-radius: 20px;
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.2);
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
 }
 
-.modal-header {
-  border-bottom: 0.5px solid var(--border-color);
-}
-
-.btn-close {
-  filter: invert(0.5);
-}
-
+/* 10. ANIMAÇÃO GERAL (FADE IN) */
 .fade-in {
-  animation: fadeIn 0.5s var(--spring) forwards;
+  animation: fadeInSpring 0.8s var(--spring) forwards;
 }
 
-@keyframes fadeIn {
-  from {
+@keyframes fadeInSpring {
+  0% {
     opacity: 0;
-    transform: translateY(15px) scale(0.98);
+    transform: translateY(20px) scale(0.98);
   }
 
-  to {
+  100% {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
 }
 
+/* 11. MODAIS (LIQUID GLASS SUPREMO) */
+.modal-content {
+  background: rgba(28, 28, 30, 0.65);
+  backdrop-filter: blur(60px) saturate(200%);
+  -webkit-backdrop-filter: blur(60px) saturate(200%);
+  border: 1px solid var(--border-glass-top);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 32px 64px rgba(0, 0, 0, 0.5);
+  color: var(--text-main);
+}
+
+.modal-header {
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.modal-footer {
+  border-top: 1px solid var(--border-glass);
+}
+
+.btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+  opacity: 0.5;
+  transition: var(--spring-fast);
+}
+
+.btn-close:hover {
+  opacity: 1;
+  transform: rotate(90deg);
+}
+
+/* 12. FILTROS DO COMMANDER (SQUIRCLES COLORIDOS) */
 .color-btn {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  border: 2px solid transparent;
-  display: inline-flex;
-  align-items: center;
+  display: flex;
   justify-content: center;
-  font-weight: 600;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 800;
   cursor: pointer;
-  opacity: 0.4;
-  transition: var(--spring);
-  font-size: 0.8rem;
+  color: #000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: var(--spring-fast);
+  border: 2px solid transparent;
+}
+
+.color-btn:hover {
+  transform: scale(1.15);
 }
 
 .color-btn.active {
-  opacity: 1;
-  border-color: var(--text-main);
-  transform: scale(1.1);
-  box-shadow: var(--shadow-subtle);
+  border-color: #fff;
+  transform: scale(1.1) translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.4);
 }
 
 .c-w {
-  background-color: #F0E6D2;
-  color: #000;
+  background: linear-gradient(135deg, #F9F8F6, #D4D1C9);
 }
 
 .c-u {
-  background-color: #4A90E2;
-  color: #FFF;
+  background: linear-gradient(135deg, #A4D0F8, #2E79B9);
 }
 
 .c-b {
-  background-color: #2C2C2E;
-  color: #FFF;
+  background: linear-gradient(135deg, #7A7A7A, #1C1C1C);
+  color: #fff;
 }
 
 .c-r {
-  background-color: #FF3B30;
-  color: #FFF;
+  background: linear-gradient(135deg, #FA9C8A, #D33620);
 }
 
 .c-g {
-  background-color: #34C759;
-  color: #FFF;
+  background: linear-gradient(135deg, #9BD3A9, #348E4A);
 }
 
 .c-c {
-  background-color: #8E8E93;
-  color: #FFF;
+  background: linear-gradient(135deg, #C2C8CB, #8E969A);
 }
 
-.form-check-input {
-  width: 3rem !important;
-  height: 1.5rem !important;
-  margin-top: 0.1em;
-  background-color: var(--bg-input);
-  border-color: var(--border-color);
-  cursor: pointer;
+/* ==========================================================================
+   13. BARRA DE PESQUISA (SEARCH WRAPPER)
+   ========================================================================== */
+.search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
-.form-check-input:checked {
-  background-color: var(--accent-secondary);
-  border-color: var(--accent-secondary);
+.search-wrapper form {
+  width: 100%;
+  margin: 0;
+  display: block;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: var(--text-muted);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.search-wrapper input {
+  width: 100%;
+  padding-left: 38px !important;
+  border-radius: var(--radius-sm);
+}
+
+/* ==========================================================================
+   14. RESPONSIVIDADE E DYNAMIC TYPE (MOBILE)
+   ========================================================================== */
+@media (max-width: 768px) {
+
+  .big-number {
+    font-size: 1.35rem;
+  }
+
+  h1#activeDeckName {
+    font-size: 1.5rem !important;
+  }
+
+  .ui-panel {
+    padding: 16px;
+  }
+
+  .bottom-bar {
+    padding: 10px 12px;
+  }
+
+  .bottom-bar .fs-6 {
+    font-size: 0.85rem !important;
+  }
+
+  .navbar-brand {
+    font-size: 1.2rem;
+  }
+
+  .back-button {
+    font-size: 0.95rem;
+  }
+
+  .preview-sidebar {
+    position: relative;
+    top: 0;
+    margin-bottom: 16px;
+  }
+
+  /* CORREÇÃO DAS TABELAS NO MOBILE: Evita o esmagamento horrendo */
+  .table td,
+  .table th {
+    white-space: nowrap;
+    /* Impede as colunas de quebrarem e esmagarem o texto */
+    font-size: 0.85rem;
+    padding: 8px 4px;
+  }
+
+  /* Apenas o nome da carta tem direito de quebrar de linha no mobile para não gerar scroll infinito */
+  .col-card-name {
+    white-space: normal;
+    min-width: 130px;
+  }
+
+  .btn-filter,
+  .ios-select {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+
+  /* Grid de Filtros ajusta pra 2 colunas cravadas se tiver muito apertado */
+  .ios-filter-grid {
+    gap: 8px;
+  }
+
+  .ios-filter-grid>select {
+    flex: 1 1 calc(50% - 8px);
+  }
+
+  .login-panel {
+    padding: 30px 20px;
+    margin: 0 15px;
+  }
 }

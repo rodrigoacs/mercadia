@@ -1,39 +1,8 @@
-const token = localStorage.getItem('mercadia_token')
-if (!token) window.location.href = 'login.html'
-
-// O Interceptador de Requisições: injeta o JWT e chuta pra tela de login se expirar
-async function apiFetch(endpoint, options = {}) {
-  if (!options.headers) options.headers = {}
-  options.headers['Authorization'] = `Bearer ${localStorage.getItem('mercadia_token')}`
-
-  const res = await fetch(endpoint, options)
-  if (res.status === 401) {
-    localStorage.removeItem('mercadia_token')
-    window.location.href = 'login.html'
-    throw new Error("Sessão expirada ou acesso negado.")
-  }
-  return res
-}
-
-const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
-
 let globalData = {}
 let fullInventory = []
 let mainChartInstance = null
 let organicChartInstance = null
 let currentSearchResults = []
-let selectedColors = []
-
-const safeSetText = (id, text) => { const el = document.getElementById(id); if (el) el.innerText = text }
-const safeSetHTML = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html }
-
-function formatManaCost(cost) {
-  if (!cost) return ''
-  return cost.replace(/{([^}]+)}/g, (match, p1) => {
-    let symbol = p1.toUpperCase().replace('/', '')
-    return `<img src="https://svgs.scryfall.io/card-symbols/${symbol}.svg" alt="${match}" style="height: 16px; vertical-align: text-bottom; margin: 0 1px; filter: drop-shadow(0px 1px 1px rgba(0,0,0,0.8));">`
-  })
-}
 
 function showCardDetails(encStr) {
   try {
@@ -163,48 +132,6 @@ function updateTimeRange(range, btn, type) {
   instance.update()
 }
 
-function toggleCommanderMode() {
-  const toggleEl = document.getElementById('commanderModeToggle')
-  if (!toggleEl) return
-  const active = toggleEl.checked
-  const colorBox = document.getElementById('colorFilters')
-
-  if (colorBox) {
-    if (active) {
-      colorBox.style.opacity = '1'; colorBox.style.pointerEvents = 'auto'; fetchCommanderPool()
-    } else {
-      colorBox.style.opacity = '0.4'; colorBox.style.pointerEvents = 'none'; loadInventory()
-    }
-  }
-}
-
-function toggleColor(color) {
-  const btn = document.querySelector(`.c-${color.toLowerCase()}`)
-  if (!btn) return
-  if (selectedColors.includes(color)) {
-    selectedColors = selectedColors.filter(c => c !== color); btn.classList.remove('active')
-  } else {
-    selectedColors.push(color); btn.classList.add('active')
-  }
-
-  if (color === 'C' && selectedColors.includes('C')) {
-    selectedColors = ['C']; document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active')
-  } else if (color !== 'C') {
-    selectedColors = selectedColors.filter(c => c !== 'C'); const ccBtn = document.querySelector('.c-c'); if (ccBtn) ccBtn.classList.remove('active')
-  }
-  const toggleEl = document.getElementById('commanderModeToggle')
-  if (toggleEl && toggleEl.checked) fetchCommanderPool()
-}
-
-async function fetchCommanderPool() {
-  try {
-    const colorString = selectedColors.length > 0 ? selectedColors.join(',') : 'C'
-    const req = await apiFetch(`/api/commander-pool?colors=${colorString}`)
-    fullInventory = await req.json()
-    applyInventoryFilters()
-  } catch (e) { console.error(e) }
-}
-
 async function loadInventory() {
   try {
     const req = await apiFetch('/api/inventory')
@@ -266,8 +193,13 @@ function applyInventoryFilters() {
 
       tbody.innerHTML += `<tr>
         <td class="text-center ps-4">${imgBtn}</td>
-        <td><div class="col-card-name fw-bold text-main">${c.name}</div>${badge}</td>
-        <td class="text-center small text-muted">${c.typeLine ? c.typeLine.split('—')[0].trim() : ''} <br/> <span class="fs-6">${formatManaCost(c.manaCost)}</span></td>
+        <td>
+          <div class="col-card-name fw-bold text-main d-flex align-items-center flex-wrap gap-2">
+            ${c.name} <span class="fs-6 d-inline-flex align-items-center">${formatManaCost(c.manaCost)}</span>
+          </div>
+          ${badge}
+        </td>
+        <td class="text-center small text-muted">${c.typeLine ? c.typeLine.split('—')[0].trim() : ''}</td>
         <td class="text-center"><span class="badge-tech">${c.set}</span></td>
         <td class="text-center text-muted">${c.qty}</td>
         <td class="text-end text-muted small">${BRL.format(c.unitPrice)}</td>
@@ -306,7 +238,7 @@ async function initDashboard() {
     if (data.pareto) {
       const row = document.getElementById('paretoRow')
       if (row) row.style.display = 'flex'
-      safeSetHTML('paretoText', `A <strong>Regra de Pareto</strong> em ação: apenas <strong class="text-main">${data.pareto.percentCards}%</strong> das suas cartas físicas (${data.pareto.totalCardsIncluded} un.) correspondem a <strong>80%</strong> de todo o seu patrimônio.`)
+      safeSetHTML('paretoText', `<strong>Princípio de Pareto</strong>: apenas <strong class="text-main">${data.pareto.percentCards}%</strong> das suas cartas físicas (${data.pareto.totalCardsIncluded} un.) correspondem a <strong>80%</strong> de todo o seu patrimônio.`)
       safeSetText('paretoValue', BRL.format(data.pareto.accWealth))
     }
 
@@ -387,7 +319,7 @@ async function initDashboard() {
           <td class="ps-3 d-flex align-items-center">
             ${imgBtn}
             <div>
-              <div class="col-card-name fw-bold text-main">${x.name} <span class="ms-2 fs-6">${formatManaCost(x.manaCost)}</span></div>
+              <div class="col-card-name fw-bold text-main">${x.name}</div>
               ${x.set ? '<div class="small text-muted">' + x.set + '</div>' : ''}
             </div>
           </td>
@@ -404,6 +336,7 @@ async function initDashboard() {
         const enc = btoa(encodeURIComponent(JSON.stringify(x)))
         const imgBtn = x.imageUri ? `<button class="btn btn-sm btn-link p-0 text-muted me-2" onclick="showCardDetails('${enc}')"><i class="bi bi-image"></i></button>` : ''
         const pos = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `${i + 1}º`
+
         tb.innerHTML += `<tr>
           <td class="text-center text-muted fw-bold" style="width: 40px;">${pos}</td>
           <td class="ps-2 d-flex align-items-center">
@@ -430,3 +363,39 @@ async function initDashboard() {
 document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('kpiTotal')) initDashboard()
 })
+
+function openSyncModal() {
+  document.getElementById('syncHtmlInput').value = ''
+  document.getElementById('btnRunSync').classList.remove('d-none')
+  document.getElementById('syncLoading').classList.add('d-none')
+  new bootstrap.Modal(document.getElementById('syncModal')).show()
+}
+
+async function runSync() {
+  const htmlContent = document.getElementById('syncHtmlInput').value.trim()
+  if (!htmlContent) return alert("Cole o código fonte primeiro, cacete.")
+
+  document.getElementById('btnRunSync').classList.add('d-none')
+  document.getElementById('syncLoading').classList.remove('d-none')
+
+  try {
+    const res = await apiFetch('/api/sync-liga', {
+      method: 'POST',
+      body: JSON.stringify({ html: htmlContent })
+    })
+
+    if (!res.ok) throw new Error("Erro na sincronização")
+
+    const data = await res.json()
+    alert(`Sucesso! ${data.count} cartas sincronizadas no valor de ${BRL.format(data.total)}.`)
+
+    bootstrap.Modal.getInstance(document.getElementById('syncModal')).hide()
+
+    // Atualiza a tela toda com os dados novos!
+    window.location.reload()
+  } catch (error) {
+    alert("Erro brutal ao ler o HTML. Confirme se colou o código inteiro (Ctrl+U).")
+    document.getElementById('btnRunSync').classList.remove('d-none')
+    document.getElementById('syncLoading').classList.add('d-none')
+  }
+}

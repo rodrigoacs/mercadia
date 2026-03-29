@@ -1,43 +1,67 @@
-import pg from 'pg'
+import { pool } from './db.js'
 import { getRawData } from './data.js'
 
-const { Pool } = pg
-
-const pool = new Pool({
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  database: process.env.DB_NAME,
-})
+// Cache em memória para não precisar traduzir a mesma carta PT-BR duas vezes
+const translationCache = new Map()
 
 const delay = (ms) => new Promise(res => setTimeout(res, ms))
 
 const fetchScryfallData = async (cardName) => {
   try {
-    let res = await fetch(`https://api.scryfall.com/cards/search?q=!"${encodeURIComponent(cardName)}"`)
-    if (!res.ok) {
-      res = await fetch(`https://api.scryfall.com/cards/named?fuzzy=${encodeURIComponent(cardName)}`)
-    }
+    // 1. Tentativa Local (Otimizada para achar DFCs pela face frontal)
+    let localRes = await pool.query(
+      `SELECT * FROM scryfall_cards WHERE name ILIKE $1 OR name ILIKE $2 LIMIT 1`,
+      [cardName, `${cardName} // %`]
+    )
 
-    if (res.ok) {
-      const data = await res.json()
-      const card = data.data ? data.data[0] : data
-      const image_uri = card.image_uris ? card.image_uris.normal : (card.card_faces && card.card_faces[0].image_uris ? card.card_faces[0].image_uris.normal : null)
-      const art_crop_uri = card.image_uris ? card.image_uris.art_crop : (card.card_faces && card.card_faces[0].image_uris ? card.card_faces[0].image_uris.art_crop : null)
-
+    if (localRes.rows.length > 0) {
+      const card = localRes.rows[0]
       return {
         name: card.name,
-        image_uri: image_uri,
-        art_crop_uri: art_crop_uri,
+        image_uri: card.image_normal,
+        art_crop_uri: card.image_art_crop,
         mana_cost: card.mana_cost || '',
         type_line: card.type_line || '',
-        color_identity: card.color_identity ? card.color_identity.join(',') : 'C'
+        color_identity: card.color_identity || 'C'
       }
     }
+
+    // 2. Se não achou, traduz no Scryfall
+    let enName = cardName
+    if (translationCache.has(cardName)) {
+      enName = translationCache.get(cardName)
+    } else {
+      await delay(75)
+      const res = await fetch(`https://api.scryfall.com/cards/named?fuzzy=${encodeURIComponent(cardName)}`)
+      if (res.ok) {
+        const data = await res.json()
+        enName = data.name
+        translationCache.set(cardName, enName)
+      }
+    }
+
+    // 3. Tenta de novo com o nome traduzido
+    localRes = await pool.query(
+      `SELECT * FROM scryfall_cards WHERE name ILIKE $1 OR name ILIKE $2 LIMIT 1`,
+      [enName, `${enName} // %`]
+    )
+
+    if (localRes.rows.length > 0) {
+      const card = localRes.rows[0]
+      return {
+        name: card.name,
+        image_uri: card.image_normal,
+        art_crop_uri: card.image_art_crop,
+        mana_cost: card.mana_cost || '',
+        type_line: card.type_line || '',
+        color_identity: card.color_identity || 'C'
+      }
+    }
+
   } catch (e) {
-    console.error(`Erro ao buscar no Scryfall a carta: ${cardName}`)
+    console.error(`Erro ao processar dados da carta: ${cardName}`)
   }
+
   return null
 }
 
@@ -75,7 +99,6 @@ export const createDeck = async (name, format, rawText) => {
 
     for (const card of parsedCards) {
       const scryfallData = await fetchScryfallData(card.originalName)
-      await delay(100)
 
       if (scryfallData) {
         if (!coverImage && scryfallData.art_crop_uri) coverImage = scryfallData.art_crop_uri
@@ -151,18 +174,24 @@ export const getDeckDetails = async (deckId) => {
 
   const basicLands = ['plains', 'island', 'swamp', 'mountain', 'forest', 'wastes', 'snow-covered plains', 'snow-covered island', 'snow-covered swamp', 'snow-covered mountain', 'snow-covered forest']
 
+  // A MÁGICA PRA DFCs: Pega só a parte antes do "//" pra comparar
+  const getFrontFace = (name) => name.split('//')[0].trim().toLowerCase()
+
   const processedCards = deckCards.map(deckCard => {
     let totalOwnedQty = 0
     let avgPrice = 0
 
     const tLine = deckCard.type_line ? deckCard.type_line.toLowerCase() : ''
-    const isBasicLand = tLine.includes('basic land') || basicLands.includes(deckCard.name.toLowerCase())
+    const deckCardFront = getFrontFace(deckCard.name)
+
+    const isBasicLand = tLine.includes('basic land') || basicLands.includes(deckCardFront)
 
     if (isBasicLand) {
       totalOwnedQty = 9999
       avgPrice = 0
     } else {
-      const userCards = currentInventory.filter(c => c.name.toLowerCase() === deckCard.name.toLowerCase())
+      // Cruza ignorando a face traseira se ela existir
+      const userCards = currentInventory.filter(c => getFrontFace(c.name) === deckCardFront)
       totalOwnedQty = userCards.reduce((acc, c) => acc + c.qty, 0)
       avgPrice = userCards.length > 0 ? userCards[0].unitPrice : 0
     }
@@ -234,31 +263,28 @@ export const setCommander = async (deckId, cardName) => {
   }
 }
 
-// NOVA FUNÇÃO: Busca todas as versões da carta no Scryfall
 export const getCardPrints = async (cardName) => {
   try {
-    const res = await fetch(`https://api.scryfall.com/cards/search?q=!"${encodeURIComponent(cardName)}"&unique=prints`)
-    if (res.ok) {
-      const data = await res.json()
-      return data.data.map(card => {
-        const img = card.image_uris ? card.image_uris.normal : (card.card_faces && card.card_faces[0].image_uris ? card.card_faces[0].image_uris.normal : null)
-        return {
-          id: card.id,
-          set: card.set.toUpperCase(),
-          collector_number: card.collector_number,
-          image_uri: img,
-          frame: card.frame,
-          border_color: card.border_color
-        }
-      }).filter(c => c.image_uri) // Ignora bizarrices sem imagem
-    }
+    const result = await pool.query(
+      `SELECT id, set_code, collector_number, image_normal
+       FROM scryfall_cards
+       WHERE name ILIKE $1 AND image_normal IS NOT NULL
+       ORDER BY set_code ASC, collector_number ASC`,
+      [cardName]
+    )
+
+    return result.rows.map(card => ({
+      id: card.id,
+      set: card.set_code.toUpperCase(),
+      collector_number: card.collector_number,
+      image_uri: card.image_normal
+    }))
   } catch (error) {
-    console.error(`Erro ao buscar prints da carta: ${cardName}`)
+    console.error(`Erro ao buscar prints locais da carta: ${cardName}`)
+    return []
   }
-  return []
 }
 
-// NOVA FUNÇÃO: Atualiza a arte apenas para o deck atual
 export const updateDeckCardPrint = async (deckId, cardName, setCode, imageUri) => {
   await pool.query(
     `UPDATE deck_cards SET set_code = $1, image_uri = $2 WHERE deck_id = $3 AND name = $4`,

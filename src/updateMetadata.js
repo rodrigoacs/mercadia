@@ -18,7 +18,7 @@ const pool = new Pool({
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 async function updateScryfallData() {
-  console.log('🚀 A iniciar o Algoritmo de Scoring Máximo do Scryfall...')
+  console.log('🚀 A iniciar o Algoritmo de Scoring Máximo (Modo Offline Ultra Rápido)...')
   const client = await pool.connect()
 
   try {
@@ -69,13 +69,23 @@ async function updateScryfallData() {
         const safeNum = card.num || ''
         const safeExtras = card.extras || ''
 
-        let url = `https://api.scryfall.com/cards/search?q=${encodeURIComponent('!"' + cleanName + '" unique:prints')}`
-        let response = await fetch(url)
-        let data = response.ok ? await response.json() : null
+        let data = null
+        let usouApiExterna = false
 
-        if (!data || !data.data || data.data.length === 0) {
+        // BUSCA 100% LOCAL! Lê a coluna JSONB pra extrair todas as propriedades da carta
+        const localSearch = await client.query(
+          `SELECT card_data FROM scryfall_cards WHERE name ILIKE $1 OR name ILIKE $2`,
+          [cleanName, `${cleanName} // %`]
+        )
+
+        if (localSearch.rows.length > 0) {
+          // Emula o formato de retorno do Scryfall para a matemática não quebrar
+          data = { data: localSearch.rows.map(r => r.card_data) }
+        } else {
+          // Se não achar localmente (Ex: Nome da LigaMagic veio em PT-BR), usa o fuzzy externo de emergência
+          usouApiExterna = true
           const fallbackUrl = `https://api.scryfall.com/cards/named?fuzzy=${encodeURIComponent(cleanName)}`
-          response = await fetch(fallbackUrl)
+          let response = await fetch(fallbackUrl)
           if (response.ok) {
             let singleData = await response.json()
             data = { data: [singleData] }
@@ -86,6 +96,7 @@ async function updateScryfallData() {
           let bestPrint = data.data[0]
           let maxScore = -99999
 
+          // Algoritmo de Scoring Original intocado (agora consumindo os dados instantâneos da RAM/Disco)
           for (const p of data.data) {
             let score = 0
             const pNum = p.collector_number ? p.collector_number.toLowerCase() : ''
@@ -156,14 +167,18 @@ async function updateScryfallData() {
           `, [card.name, card.set_code, safeNum, safeExtras, 'UNKNOWN', '', 0, 'UNKNOWN', 'UNKNOWN', '', '{}', ''])
           erros++
         }
+
+        // Só respeita o rate limit de 100ms se realmente precisou bater no Scryfall!
+        if (usouApiExterna) await delay(100)
+
       } catch (err) {
         erros++
       }
 
-      await delay(100)
-      if ((processadas + erros) % 50 === 0) console.log(`⏳ Progresso: ${processadas + erros} de ${missingCards.length}...`)
+      // Feedback no console mais rápido agora!
+      if ((processadas + erros) % 50 === 0) console.log(`⏳ Progresso Local: ${processadas + erros} de ${missingCards.length}...`)
     }
-    console.log(`✅ Concluído! ${processadas} cartas marcadas com o Scoring Perfeito.`)
+    console.log(`✅ Concluído! ${processadas} cartas marcadas com o Scoring Perfeito de forma instantânea.`)
   } catch (error) {
     console.error('❌ Erro fatal:', error)
   } finally {
