@@ -1,27 +1,138 @@
-const express = require('express')
-const cors = require('cors')
-const path = require('path')
+import express from 'express'
+import path from 'path'
+import { fileURLToPath } from 'url'
+import jwt from 'jsonwebtoken'
+import helmet from 'helmet'
+import rateLimit from 'express-rate-limit'
 
-// Importações (MVC)
-const CsvRepository = require('./src/repositories/CsvRepository')
-const AnalyticsService = require('./src/services/AnalyticsService')
-const DashboardController = require('./src/controllers/DashboardController')
+import { verifyToken } from './src/auth.js'
+import { getDashboardData, searchCardData, getInventoryData } from './src/analytics.js'
+import { createDeck, getDecks, getDeckDetails, deleteDeck, updateDeckCover, setCommander, getCardPrints, updateDeckCardPrint } from './src/deckManager.js'
+import { syncLigaMagic } from './src/ligaParser.js' // A Rota Ninja
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const app = express()
-app.use(cors())
-app.use(express.static('public'))
+const port = process.env.PORT || 3000
 
-// Configuração (Wiring)
-const csvFile = path.join(__dirname, 'data', 'historico_cartas.csv')
-const repository = new CsvRepository(csvFile)
-const service = new AnalyticsService(repository)
-const controller = new DashboardController(service)
+// ==========================================
+// BLINDAGEM DE PRODUÇÃO (MIDDLEWARES)
+// ==========================================
+app.use(helmet({ contentSecurityPolicy: false }))
 
-// Rotas
-app.get('/api/dashboard', (req, res) => controller.getDashboard(req, res))
-app.get('/api/search', (req, res) => controller.search(req, res))
-app.get('/api/inventory', (req, res) => controller.getInventory(req, res)) // Nova rota
+// Permite payloads de até 10MB (O código fonte da LigaMagic pode ser grande)
+app.use(express.json({ limit: '10mb' }))
+app.use(express.static(path.join(__dirname, 'public')))
 
-app.listen(3000, () => {
-  console.log('🚀 Sistema Mercadia Rodando: http://localhost:3000')
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  message: { error: 'Muitas tentativas de login. Tá tentando hackear, caralho? Volta daqui a 15 minutos.' },
+  standardHeaders: true,
+  legacyHeaders: false,
 })
+
+// ==========================================
+// ROTA PÚBLICA (LOGIN)
+// ==========================================
+app.post('/api/login', loginLimiter, (req, res) => {
+  const { password } = req.body
+  if (!process.env.ADMIN_PASSWORD) return res.status(500).json({ error: 'Erro: ADMIN_PASSWORD não configurada' })
+  if (password === process.env.ADMIN_PASSWORD) {
+    const token = jwt.sign({ role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '30d' })
+    res.json({ success: true, token })
+  } else {
+    res.status(401).json({ error: 'Senha incorreta, invasor.' })
+  }
+})
+
+// ==========================================
+// O LEÃO DE CHÁCARA (Tranca tudo abaixo)
+// ==========================================
+app.use('/api', verifyToken)
+
+// ==========================================
+// ROTA DE SINCRONIZAÇÃO MANUAL
+// ==========================================
+app.post('/api/sync-liga', async (req, res) => {
+  try {
+    if (!req.body.html) return res.status(400).json({ error: 'HTML vazio caralho.' })
+    const result = await syncLigaMagic(req.body.html)
+    res.json(result)
+  } catch (error) {
+    res.status(500).json({ error: error.message || 'Erro ao processar o HTML.' })
+  }
+})
+
+// ==========================================
+// ROTAS DO INVENTÁRIO E DASHBOARD
+// ==========================================
+app.get('/api/dashboard', async (req, res) => {
+  try { res.json(await getDashboardData()) } catch (error) { res.status(500).json({ error: 'Erro no dashboard.' }) }
+})
+
+app.get('/api/search', async (req, res) => {
+  try { res.json(await searchCardData((req.query.q || '').toLowerCase())) } catch (error) { res.status(500).json({ error: 'Erro na busca.' }) }
+})
+
+app.get('/api/inventory', async (req, res) => {
+  try { res.json(await getInventoryData()) } catch (error) { res.status(500).json({ error: 'Erro no inventário.' }) }
+})
+
+// ==========================================
+// ROTAS DO GESTOR DE DECKS
+// ==========================================
+app.post('/api/decks', async (req, res) => {
+  try {
+    const { name, format, deckText } = req.body
+    if (!name || !deckText) return res.status(400).json({ error: 'Nome e lista são obrigatórios.' })
+    res.json(await createDeck(name, format, deckText))
+  } catch (error) { res.status(500).json({ error: 'Erro ao salvar o deck.' }) }
+})
+
+app.get('/api/decks', async (req, res) => {
+  try { res.json(await getDecks()) } catch (error) { res.status(500).json({ error: 'Erro ao listar decks.' }) }
+})
+
+app.get('/api/decks/:id', async (req, res) => {
+  try { res.json(await getDeckDetails(req.params.id)) } catch (error) { res.status(500).json({ error: 'Erro nos detalhes.' }) }
+})
+
+app.put('/api/decks/:id/cover', async (req, res) => {
+  try {
+    if (!req.body.imageUri) return res.status(400).json({ error: 'URL obrigatória.' })
+    await updateDeckCover(req.params.id, req.body.imageUri)
+    res.json({ success: true })
+  } catch (error) { res.status(500).json({ error: 'Erro na capa.' }) }
+})
+
+app.put('/api/decks/:id/commander', async (req, res) => {
+  try {
+    if (!req.body.cardName) return res.status(400).json({ error: 'Nome obrigatório.' })
+    await setCommander(req.params.id, req.body.cardName)
+    res.json({ success: true })
+  } catch (error) { res.status(500).json({ error: 'Erro no comandante.' }) }
+})
+
+app.get('/api/cards/prints', async (req, res) => {
+  try {
+    if (!req.query.name) return res.status(400).json({ error: 'Nome obrigatório.' })
+    res.json(await getCardPrints(req.query.name))
+  } catch (error) { res.status(500).json({ error: 'Erro nos prints.' }) }
+})
+
+app.put('/api/decks/:id/card-print', async (req, res) => {
+  try {
+    const { cardName, setCode, imageUri } = req.body
+    if (!cardName || !imageUri) return res.status(400).json({ error: 'Dados incompletos.' })
+    await updateDeckCardPrint(req.params.id, cardName, setCode, imageUri)
+    res.json({ success: true })
+  } catch (error) { res.status(500).json({ error: 'Erro na arte.' }) }
+})
+
+app.delete('/api/decks/:id', async (req, res) => {
+  try { await deleteDeck(req.params.id); res.json({ success: true }) } catch (error) { res.status(500).json({ error: 'Erro ao deletar.' }) }
+})
+
+app.listen(port, () => console.log(`Mercadia rodando em http://localhost:${port}`))

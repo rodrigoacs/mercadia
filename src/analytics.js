@@ -1,0 +1,243 @@
+import { getRawData } from './data.js'
+
+const buildTimeline = (data) => {
+  const timeline = {}
+  data.forEach(d => {
+    if (!timeline[d.date]) timeline[d.date] = 0
+    timeline[d.date] += d.totalPrice
+  })
+  const dates = Object.keys(timeline).sort()
+  return { timeline, dates }
+}
+
+const calculateKPIs = (timeline, dates, todayData, lastDate, trueVars) => {
+  const currentValue = timeline[lastDate]
+  const totalCards = todayData.reduce((acc, c) => acc + c.qty, 0)
+  const avgTicket = totalCards > 0 ? currentValue / totalCards : 0
+
+  const dailyVals = trueVars.dailyChartData.values
+  const dayVar = dailyVals.length > 0 ? dailyVals[dailyVals.length - 1] : 0
+  const monthVals = dailyVals.slice(-30)
+  const monthVar = monthVals.reduce((a, b) => a + b, 0)
+
+  return {
+    totalValue: currentValue, totalCards: totalCards, avgTicket: avgTicket,
+    dayVar: dayVar, monthVar: monthVar, lastUpdate: lastDate
+  }
+}
+
+const calculateTrueVariations = (data, dates, todayData) => {
+  let topGainers = [], topLosers = []
+  const dailyChartData = { labels: [], values: [] }
+  const organicLineData = { labels: dates, values: [0] }
+
+  if (dates.length <= 1) return { topGainers, topLosers, dailyChartData, organicLineData }
+
+  const dataByDate = {}
+  data.forEach(d => {
+    if (!dataByDate[d.date]) dataByDate[d.date] = []
+    dataByDate[d.date].push(d)
+  })
+
+  let cumulativeOrganic = 0
+
+  for (let i = 1; i < dates.length; i++) {
+    const prevDate = dates[i - 1]
+    const currDate = dates[i]
+    const prevCards = dataByDate[prevDate] || []
+    const currCards = dataByDate[currDate] || []
+
+    const currMap = new Map(currCards.map(c => [`${c.name}|${c.set}|${c.num}|${c.extras}`, { price: c.unitPrice, qty: c.qty }]))
+
+    let dailyDiff = 0
+    prevCards.forEach(prev => {
+      const curr = currMap.get(`${prev.name}|${prev.set}|${prev.num}|${prev.extras}`)
+      if (curr) {
+        const heldQty = Math.min(prev.qty, curr.qty)
+        if (heldQty > 0) dailyDiff += (curr.price - prev.unitPrice) * heldQty
+      }
+    })
+
+    dailyChartData.labels.push(currDate)
+    dailyChartData.values.push(dailyDiff)
+    cumulativeOrganic += dailyDiff
+    organicLineData.values.push(cumulativeOrganic)
+  }
+
+  const prevDateForTop = dates[dates.length - 2]
+  const prevDataForTop = dataByDate[prevDateForTop] || []
+  const prevMap = new Map(prevDataForTop.map(c => [`${c.name}|${c.set}|${c.num}|${c.extras}`, c.unitPrice]))
+
+  const variations = []
+  todayData.forEach(h => {
+    const oldPrice = prevMap.get(`${h.name}|${h.set}|${h.num}|${h.extras}`)
+    if (oldPrice !== undefined && oldPrice > 0) {
+      const diff = h.unitPrice - oldPrice
+      if (Math.abs(diff) >= 0.01) variations.push({ ...h, diff: diff })
+    }
+  })
+
+  topGainers = [...variations].filter(v => v.diff > 0).sort((a, b) => b.diff - a.diff).slice(0, 5)
+  topLosers = [...variations].filter(v => v.diff < 0).sort((a, b) => a.diff - b.diff).slice(0, 5)
+
+  return { topGainers, topLosers, dailyChartData, organicLineData }
+}
+
+const calculateSetDistribution = (todayData) => {
+  const setDistribution = {}
+  todayData.forEach(c => {
+    if (!setDistribution[c.set]) setDistribution[c.set] = 0
+    setDistribution[c.set] += c.totalPrice
+  })
+  const sortedSets = Object.entries(setDistribution).sort((a, b) => b[1] - a[1])
+  const topSets = sortedSets.slice(0, 5)
+  const otherSetsValue = sortedSets.slice(5).reduce((acc, curr) => acc + curr[1], 0)
+  return { labels: [...topSets.map(s => s[0]), 'Outros'], values: [...topSets.map(s => s[1]), otherSetsValue] }
+}
+
+const calculateTiers = (todayData) => {
+  const tiers = { bulk: { qty: 0, value: 0 }, low: { qty: 0, value: 0 }, mid: { qty: 0, value: 0 }, high: { qty: 0, value: 0 } }
+  todayData.forEach(c => {
+    if (c.unitPrice < 2) { tiers.bulk.qty += c.qty; tiers.bulk.value += c.totalPrice }
+    else if (c.unitPrice < 10) { tiers.low.qty += c.qty; tiers.low.value += c.totalPrice }
+    else if (c.unitPrice < 50) { tiers.mid.qty += c.qty; tiers.mid.value += c.totalPrice }
+    else { tiers.high.qty += c.qty; tiers.high.value += c.totalPrice }
+  })
+  return tiers
+}
+
+const calculateColorDistribution = (todayData) => {
+  const dist = { W: 0, U: 0, B: 0, R: 0, G: 0, M: 0, C: 0 }
+  todayData.forEach(c => {
+    if (c.colorIdentity === 'C' || !c.colorIdentity) dist.C += c.qty
+    else {
+      const colors = c.colorIdentity.split(',')
+      if (colors.length > 1) dist.M += c.qty; else dist[colors[0]] += c.qty
+    }
+  })
+  return dist
+}
+
+const calculateRarityDistribution = (todayData) => {
+  const dist = { common: 0, uncommon: 0, rare: 0, mythic: 0 }
+  todayData.forEach(c => { const r = c.rarity ? c.rarity.toLowerCase() : ''; if (dist[r] !== undefined) dist[r] += c.qty })
+  return dist
+}
+
+const calculateTypeDistribution = (todayData) => {
+  const dist = { creature: 0, land: 0, artifact: 0, enchantment: 0, planeswalker: 0, instant: 0, sorcery: 0 }
+  todayData.forEach(c => {
+    if (!c.typeLine) return
+    const t = c.typeLine.toLowerCase()
+    if (t.includes('creature')) dist.creature += c.qty
+    else if (t.includes('land')) dist.land += c.qty
+    else if (t.includes('artifact')) dist.artifact += c.qty
+    else if (t.includes('enchantment')) dist.enchantment += c.qty
+    else if (t.includes('planeswalker')) dist.planeswalker += c.qty
+    else if (t.includes('instant')) dist.instant += c.qty
+    else if (t.includes('sorcery')) dist.sorcery += c.qty
+  })
+  return dist
+}
+
+const calculateTopCards = (todayData) => [...todayData].sort((a, b) => b.unitPrice - a.unitPrice).slice(0, 5)
+
+const calculatePareto = (todayData, totalValue, totalCards) => {
+  if (totalValue === 0 || totalCards === 0) return null
+  const sorted = [...todayData].sort((a, b) => b.unitPrice - a.unitPrice)
+
+  let accWealth = 0
+  let accCards = 0
+  const targetWealth = totalValue * 0.8
+
+  for (const c of sorted) {
+    if (accWealth >= targetWealth) break
+    for (let i = 0; i < c.qty; i++) {
+      if (accWealth >= targetWealth) break
+      accWealth += c.unitPrice
+      accCards += 1
+    }
+  }
+
+  return {
+    percentCards: ((accCards / totalCards) * 100).toFixed(1),
+    accWealth: accWealth,
+    totalCardsIncluded: accCards
+  }
+}
+
+export const getDashboardData = async () => {
+  const data = await getRawData()
+  if (data.length === 0) return { empty: true }
+
+  const { timeline, dates } = buildTimeline(data)
+  const lastDate = dates[dates.length - 1]
+  const todayData = data.filter(d => d.date === lastDate)
+
+  const trueVars = calculateTrueVariations(data, dates, todayData)
+  const totalValue = timeline[lastDate]
+  const totalCards = todayData.reduce((acc, c) => acc + c.qty, 0)
+
+  return {
+    empty: false,
+    kpis: calculateKPIs(timeline, dates, todayData, lastDate, trueVars),
+    chart: { labels: dates, values: dates.map(d => timeline[d]) },
+    organicChart: trueVars.organicLineData,
+    dailyChart: trueVars.dailyChartData,
+    setChart: calculateSetDistribution(todayData),
+    tiers: calculateTiers(todayData),
+    topGainers: trueVars.topGainers,
+    topLosers: trueVars.topLosers,
+    colorDist: calculateColorDistribution(todayData),
+    rarityDist: calculateRarityDistribution(todayData),
+    typeDist: calculateTypeDistribution(todayData),
+    topCards: calculateTopCards(todayData),
+    pareto: calculatePareto(todayData, totalValue, totalCards)
+  }
+}
+
+export const searchCardData = async (query) => {
+  const data = await getRawData()
+  if (data.length === 0) return []
+  const uniqueDates = [...new Set(data.map(d => d.date))].sort()
+  const lastDate = uniqueDates[uniqueDates.length - 1]
+
+  let results = data.filter(d =>
+    d.date === lastDate &&
+    (d.name.toLowerCase().includes(query) || (d.oracleText && d.oracleText.toLowerCase().includes(query)))
+  )
+
+  return results.map(card => {
+    const history = data
+      .filter(d => d.name === card.name && d.set === card.set && d.num === card.num && d.extras === card.extras)
+      .sort((a, b) => b.date.localeCompare(a.date))
+      .map(h => ({ date: h.date, value: h.unitPrice }))
+    return { ...card, history }
+  }).sort((a, b) => b.totalPrice - a.totalPrice)
+}
+
+export const getInventoryData = async () => {
+  const data = await getRawData()
+  if (data.length === 0) return []
+  const uniqueDates = [...new Set(data.map(d => d.date))].sort()
+  const lastDate = uniqueDates[uniqueDates.length - 1]
+  return data.filter(d => d.date === lastDate)
+}
+
+export const getCommanderPoolData = async (commanderColors) => {
+  const data = await getRawData()
+  if (data.length === 0) return []
+
+  const uniqueDates = [...new Set(data.map(d => d.date))].sort()
+  const lastDate = uniqueDates[uniqueDates.length - 1]
+  const inventory = data.filter(d => d.date === lastDate)
+  const allowedColors = commanderColors === 'C' || !commanderColors ? [] : commanderColors.split(',')
+
+  return inventory.filter(card => {
+    const isLegal = card.legalities && card.legalities.commander === 'legal'
+    if (!isLegal) return false
+    if (card.colorIdentity === 'C') return true
+    const cardColors = card.colorIdentity.split(',')
+    return cardColors.every(c => allowedColors.includes(c))
+  }).sort((a, b) => b.totalPrice - a.totalPrice)
+}

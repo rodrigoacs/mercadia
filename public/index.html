@@ -1,294 +1,30 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br" data-bs-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mercadia - Enterprise Edition</title>
+
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
+    <link rel="stylesheet" href="style.css" />
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <style>
-      :root {
-        --bg-body: #0f1014;
-        --bg-panel: #18191e;
-        --bg-input: #23242a;
-        --border-color: #2a2b32;
-        --accent-primary: #6366f1;
-        --text-main: #e2e8f0;
-        --text-muted: #94a3b8;
-        --profit: #34d399;
-        --loss: #f87171;
-        --font-main: 'Inter', sans-serif;
-      }
-
-      body {
-        background-color: var(--bg-body);
-        color: var(--text-main);
-        font-family: var(--font-main);
-        padding-bottom: 60px;
-        overflow-x: hidden;
-      }
-
-      .navbar {
-        background-color: rgba(24, 25, 30, 0.85);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid var(--border-color);
-        padding: 0.8rem 0;
-        z-index: 1030;
-      }
-      .navbar-brand {
-        font-weight: 800;
-        letter-spacing: -0.5px;
-        font-size: 1.2rem;
-        background: linear-gradient(90deg, #fff, #a5b4fc);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-      .form-control-dark {
-        background-color: var(--bg-input);
-        border: 1px solid transparent;
-        color: #fff;
-        font-size: 0.9rem;
-        border-radius: 8px;
-        padding: 6px 12px;
-      }
-      .form-control-dark:focus {
-        background-color: var(--bg-input);
-        border-color: var(--accent-primary);
-        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
-        color: #fff;
-      }
-
-      .ui-panel {
-        background-color: var(--bg-panel);
-        border: 1px solid var(--border-color);
-        border-radius: 12px;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-      }
-      .panel-header {
-        padding: 12px 16px;
-        border-bottom: 1px solid var(--border-color);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 8px;
-      }
-      .panel-title {
-        font-size: 0.75rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        color: var(--text-muted);
-        white-space: nowrap;
-      }
-      .panel-body {
-        padding: 16px;
-        flex-grow: 1;
-        position: relative;
-        min-width: 0;
-      }
-
-      .big-number {
-        font-size: clamp(1.2rem, 3vw, 1.8rem);
-        font-weight: 700;
-        color: #fff;
-        line-height: 1.1;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-      .highlight-value {
-        font-size: clamp(1.5rem, 4vw, 2.4rem);
-        background: linear-gradient(135deg, #e0e7ff 0%, #818cf8 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        white-space: nowrap;
-      }
-
-      .table {
-        --bs-table-bg: transparent;
-        --bs-table-hover-bg: rgba(255, 255, 255, 0.03);
-        margin-bottom: 0;
-      }
-      .table th {
-        border-bottom: 1px solid var(--border-color);
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        color: var(--text-muted);
-        padding: 10px 12px;
-        white-space: nowrap;
-        background-color: var(--bg-panel);
-        position: sticky;
-        top: 0;
-        z-index: 5;
-      }
-      .table td {
-        border-bottom: 1px solid var(--border-color);
-        padding: 10px 12px;
-        font-size: 0.85rem;
-        color: var(--text-main);
-        vertical-align: middle;
-        white-space: nowrap;
-      }
-
-      .col-card-name {
-        max-width: 180px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        font-weight: 600;
-        color: #f1f5f9;
-        display: block;
-      }
-
-      @media (min-width: 992px) {
-        .col-card-name {
-          max-width: 300px;
-        }
-      }
-
-      .badge-tech {
-        background: #23242a;
-        border: 1px solid #333;
-        color: #cbd5e1;
-        font-size: 0.65rem;
-        padding: 3px 6px;
-        border-radius: 6px;
-      }
-      .badge-extra {
-        background: rgba(99, 102, 241, 0.15);
-        border: 1px solid rgba(99, 102, 241, 0.4);
-        color: #a5b4fc;
-        font-size: 0.6rem;
-        font-weight: 600;
-        padding: 2px 5px;
-        border-radius: 4px;
-      }
-      .var-up {
-        color: var(--profit);
-        font-weight: 600;
-      }
-      .var-down {
-        color: var(--loss);
-        font-weight: 600;
-      }
-
-      .chart-container-main {
-        position: relative;
-        height: 260px;
-        width: 100%;
-      }
-      .chart-container-sm {
-        position: relative;
-        height: 200px;
-        width: 100%;
-      }
-      @media (min-width: 768px) {
-        .chart-container-main {
-          height: 340px;
-        }
-      }
-
-      .search-wrapper {
-        position: relative;
-        width: 100%;
-        max-width: 380px;
-      }
-      .search-icon {
-        position: absolute;
-        left: 12px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: var(--text-muted);
-        width: 16px;
-        height: 16px;
-        pointer-events: none;
-      }
-
-      .btn-filter {
-        font-size: 0.75rem;
-        font-weight: 600;
-        color: var(--text-muted);
-        background: transparent;
-        border: 1px solid var(--border-color);
-        padding: 4px 12px;
-        border-radius: 6px;
-        transition: all 0.2s;
-        white-space: nowrap;
-      }
-      .btn-filter:hover,
-      .btn-filter.active {
-        background: var(--accent-primary);
-        color: #fff;
-        border-color: var(--accent-primary);
-      }
-      .btn-group-filter {
-        display: flex;
-        gap: 6px;
-      }
-
-      .btn-history {
-        background: transparent;
-        border: 1px solid var(--border-color);
-        color: var(--text-muted);
-        border-radius: 8px;
-        padding: 4px 8px;
-        transition: all 0.2s;
-      }
-      .btn-history:hover {
-        background: #23242a;
-        color: #fff;
-        border-color: #6366f1;
-      }
-
-      .modal-content {
-        background-color: var(--bg-panel);
-        border: 1px solid var(--border-color);
-      }
-      .btn-close {
-        filter: invert(1) grayscale(100%) brightness(200%);
-        opacity: 0.5;
-      }
-
-      .fade-in {
-        animation: fadeIn 0.5s ease-out forwards;
-        opacity: 0;
-      }
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(5px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-    </style>
   </head>
   <body>
     <nav class="navbar sticky-top">
       <div class="container px-3">
         <div class="d-flex align-items-center w-100 justify-content-between">
           <span class="navbar-brand">MERCADIA</span>
-          <div style="max-width: 380px" class="ms-auto me-3 w-100">
-            <div class="search-wrapper">
+          <div class="ms-auto d-flex gap-3 align-items-center">
+            <div class="search-wrapper d-none d-md-block" style="width: 250px">
               <svg
                 class="search-icon"
                 xmlns="http://www.w3.org/2000/svg"
@@ -308,24 +44,90 @@
                   type="text"
                   id="searchInput"
                   class="form-control form-control-dark"
-                  style="padding-left: 38px; padding-top: 8px; padding-bottom: 8px"
+                  style="padding-left: 38px"
                   placeholder="Buscar..."
                   autocomplete="off"
                 />
               </form>
             </div>
-          </div>
-          <div class="text-end d-none d-sm-block">
-            <div style="font-size: 0.6rem; text-transform: uppercase; color: var(--text-muted)">
-              Atualizado
-            </div>
-            <div style="font-size: 0.85rem; font-weight: 500; color: #fff" id="lastUpdate">
-              --/--
-            </div>
+
+            <button
+              class="btn-filter text-decoration-none d-flex align-items-center gap-2"
+              style="
+                background: var(--accent-purple);
+                color: #fff;
+                border: none;
+                box-shadow: 0 4px 12px rgba(191, 90, 242, 0.3);
+              "
+              onclick="openSyncModal()"
+            >
+              <i class="bi bi-cloud-arrow-up-fill"></i> Sync
+            </button>
+            <a
+              href="decks.html"
+              class="btn-filter text-decoration-none d-flex align-items-center gap-2"
+              style="
+                background: var(--accent-primary);
+                color: #fff;
+                border: none;
+                box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+              "
+            >
+              <i class="bi bi-inboxes-fill"></i> Decks
+            </a>
           </div>
         </div>
       </div>
     </nav>
+
+    <div class="modal fade" id="syncModal" tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header border-0 pb-0 pt-4 px-4">
+            <h5 class="modal-title fw-bold fs-4">Sincronizar LigaMagic</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body p-4">
+            <div class="alert alert-dark border-glass mb-4 text-muted small">
+              <i class="bi bi-shield-lock text-success me-2"></i> Vá na
+              página de
+              <a
+                href="https://www.ligamagic.com.br/colecao/print.php?id=350393&tcg=1"
+                target="_blank"
+                class="text-primary text-decoration-none"
+                >Impressão da sua Coleção</a
+              >, aperte <strong>Ctrl+U</strong>, depois <strong>Ctrl+A</strong> e
+              <strong>Ctrl+C</strong> para copiar o código fonte. Cole abaixo:
+            </div>
+            <textarea
+              id="syncHtmlInput"
+              class="form-control-dark w-100 mb-3"
+              style="height: 200px; font-family: monospace; font-size: 0.8rem"
+              placeholder="<!DOCTYPE html><html>..."
+            ></textarea>
+
+            <div id="syncLoading" class="d-none text-center py-3">
+              <div class="spinner-border text-purple mb-2" role="status"></div>
+              <div class="text-muted small">Analisando o HTML e atualizando o cofre...</div>
+            </div>
+
+            <button
+              id="btnRunSync"
+              class="btn-filter w-100 py-3"
+              style="
+                background: var(--accent-purple);
+                color: #fff;
+                font-size: 1.1rem;
+                border-radius: var(--radius-md);
+              "
+              onclick="runSync()"
+            >
+              Iniciar Sincronização
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="modal fade" id="searchModal" tabindex="-1">
       <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
@@ -340,8 +142,8 @@
                 <thead>
                   <tr>
                     <th class="ps-4">Carta</th>
+                    <th class="text-center">Ações</th>
                     <th class="text-center">Set</th>
-                    <th class="text-center">Hist</th>
                     <th class="text-center">Qtd</th>
                     <th class="text-end pe-4">Total</th>
                   </tr>
@@ -369,6 +171,92 @@
             <table class="table table-sm table-striped mb-0">
               <tbody id="historyTableBody"></tbody>
             </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="imagePreviewModal" tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header border-0 pb-0">
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body p-4 pt-0">
+            <div class="row g-4">
+              <div class="col-12 col-md-5 text-center">
+                <img
+                  id="detailImage"
+                  src=""
+                  alt="Card Preview"
+                  class="img-fluid rounded-4 shadow-lg"
+                  style="max-height: 60vh"
+                />
+              </div>
+              <div class="col-12 col-md-7">
+                <div class="d-flex justify-content-between align-items-start mb-1">
+                  <h4 id="detailName" class="text-white fw-bold mb-0"></h4>
+                  <span id="detailMana" class="fs-5 text-nowrap"></span>
+                </div>
+                <div
+                  id="detailType"
+                  class="text-muted small mb-3 border-bottom border-color pb-2"
+                ></div>
+                <div
+                  class="p-3 mb-3 rounded"
+                  style="background: var(--bg-input); border: 1px solid var(--border-color)"
+                >
+                  <div
+                    id="detailOracle"
+                    class="text-white small"
+                    style="white-space: pre-wrap; font-family: var(--font-main); line-height: 1.5"
+                  ></div>
+                </div>
+                <div class="row g-2 mb-3">
+                  <div class="col-6">
+                    <div class="text-muted" style="font-size: 0.65rem; text-transform: uppercase">
+                      Coleção
+                    </div>
+                    <div id="detailSet" class="text-white fw-bold small"></div>
+                  </div>
+                  <div class="col-6">
+                    <div class="text-muted" style="font-size: 0.65rem; text-transform: uppercase">
+                      Raridade
+                    </div>
+                    <div id="detailRarity" class="text-white fw-bold small text-capitalize"></div>
+                  </div>
+                </div>
+                <div class="row g-2 mb-3">
+                  <div class="col-4">
+                    <div class="text-muted" style="font-size: 0.65rem; text-transform: uppercase">
+                      Em Estoque
+                    </div>
+                    <div id="detailQty" class="text-white fw-bold fs-5"></div>
+                  </div>
+                  <div class="col-4">
+                    <div class="text-muted" style="font-size: 0.65rem; text-transform: uppercase">
+                      Preço Unit.
+                    </div>
+                    <div id="detailUnit" class="text-warning fw-bold fs-5"></div>
+                  </div>
+                  <div class="col-4">
+                    <div class="text-muted" style="font-size: 0.65rem; text-transform: uppercase">
+                      Valor Total
+                    </div>
+                    <div id="detailTotal" class="text-success fw-bold fs-5"></div>
+                  </div>
+                </div>
+                <div class="mt-3">
+                  <div
+                    class="text-muted mb-2"
+                    style="font-size: 0.65rem; text-transform: uppercase"
+                  >
+                    Legalidade (Formatos)
+                  </div>
+                  <div id="detailLegalities" class="d-flex flex-wrap gap-2"></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -422,21 +310,86 @@
         </div>
       </div>
 
-      <div class="row mb-4">
+      <div class="row mb-4 fade-in" id="paretoRow" style="display: none">
         <div class="col-12">
+          <div class="ui-panel" style="flex-direction: row; align-items: center">
+            <div class="panel-body d-flex align-items-center justify-content-between p-3 w-100">
+              <div class="d-flex align-items-center">
+                <i class="bi bi-gem fs-2 me-3" style="color: var(--accent-secondary)"></i>
+                <div>
+                  <h6 class="mb-1 fw-bold text-white text-uppercase" style="letter-spacing: 0.5px">
+                    Índice de Concentração de Riqueza
+                  </h6>
+                  <span class="text-muted small" id="paretoText"
+                    >Calculando o Princípio de Pareto...</span
+                  >
+                </div>
+              </div>
+              <div class="text-end d-none d-md-block">
+                <span class="fs-5 fw-bold highlight-value" id="paretoValue">...</span>
+                <div class="text-muted" style="font-size: 0.65rem; text-transform: uppercase">
+                  Em 80% do Patrimônio
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3 mb-4">
+        <div class="col-12 col-lg-6">
           <div class="ui-panel">
             <div class="panel-header">
-              <span class="panel-title">Evolução Patrimonial</span>
+              <span class="panel-title">Evolução Patrimonial (Total)</span>
               <div class="btn-group-filter">
-                <button class="btn-filter" onclick="updateTimeRange('7d', this)">7D</button
-                ><button class="btn-filter" onclick="updateTimeRange('30d', this)">30D</button
-                ><button class="btn-filter active" onclick="updateTimeRange('max', this)">
+                <button
+                  class="btn-filter btn-filter-main"
+                  onclick="updateTimeRange('7d', this, 'main')"
+                >
+                  7D</button
+                ><button
+                  class="btn-filter btn-filter-main"
+                  onclick="updateTimeRange('30d', this, 'main')"
+                >
+                  30D</button
+                ><button
+                  class="btn-filter btn-filter-main active"
+                  onclick="updateTimeRange('max', this, 'main')"
+                >
                   MAX
                 </button>
               </div>
             </div>
             <div class="panel-body">
               <div class="chart-container-main"><canvas id="mainChart"></canvas></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="ui-panel">
+            <div class="panel-header">
+              <span class="panel-title text-success">Crescimento Orgânico (Mercado)</span>
+              <div class="btn-group-filter">
+                <button
+                  class="btn-filter btn-filter-org"
+                  onclick="updateTimeRange('7d', this, 'org')"
+                >
+                  7D</button
+                ><button
+                  class="btn-filter btn-filter-org"
+                  onclick="updateTimeRange('30d', this, 'org')"
+                >
+                  30D</button
+                ><button
+                  class="btn-filter btn-filter-org active"
+                  onclick="updateTimeRange('max', this, 'org')"
+                >
+                  MAX
+                </button>
+              </div>
+            </div>
+            <div class="panel-body">
+              <div class="chart-container-main"><canvas id="organicChart"></canvas></div>
             </div>
           </div>
         </div>
@@ -453,9 +406,7 @@
         </div>
         <div class="col-12 col-md-4">
           <div class="ui-panel">
-            <div class="panel-header">
-              <span class="panel-title">Distribuição</span>
-            </div>
+            <div class="panel-header"><span class="panel-title">Distribuição (Top Sets)</span></div>
             <div class="panel-body d-flex justify-content-center">
               <div style="height: 180px; width: 100%; max-width: 250px">
                 <canvas id="setChart"></canvas>
@@ -465,14 +416,34 @@
         </div>
       </div>
 
-      <div class="row mb-4">
-        <div class="col-12">
+      <div class="row g-3 mb-4">
+        <div class="col-12 col-md-4">
           <div class="ui-panel">
-            <div class="panel-header">
-              <span class="panel-title">Qualidade dos Ativos (Tier List)</span>
+            <div class="panel-header"><span class="panel-title">Cores da Coleção</span></div>
+            <div class="panel-body d-flex justify-content-center">
+              <div style="height: 180px; width: 100%; max-width: 250px">
+                <canvas id="colorChart"></canvas>
+              </div>
             </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="ui-panel">
+            <div class="panel-header"><span class="panel-title">Tipos de Carta</span></div>
             <div class="panel-body">
-              <div class="chart-container-sm"><canvas id="tierChart"></canvas></div>
+              <div class="chart-container-sm" style="height: 180px">
+                <canvas id="typeChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="ui-panel">
+            <div class="panel-header"><span class="panel-title">Raridade</span></div>
+            <div class="panel-body d-flex justify-content-center">
+              <div style="height: 180px; width: 100%; max-width: 250px">
+                <canvas id="rarityChart"></canvas>
+              </div>
             </div>
           </div>
         </div>
@@ -482,7 +453,7 @@
         <div class="col-12 col-md-6">
           <div class="ui-panel h-100">
             <div class="panel-header">
-              <span class="panel-title text-success">🚀 Top Valorização (R$)</span>
+              <span class="panel-title text-success">🚀 Top Valorização Diária (R$)</span>
             </div>
             <div class="table-responsive flex-grow-1">
               <table class="table table-sm align-middle mb-0">
@@ -494,7 +465,7 @@
         <div class="col-12 col-md-6">
           <div class="ui-panel h-100">
             <div class="panel-header">
-              <span class="panel-title text-danger">📉 Maiores Quedas (R$)</span>
+              <span class="panel-title text-danger">📉 Maiores Quedas Diárias (R$)</span>
             </div>
             <div class="table-responsive flex-grow-1">
               <table class="table table-sm align-middle mb-0">
@@ -505,38 +476,97 @@
         </div>
       </div>
 
+      <div class="row g-3 mb-4">
+        <div class="col-12 col-md-6">
+          <div class="ui-panel h-100">
+            <div class="panel-header">
+              <span class="panel-title text-warning">👑 As Joias da Coroa (Top 5 Mais Caras)</span>
+            </div>
+            <div class="table-responsive flex-grow-1">
+              <table class="table table-sm align-middle mb-0">
+                <tbody id="tableTopCards"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="ui-panel h-100">
+            <div class="panel-header">
+              <span class="panel-title">Qualidade dos Ativos (Tier List)</span>
+            </div>
+            <div class="panel-body">
+              <div class="chart-container-sm" style="height: 200px">
+                <canvas id="tierChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="row g-3">
         <div class="col-12">
-          <div class="ui-panel h-100">
-            <div class="panel-header flex-wrap gap-2">
-              <span class="panel-title text-nowrap me-auto">Explorador de Inventário</span>
-              <div class="d-flex gap-2 align-items-center flex-wrap">
-                <select id="filterSet" class="form-control-dark" onchange="applyInventoryFilters()">
+          <div class="ui-panel h-100 p-0">
+            <div class="panel-header flex-column align-items-stretch gap-3 border-0 pb-0 pt-4 px-4">
+              <div class="d-flex w-100 justify-content-between align-items-center flex-wrap gap-3">
+                <span
+                  class="panel-title mb-0 fs-6 text-main fw-bold"
+                  style="letter-spacing: -0.02em"
+                  >Explorador de Inventário</span
+                >
+              </div>
+              <div class="ios-filter-grid mt-2">
+                <select id="filterSet" class="ios-select" onchange="applyInventoryFilters()">
                   <option value="all">Todas Edições</option>
                 </select>
-                <select
-                  id="filterExtra"
-                  class="form-control-dark"
-                  onchange="applyInventoryFilters()"
-                >
-                  <option value="all">Acabamento: Todos</option>
+                <select id="filterType" class="ios-select" onchange="applyInventoryFilters()">
+                  <option value="all">Todos os Tipos</option>
+                  <option value="creature">Criaturas</option>
+                  <option value="instant">Instantâneas</option>
+                  <option value="sorcery">Feitiços</option>
+                  <option value="artifact">Artefatos</option>
+                  <option value="enchantment">Encantamentos</option>
+                  <option value="planeswalker">Planeswalkers</option>
+                  <option value="land">Terrenos</option>
+                </select>
+                <select id="filterRarity" class="ios-select" onchange="applyInventoryFilters()">
+                  <option value="all">Todas Raridades</option>
+                  <option value="mythic">Míticas</option>
+                  <option value="rare">Raras</option>
+                  <option value="uncommon">Incomuns</option>
+                  <option value="common">Comuns</option>
+                </select>
+                <select id="filterTier" class="ios-select" onchange="applyInventoryFilters()">
+                  <option value="all">Todos os Preços</option>
+                  <option value="bulk">Bulk (< R$ 2)</option>
+                  <option value="low">Low (R$ 2-10)</option>
+                  <option value="mid">Mid (R$ 10-50)</option>
+                  <option value="high">High (> R$ 50)</option>
+                </select>
+                <select id="filterExtra" class="ios-select" onchange="applyInventoryFilters()">
+                  <option value="all">Acabamento</option>
                   <option value="foil">Apenas Foil/Etched</option>
                   <option value="normal">Apenas Normal</option>
                 </select>
-                <select id="sortOrder" class="form-control-dark" onchange="applyInventoryFilters()">
+                <select id="sortOrder" class="ios-select" onchange="applyInventoryFilters()">
                   <option value="totalDesc">Maior Valor Total</option>
                   <option value="unitDesc">Maior Preço Unit.</option>
+                  <option value="unitAsc">Menor Preço Unit.</option>
+                  <option value="rarityDesc">Raridade</option>
                   <option value="qtyDesc">Maior Quantidade</option>
                   <option value="nameAsc">Nome (A-Z)</option>
                 </select>
               </div>
             </div>
-            <div class="table-responsive flex-grow-1" style="max-height: 500px; overflow-y: auto">
+            <div
+              class="table-responsive flex-grow-1 px-2"
+              style="max-height: 600px; overflow-y: auto"
+            >
               <table class="table table-hover align-middle">
                 <thead>
                   <tr>
-                    <th style="width: 40px" class="ps-4">#</th>
+                    <th style="width: 40px" class="ps-4">Img</th>
                     <th>Carta</th>
+                    <th class="text-center">Tipo / Custo</th>
                     <th class="text-center">Set</th>
                     <th class="text-center">Qtd</th>
                     <th class="text-end">Unit.</th>
@@ -547,7 +577,8 @@
               </table>
             </div>
             <div
-              class="p-2 text-end text-muted small border-top border-secondary border-opacity-25"
+              class="p-3 text-end text-muted small border-top border-color"
+              style="background: var(--bg-glass)"
               id="inventoryCount"
             >
               Carregando...
@@ -557,360 +588,7 @@
       </div>
     </div>
 
-    <script>
-      const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
-      Chart.defaults.font.family = "'Inter', sans-serif"
-      Chart.defaults.color = '#64748b'
-      Chart.defaults.borderColor = '#2a2b32'
-
-      let globalData = {}
-      let fullInventory = [] // Dados completos para o explorador
-      let mainChartInstance = null
-      let currentSearchResults = []
-
-      async function performSearch(e) {
-        e.preventDefault()
-        const q = document.getElementById('searchInput').value.trim()
-        if (q.length < 2) return
-        new bootstrap.Modal(document.getElementById('searchModal')).show()
-        const tb = document.getElementById('searchResultsBody')
-        tb.innerHTML = '<tr><td colspan="5" class="text-center py-4 text-muted">...</td></tr>'
-        document.getElementById('noResults').classList.add('d-none')
-        try {
-          const req = await fetch(`/api/search?q=${encodeURIComponent(q)}`)
-          currentSearchResults = await req.json()
-          tb.innerHTML = ''
-          if (currentSearchResults.length === 0) {
-            document.getElementById('noResults').classList.remove('d-none')
-            return
-          }
-          currentSearchResults.forEach((c, i) => {
-            let icn = '<i class="bi bi-clock-history"></i>'
-            if (c.history.length > 1) {
-              const cr = c.history[0].value,
-                pr = c.history[1].value
-              if (cr > pr) icn = '<i class="bi bi-graph-up-arrow text-success"></i>'
-              else if (cr < pr) icn = '<i class="bi bi-graph-down-arrow text-danger"></i>'
-            }
-            tb.innerHTML += `<tr><td class="ps-4"><div class="col-card-name fw-bold text-white">${
-              c.name
-            }</div><div class="small text-muted">${c.set} #${
-              c.num
-            }</div></td><td class="text-center"><span class="badge-tech">${
-              c.set
-            }</span></td><td class="text-center"><button class="btn btn-sm btn-outline-secondary border-0 text-muted" onclick="openHistory(${i})">${icn}</button></td><td class="text-center">${
-              c.qty
-            }</td><td class="text-end pe-4 text-white fw-bold">${BRL.format(
-              c.totalPrice
-            )}</td></tr>`
-          })
-        } catch (e) {
-          console.error(e)
-        }
-      }
-
-      function openHistory(i) {
-        const c = currentSearchResults[i]
-        if (!c) return
-        new bootstrap.Modal(document.getElementById('historyDetailModal')).show()
-        document.getElementById('histTitle').innerText = `${c.name} (${c.set})`
-        const tb = document.getElementById('historyTableBody')
-        tb.innerHTML = ''
-        c.history.forEach((h, x) => {
-          let d = ''
-          if (x < c.history.length - 1) {
-            const p = c.history[x + 1].value
-            if (h.value > p) d = '<span class="text-success ms-1">▲</span>'
-            else if (h.value < p) d = '<span class="text-danger ms-1">▼</span>'
-          }
-          const dp = h.date.split('-')
-          tb.innerHTML += `<tr><td class="ps-3 text-muted">${dp[2]}/${
-            dp[1]
-          }</td><td class="text-end pe-3 text-white fw-bold">${BRL.format(h.value)}${d}</td></tr>`
-        })
-      }
-
-      function updateTimeRange(range, btn) {
-        if (!globalData.chart) return
-        document.querySelectorAll('.btn-filter').forEach(b => b.classList.remove('active'))
-        btn.classList.add('active')
-        const allL = globalData.chart.labels,
-          allV = globalData.chart.values
-        let cut = range === '7d' ? -7 : range === '30d' ? -30 : 0
-        mainChartInstance.data.labels = cut === 0 ? allL : allL.slice(cut)
-        mainChartInstance.data.datasets[0].data = cut === 0 ? allV : allV.slice(cut)
-        mainChartInstance.update()
-      }
-
-      // --- INVENTORY EXPLORER LOGIC ---
-      async function loadInventory() {
-        try {
-          const req = await fetch('/api/inventory')
-          fullInventory = await req.json()
-
-          const sets = [...new Set(fullInventory.map(c => c.set))].sort()
-          const setSelect = document.getElementById('filterSet')
-          sets.forEach(s => {
-            const opt = document.createElement('option')
-            opt.value = s
-            opt.innerText = s
-            setSelect.appendChild(opt)
-          })
-
-          applyInventoryFilters()
-        } catch (e) {
-          console.error('Error loading inventory', e)
-        }
-      }
-
-      function applyInventoryFilters() {
-        const setF = document.getElementById('filterSet').value
-        const extraF = document.getElementById('filterExtra').value
-        const sortF = document.getElementById('sortOrder').value
-
-        let filtered = fullInventory.filter(c => {
-          if (setF !== 'all' && c.set !== setF) return false
-          if (extraF === 'foil' && (!c.extras || c.extras.trim() === '')) return false
-          if (extraF === 'normal' && c.extras && c.extras.trim() !== '') return false
-          return true
-        })
-
-        filtered.sort((a, b) => {
-          if (sortF === 'totalDesc') return b.totalPrice - a.totalPrice
-          if (sortF === 'unitDesc') return b.unitPrice - a.unitPrice
-          if (sortF === 'qtyDesc') return b.qty - a.qty
-          if (sortF === 'nameAsc') return a.name.localeCompare(b.name)
-          return 0
-        })
-
-        const tbody = document.getElementById('tableInventory')
-        tbody.innerHTML = ''
-        const displayList = filtered.slice(0, 100)
-
-        displayList.forEach((c, i) => {
-          const badge = c.extras ? `<span class="badge-extra ms-1">${c.extras}</span>` : ''
-          tbody.innerHTML += `<tr><td class="text-muted small ps-4">${
-            i + 1
-          }</td><td><div class="col-card-name fw-bold text-white">${
-            c.name
-          }</div>${badge}</td><td class="text-center"><span class="badge-tech">${
-            c.set
-          }</span></td><td class="text-center text-muted">${
-            c.qty
-          }</td><td class="text-end text-muted small">${BRL.format(
-            c.unitPrice
-          )}</td><td class="text-end fw-bold text-white pe-4">${BRL.format(c.totalPrice)}</td></tr>`
-        })
-        document.getElementById(
-          'inventoryCount'
-        ).innerText = `Mostrando ${displayList.length} de ${filtered.length} cartas.`
-      }
-
-      function filterFromChart(setName) {
-        const select = document.getElementById('filterSet')
-        if (setName === 'Outros') select.value = 'all'
-        else {
-          const exists = [...select.options].some(o => o.value === setName)
-          if (exists) select.value = setName
-        }
-        applyInventoryFilters()
-        document.getElementById('tableInventory').scrollIntoView({ behavior: 'smooth' })
-      }
-
-      async function initDashboard() {
-        try {
-          const req = await fetch('/api/dashboard')
-          globalData = await req.json()
-          const data = globalData
-          if (!data || data.empty) return
-
-          document.getElementById('kpiTotal').innerText = BRL.format(data.kpis.totalValue)
-          document.getElementById('kpiQty').innerText = data.kpis.totalCards
-          document.getElementById('kpiTicket').innerText = BRL.format(data.kpis.avgTicket)
-          document.getElementById('lastUpdate').innerText = data.kpis.lastUpdate
-            .split('-')
-            .reverse()
-            .slice(0, 2)
-            .join('/')
-          const setKpi = (id, val) => {
-            const el = document.getElementById(id)
-            el.innerText = (val > 0 ? '' : '') + BRL.format(val)
-            el.className = 'big-number mt-2 ' + (val >= 0 ? 'var-up' : 'var-down')
-          }
-          setKpi('kpiVar', data.kpis.dayVar)
-          setKpi('kpiMonth', data.kpis.monthVar)
-
-          const ctxMain = document.getElementById('mainChart').getContext('2d')
-          const grad = ctxMain.createLinearGradient(0, 0, 0, 300)
-          grad.addColorStop(0, 'rgba(99,102,241,0.3)')
-          grad.addColorStop(1, 'rgba(99,102,241,0)')
-          mainChartInstance = new Chart(ctxMain, {
-            type: 'line',
-            data: {
-              labels: data.chart.labels,
-              datasets: [
-                {
-                  label: 'Total',
-                  data: data.chart.values,
-                  borderColor: '#6366f1',
-                  borderWidth: 2,
-                  backgroundColor: grad,
-                  fill: true,
-                  tension: 0.3,
-                  pointRadius: 0,
-                  pointHitRadius: 20,
-                },
-              ],
-            },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              plugins: { legend: { display: false } },
-              scales: {
-                x: {
-                  display: true,
-                  grid: { display: false },
-                  ticks: {
-                    maxTicksLimit: 7,
-                    callback: function (v) {
-                      return this.getLabelForValue(v).split('-').slice(1).reverse().join('/')
-                    },
-                  },
-                },
-                y: {
-                  display: true,
-                  position: 'right',
-                  grid: { color: '#2a2b32', borderDash: [5, 5] },
-                  ticks: {
-                    callback: v =>
-                      new Intl.NumberFormat('pt-BR', {
-                        notation: 'compact',
-                        style: 'currency',
-                        currency: 'BRL',
-                      }).format(v),
-                  },
-                },
-              },
-            },
-          })
-
-          if (data.dailyChart.labels.length)
-            new Chart(document.getElementById('dailyChart'), {
-              type: 'bar',
-              data: {
-                labels: data.dailyChart.labels,
-                datasets: [
-                  {
-                    data: data.dailyChart.values,
-                    backgroundColor: data.dailyChart.values.map(v =>
-                      v >= 0 ? '#34d399' : '#f87171'
-                    ),
-                    borderRadius: 4,
-                  },
-                ],
-              },
-              options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: { x: { display: false }, y: { grid: { color: '#2a2b32' } } },
-              },
-            })
-
-          if (data.setChart)
-            new Chart(document.getElementById('setChart'), {
-              type: 'doughnut',
-              data: {
-                labels: data.setChart.labels,
-                datasets: [
-                  {
-                    data: data.setChart.values,
-                    backgroundColor: [
-                      '#6366f1',
-                      '#818cf8',
-                      '#a5b4fc',
-                      '#c7d2fe',
-                      '#e0e7ff',
-                      '#334155',
-                    ],
-                    borderWidth: 0,
-                  },
-                ],
-              },
-              options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                onClick: (evt, activeElements) => {
-                  if (activeElements.length > 0) {
-                    const index = activeElements[0].index
-                    filterFromChart(data.setChart.labels[index])
-                  }
-                },
-                plugins: {
-                  legend: {
-                    position: 'right',
-                    labels: { color: '#94a3b8', boxWidth: 10, font: { size: 10 } },
-                  },
-                  tooltip: { callbacks: { label: c => ` ${c.label}: ${BRL.format(c.raw)}` } },
-                },
-                cutout: '70%',
-              },
-            })
-
-          if (data.tiers)
-            new Chart(document.getElementById('tierChart'), {
-              type: 'bar',
-              data: {
-                labels: ['Bulk', 'Low', 'Mid', 'High'],
-                datasets: [
-                  {
-                    data: [
-                      data.tiers.bulk.qty,
-                      data.tiers.low.qty,
-                      data.tiers.mid.qty,
-                      data.tiers.high.qty,
-                    ],
-                    backgroundColor: ['#475569', '#94a3b8', '#6366f1', '#a855f7'],
-                    borderRadius: 4,
-                  },
-                ],
-              },
-              options: {
-                indexAxis: 'y',
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: { x: { display: false }, y: { grid: { display: false } } },
-              },
-            })
-
-          const fillTable = (id, list, colorCheck = false) => {
-            const tb = document.getElementById(id)
-            if (!list.length) {
-              tb.innerHTML = '<tr><td class="text-center text-muted">Vazio</td></tr>'
-              return
-            }
-            list.forEach(x => {
-              let val = BRL.format(x.diff)
-              let cls = colorCheck ? (x.diff > 0 ? 'var-up' : 'var-down') : 'text-white'
-              let prefix = colorCheck ? (x.diff > 0 ? '+' : '') : ''
-              tb.innerHTML += `<tr><td class="ps-3"><div class="col-card-name fw-bold text-white">${
-                x.name
-              }</div>${
-                x.set ? '<div class="small text-muted">' + x.set + '</div>' : ''
-              }</td><td class="text-end pe-3 fw-bold ${cls}">${prefix}${val}</td></tr>`
-            })
-          }
-
-          fillTable('tableTopGainers', data.topGainers, true)
-          fillTable('tableTopLosers', data.topLosers, true)
-
-          loadInventory()
-        } catch (e) {
-          console.error(e)
-        }
-      }
-      initDashboard()
-    </script>
+    <script src="utils.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>
