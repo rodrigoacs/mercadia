@@ -24,8 +24,8 @@
       <div class="container px-3">
         <div class="d-flex align-items-center w-100 justify-content-between">
           <span class="navbar-brand">MERCADIA</span>
-          <div style="max-width: 380px" class="ms-auto me-3 w-100">
-            <div class="search-wrapper">
+          <div class="ms-auto d-flex gap-3 align-items-center">
+            <div class="search-wrapper d-none d-md-block" style="width: 250px">
               <svg
                 class="search-icon"
                 xmlns="http://www.w3.org/2000/svg"
@@ -45,23 +45,24 @@
                   type="text"
                   id="searchInput"
                   class="form-control form-control-dark"
-                  style="padding-left: 38px; padding-top: 8px; padding-bottom: 8px"
-                  placeholder="Buscar no Oracle Text..."
+                  style="padding-left: 38px"
+                  placeholder="Buscar..."
                   autocomplete="off"
                 />
               </form>
             </div>
-          </div>
-          <div class="text-end d-none d-sm-block">
-            <div style="font-size: 0.6rem; text-transform: uppercase; color: var(--text-muted)">
-              Atualizado
-            </div>
-            <div
-              style="font-size: 0.85rem; font-weight: 500; color: var(--text-main)"
-              id="lastUpdate"
+            <a
+              href="decks.html"
+              class="btn-filter text-decoration-none d-flex align-items-center gap-2"
+              style="
+                background: var(--accent-primary);
+                color: #fff;
+                border: none;
+                box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+              "
             >
-              --/--
-            </div>
+              <i class="bi bi-inboxes-fill"></i> Meus Decks
+            </a>
           </div>
         </div>
       </div>
@@ -138,9 +139,8 @@
                 </div>
                 <div
                   id="detailType"
-                  class="text-muted small mb-3 border-bottom border-secondary pb-2"
+                  class="text-muted small mb-3 border-bottom border-color pb-2"
                 ></div>
-
                 <div
                   class="p-3 mb-3 rounded"
                   style="background: var(--bg-input); border: 1px solid var(--border-color)"
@@ -151,7 +151,6 @@
                     style="white-space: pre-wrap; font-family: var(--font-main); line-height: 1.5"
                   ></div>
                 </div>
-
                 <div class="row g-2 mb-3">
                   <div class="col-6">
                     <div class="text-muted" style="font-size: 0.65rem; text-transform: uppercase">
@@ -166,7 +165,6 @@
                     <div id="detailRarity" class="text-white fw-bold small text-capitalize"></div>
                   </div>
                 </div>
-
                 <div class="row g-2 mb-3">
                   <div class="col-4">
                     <div class="text-muted" style="font-size: 0.65rem; text-transform: uppercase">
@@ -187,7 +185,6 @@
                     <div id="detailTotal" class="text-success fw-bold fs-5"></div>
                   </div>
                 </div>
-
                 <div class="mt-3">
                   <div
                     class="text-muted mb-2"
@@ -288,15 +285,13 @@
                   class="btn-filter btn-filter-main"
                   onclick="updateTimeRange('7d', this, 'main')"
                 >
-                  7D
-                </button>
-                <button
+                  7D</button
+                ><button
                   class="btn-filter btn-filter-main"
                   onclick="updateTimeRange('30d', this, 'main')"
                 >
-                  30D
-                </button>
-                <button
+                  30D</button
+                ><button
                   class="btn-filter btn-filter-main active"
                   onclick="updateTimeRange('max', this, 'main')"
                 >
@@ -318,15 +313,13 @@
                   class="btn-filter btn-filter-org"
                   onclick="updateTimeRange('7d', this, 'org')"
                 >
-                  7D
-                </button>
-                <button
+                  7D</button
+                ><button
                   class="btn-filter btn-filter-org"
                   onclick="updateTimeRange('30d', this, 'org')"
                 >
-                  30D
-                </button>
-                <button
+                  30D</button
+                ><button
                   class="btn-filter btn-filter-org active"
                   onclick="updateTimeRange('max', this, 'org')"
                 >
@@ -459,7 +452,6 @@
                   style="letter-spacing: -0.02em"
                   >Explorador de Inventário</span
                 >
-
                 <div class="ios-commander-pill d-flex gap-3 align-items-center shadow-sm">
                   <div class="form-check form-switch m-0 d-flex align-items-center gap-2">
                     <input
@@ -489,7 +481,6 @@
                   </div>
                 </div>
               </div>
-
               <div class="ios-filter-grid mt-2">
                 <select id="filterSet" class="ios-select" onchange="applyInventoryFilters()">
                   <option value="all">Todas Edições</option>
@@ -533,7 +524,6 @@
                 </select>
               </div>
             </div>
-
             <div
               class="table-responsive flex-grow-1 px-2"
               style="max-height: 600px; overflow-y: auto"

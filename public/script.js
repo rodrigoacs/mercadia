@@ -1,3 +1,20 @@
+const token = localStorage.getItem('mercadia_token')
+if (!token) window.location.href = 'login.html'
+
+// O Interceptador de Requisições: injeta o JWT e chuta pra tela de login se expirar
+async function apiFetch(endpoint, options = {}) {
+  if (!options.headers) options.headers = {}
+  options.headers['Authorization'] = `Bearer ${localStorage.getItem('mercadia_token')}`
+
+  const res = await fetch(endpoint, options)
+  if (res.status === 401) {
+    localStorage.removeItem('mercadia_token')
+    window.location.href = 'login.html'
+    throw new Error("Sessão expirada ou acesso negado.")
+  }
+  return res
+}
+
 const BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
 
 let globalData = {}
@@ -6,6 +23,9 @@ let mainChartInstance = null
 let organicChartInstance = null
 let currentSearchResults = []
 let selectedColors = []
+
+const safeSetText = (id, text) => { const el = document.getElementById(id); if (el) el.innerText = text }
+const safeSetHTML = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html }
 
 function formatManaCost(cost) {
   if (!cost) return ''
@@ -18,61 +38,69 @@ function formatManaCost(cost) {
 function showCardDetails(encStr) {
   try {
     const c = JSON.parse(decodeURIComponent(atob(encStr)))
-    if (!c.imageUri) {
-      alert("Imagem não encontrada para esta carta.")
-      return
-    }
+    if (!c.imageUri) { alert("Imagem não encontrada para esta carta."); return }
 
-    document.getElementById('detailImage').src = c.imageUri
-    document.getElementById('detailName').innerText = c.name
-    document.getElementById('detailMana').innerHTML = formatManaCost(c.manaCost)
-    document.getElementById('detailType').innerText = c.typeLine || 'Desconhecido'
+    const imgEl = document.getElementById('detailImage')
+    if (imgEl) imgEl.src = c.imageUri
+
+    safeSetText('detailName', c.name)
+    safeSetHTML('detailMana', formatManaCost(c.manaCost))
+    safeSetText('detailType', c.typeLine || 'Desconhecido')
 
     let oracle = c.oracleText || 'Sem texto de regras.'
-    document.getElementById('detailOracle').innerHTML = formatManaCost(oracle)
+    safeSetHTML('detailOracle', formatManaCost(oracle))
 
-    document.getElementById('detailSet').innerText = `${c.set.toUpperCase()} #${c.num || ''} ${c.extras ? '(' + c.extras + ')' : ''}`
+    safeSetText('detailSet', `${c.set.toUpperCase()} #${c.num || ''} ${c.extras ? '(' + c.extras + ')' : ''}`)
 
     const rarities = { common: 'Comum', uncommon: 'Incomum', rare: 'Rara', mythic: 'Mítica' }
-    document.getElementById('detailRarity').innerText = rarities[c.rarity?.toLowerCase()] || c.rarity || '-'
+    safeSetText('detailRarity', rarities[c.rarity?.toLowerCase()] || c.rarity || '-')
 
-    document.getElementById('detailQty').innerText = `${c.qty}x`
-    document.getElementById('detailUnit').innerText = BRL.format(c.unitPrice || 0)
-    document.getElementById('detailTotal').innerText = BRL.format((c.unitPrice || 0) * (c.qty || 1))
+    safeSetText('detailQty', `${c.qty}x`)
+    safeSetText('detailUnit', BRL.format(c.unitPrice || 0))
+    safeSetText('detailTotal', BRL.format((c.unitPrice || 0) * (c.qty || 1)))
 
     const legDiv = document.getElementById('detailLegalities')
-    legDiv.innerHTML = ''
-    if (c.legalities) {
-      const formats = ['standard', 'pioneer', 'modern', 'legacy', 'commander', 'pauper']
-      formats.forEach(f => {
-        if (c.legalities[f]) {
-          const isLegal = c.legalities[f] === 'legal'
-          const badgeClass = isLegal ? 'bg-success' : 'bg-danger'
-          legDiv.innerHTML += `<span class="badge ${badgeClass} text-uppercase" style="font-size: 0.65rem; padding: 0.4em 0.6em;">${f}</span>`
-        }
-      })
+    if (legDiv) {
+      legDiv.innerHTML = ''
+      if (c.legalities) {
+        const formats = ['standard', 'pioneer', 'modern', 'legacy', 'commander', 'pauper']
+        formats.forEach(f => {
+          if (c.legalities[f]) {
+            const isLegal = c.legalities[f] === 'legal'
+            const badgeClass = isLegal ? 'bg-success' : 'bg-danger'
+            legDiv.innerHTML += `<span class="badge ${badgeClass} text-uppercase text-white" style="font-size: 0.65rem; padding: 0.4em 0.6em;">${f}</span>`
+          }
+        })
+      }
     }
-
-    new bootstrap.Modal(document.getElementById('imagePreviewModal')).show()
-  } catch (e) {
-    console.error('Erro ao abrir detalhes', e)
-  }
+    const modalEl = document.getElementById('imagePreviewModal')
+    if (modalEl) new bootstrap.Modal(modalEl).show()
+  } catch (e) { console.error('Erro ao abrir detalhes', e) }
 }
 
 async function performSearch(e) {
   e.preventDefault()
-  const q = document.getElementById('searchInput').value.trim()
+  const searchEl = document.getElementById('searchInput')
+  if (!searchEl) return
+  const q = searchEl.value.trim()
   if (q.length < 2) return
-  new bootstrap.Modal(document.getElementById('searchModal')).show()
+
+  const modalEl = document.getElementById('searchModal')
+  if (modalEl) new bootstrap.Modal(modalEl).show()
+
   const tb = document.getElementById('searchResultsBody')
+  if (!tb) return
+
   tb.innerHTML = '<tr><td colspan="5" class="text-center py-4 text-muted">Buscando...</td></tr>'
-  document.getElementById('noResults').classList.add('d-none')
+  const noResEl = document.getElementById('noResults')
+  if (noResEl) noResEl.classList.add('d-none')
+
   try {
-    const req = await fetch(`/api/search?q=${encodeURIComponent(q)}`)
+    const req = await apiFetch(`/api/search?q=${encodeURIComponent(q)}`)
     currentSearchResults = await req.json()
     tb.innerHTML = ''
     if (currentSearchResults.length === 0) {
-      document.getElementById('noResults').classList.remove('d-none')
+      if (noResEl) noResEl.classList.remove('d-none')
       return
     }
     currentSearchResults.forEach((c, i) => {
@@ -82,20 +110,16 @@ async function performSearch(e) {
         if (cr > pr) icnHist = '<i class="bi bi-graph-up-arrow text-success"></i>'
         else if (cr < pr) icnHist = '<i class="bi bi-graph-down-arrow text-danger"></i>'
       }
-
       const enc = btoa(encodeURIComponent(JSON.stringify(c)))
       const btnImg = `<button class="btn-action-icon me-1" onclick="showCardDetails('${enc}')" title="Inspecionar Carta"><i class="bi bi-image"></i></button>`
       const btnHist = `<button class="btn-action-icon" onclick="openHistory(${i})" title="Histórico de Preço">${icnHist}</button>`
 
       tb.innerHTML += `<tr>
-        <td class="ps-4">
-          <div class="col-card-name fw-bold text-white">${c.name}</div>
-          <div class="small text-muted">${c.set} #${c.num} <span class="ms-2">${formatManaCost(c.manaCost)}</span></div>
-        </td>
+        <td class="ps-4"><div class="col-card-name fw-bold text-main">${c.name}</div><div class="small text-muted">${c.set} #${c.num} <span class="ms-2">${formatManaCost(c.manaCost)}</span></div></td>
         <td class="text-center text-nowrap">${btnImg}${btnHist}</td>
         <td class="text-center"><span class="badge-tech">${c.set}</span></td>
         <td class="text-center">${c.qty}</td>
-        <td class="text-end pe-4 text-white fw-bold">${BRL.format(c.totalPrice)}</td>
+        <td class="text-end pe-4 text-main fw-bold">${BRL.format(c.totalPrice)}</td>
       </tr>`
     })
   } catch (e) { console.error(e) }
@@ -104,9 +128,11 @@ async function performSearch(e) {
 function openHistory(i) {
   const c = currentSearchResults[i]
   if (!c) return
-  new bootstrap.Modal(document.getElementById('historyDetailModal')).show()
-  document.getElementById('histTitle').innerText = `${c.name} (${c.set})`
+  const modalEl = document.getElementById('historyDetailModal')
+  if (modalEl) new bootstrap.Modal(modalEl).show()
+  safeSetText('histTitle', `${c.name} (${c.set})`)
   const tb = document.getElementById('historyTableBody')
+  if (!tb) return
   tb.innerHTML = ''
   c.history.forEach((h, x) => {
     let d = ''
@@ -116,7 +142,7 @@ function openHistory(i) {
       else if (h.value < p) d = '<span class="text-danger ms-1">▼</span>'
     }
     const dp = h.date.split('-')
-    tb.innerHTML += `<tr><td class="ps-3 text-muted">${dp[2]}/${dp[1]}</td><td class="text-end pe-3 text-white fw-bold">${BRL.format(h.value)}${d}</td></tr>`
+    tb.innerHTML += `<tr><td class="ps-3 text-muted">${dp[2]}/${dp[1]}</td><td class="text-end pe-3 text-main fw-bold">${BRL.format(h.value)}${d}</td></tr>`
   })
 }
 
@@ -126,6 +152,8 @@ function updateTimeRange(range, btn, type) {
   btn.classList.add('active')
 
   const instance = type === 'main' ? mainChartInstance : organicChartInstance
+  if (!instance) return
+
   const allL = type === 'main' ? globalData.chart.labels : globalData.organicChart.labels
   const allV = type === 'main' ? globalData.chart.values : globalData.organicChart.values
 
@@ -136,47 +164,42 @@ function updateTimeRange(range, btn, type) {
 }
 
 function toggleCommanderMode() {
-  const active = document.getElementById('commanderModeToggle').checked
+  const toggleEl = document.getElementById('commanderModeToggle')
+  if (!toggleEl) return
+  const active = toggleEl.checked
   const colorBox = document.getElementById('colorFilters')
-  if (active) {
-    colorBox.style.opacity = '1'
-    colorBox.style.pointerEvents = 'auto'
-    fetchCommanderPool()
-  } else {
-    colorBox.style.opacity = '0.4'
-    colorBox.style.pointerEvents = 'none'
-    loadInventory()
+
+  if (colorBox) {
+    if (active) {
+      colorBox.style.opacity = '1'; colorBox.style.pointerEvents = 'auto'; fetchCommanderPool()
+    } else {
+      colorBox.style.opacity = '0.4'; colorBox.style.pointerEvents = 'none'; loadInventory()
+    }
   }
 }
 
 function toggleColor(color) {
   const btn = document.querySelector(`.c-${color.toLowerCase()}`)
+  if (!btn) return
   if (selectedColors.includes(color)) {
-    selectedColors = selectedColors.filter(c => c !== color)
-    btn.classList.remove('active')
+    selectedColors = selectedColors.filter(c => c !== color); btn.classList.remove('active')
   } else {
-    selectedColors.push(color)
-    btn.classList.add('active')
+    selectedColors.push(color); btn.classList.add('active')
   }
 
   if (color === 'C' && selectedColors.includes('C')) {
-    selectedColors = ['C']
-    document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'))
-    btn.classList.add('active')
+    selectedColors = ['C']; document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active')
   } else if (color !== 'C') {
-    selectedColors = selectedColors.filter(c => c !== 'C')
-    document.querySelector('.c-c')?.classList.remove('active')
+    selectedColors = selectedColors.filter(c => c !== 'C'); const ccBtn = document.querySelector('.c-c'); if (ccBtn) ccBtn.classList.remove('active')
   }
-
-  if (document.getElementById('commanderModeToggle').checked) {
-    fetchCommanderPool()
-  }
+  const toggleEl = document.getElementById('commanderModeToggle')
+  if (toggleEl && toggleEl.checked) fetchCommanderPool()
 }
 
 async function fetchCommanderPool() {
   try {
     const colorString = selectedColors.length > 0 ? selectedColors.join(',') : 'C'
-    const req = await fetch(`/api/commander-pool?colors=${colorString}`)
+    const req = await apiFetch(`/api/commander-pool?colors=${colorString}`)
     fullInventory = await req.json()
     applyInventoryFilters()
   } catch (e) { console.error(e) }
@@ -184,223 +207,179 @@ async function fetchCommanderPool() {
 
 async function loadInventory() {
   try {
-    const req = await fetch('/api/inventory')
+    const req = await apiFetch('/api/inventory')
     fullInventory = await req.json()
-
     const sets = [...new Set(fullInventory.map(c => c.set))].sort()
     const setSelect = document.getElementById('filterSet')
-    setSelect.innerHTML = '<option value="all">Todas Edições</option>'
-    sets.forEach(s => {
-      const opt = document.createElement('option')
-      opt.value = s
-      opt.innerText = s
-      setSelect.appendChild(opt)
-    })
-
+    if (setSelect) {
+      setSelect.innerHTML = '<option value="all">Todas Edições</option>'
+      sets.forEach(s => {
+        const opt = document.createElement('option'); opt.value = s; opt.innerText = s; setSelect.appendChild(opt)
+      })
+    }
     applyInventoryFilters()
-  } catch (e) {
-    console.error(e)
-  }
+  } catch (e) { console.error(e) }
 }
 
 function applyInventoryFilters() {
-  const setF = document.getElementById('filterSet').value
-  const extraF = document.getElementById('filterExtra').value
-  const typeF = document.getElementById('filterType').value
-  const rarityF = document.getElementById('filterRarity').value
-  const tierF = document.getElementById('filterTier').value
-  const sortF = document.getElementById('sortOrder').value
+  const getVal = id => { const el = document.getElementById(id); return el ? el.value : 'all' }
+  const setF = getVal('filterSet'), extraF = getVal('filterExtra'), typeF = getVal('filterType')
+  const rarityF = getVal('filterRarity'), tierF = getVal('filterTier'), sortF = getVal('sortOrder')
 
   let filtered = fullInventory.filter(c => {
     if (setF !== 'all' && c.set !== setF) return false
     if (extraF === 'foil' && (!c.extras || c.extras.trim() === '')) return false
     if (extraF === 'normal' && c.extras && c.extras.trim() !== '') return false
     if (rarityF !== 'all' && (!c.rarity || c.rarity.toLowerCase() !== rarityF)) return false
-
-    if (typeF !== 'all') {
-      if (!c.typeLine) return false
-      const tl = c.typeLine.toLowerCase()
-      if (!tl.includes(typeF)) return false
-    }
-
+    if (typeF !== 'all') { if (!c.typeLine) return false; if (!c.typeLine.toLowerCase().includes(typeF)) return false }
     if (tierF !== 'all') {
       if (tierF === 'bulk' && c.unitPrice >= 2) return false
       if (tierF === 'low' && (c.unitPrice < 2 || c.unitPrice >= 10)) return false
       if (tierF === 'mid' && (c.unitPrice < 10 || c.unitPrice >= 50)) return false
       if (tierF === 'high' && c.unitPrice < 50) return false
     }
-
     return true
   })
 
   const rarityWeight = { 'mythic': 4, 'rare': 3, 'uncommon': 2, 'common': 1 }
-
   filtered.sort((a, b) => {
     if (sortF === 'totalDesc') return b.totalPrice - a.totalPrice
     if (sortF === 'unitDesc') return b.unitPrice - a.unitPrice
     if (sortF === 'unitAsc') return a.unitPrice - b.unitPrice
     if (sortF === 'qtyDesc') return b.qty - a.qty
     if (sortF === 'nameAsc') return a.name.localeCompare(b.name)
-
     if (sortF === 'rarityDesc') {
-      const rA = rarityWeight[a.rarity?.toLowerCase()] || 0
-      const rB = rarityWeight[b.rarity?.toLowerCase()] || 0
+      const rA = rarityWeight[a.rarity?.toLowerCase()] || 0, rB = rarityWeight[b.rarity?.toLowerCase()] || 0
       return rB - rA || b.totalPrice - a.totalPrice
     }
-
     return 0
   })
 
   const tbody = document.getElementById('tableInventory')
-  tbody.innerHTML = ''
-  const displayList = filtered.slice(0, 150)
+  if (tbody) {
+    tbody.innerHTML = ''
+    const displayList = filtered.slice(0, 150)
+    displayList.forEach((c, i) => {
+      const badge = c.extras ? `<span class="badge-extra ms-1">${c.extras}</span>` : ''
+      const enc = btoa(encodeURIComponent(JSON.stringify(c)))
+      const imgBtn = c.imageUri ? `<button class="btn btn-sm btn-link p-0 text-muted" onclick="showCardDetails('${enc}')"><i class="bi bi-image"></i></button>` : ''
 
-  displayList.forEach((c, i) => {
-    const badge = c.extras ? `<span class="badge-extra ms-1">${c.extras}</span>` : ''
-    const enc = btoa(encodeURIComponent(JSON.stringify(c)))
-    const imgBtn = c.imageUri ? `<button class="btn btn-sm btn-link p-0 text-muted" onclick="showCardDetails('${enc}')"><i class="bi bi-image"></i></button>` : ''
-
-    tbody.innerHTML += `<tr>
-      <td class="text-center ps-4">${imgBtn}</td>
-      <td>
-        <div class="col-card-name fw-bold text-white">${c.name}</div>
-        ${badge}
-      </td>
-      <td class="text-center small text-muted">
-        ${c.typeLine ? c.typeLine.split('—')[0].trim() : ''} <br/> 
-        <span class="fs-6">${formatManaCost(c.manaCost)}</span>
-      </td>
-      <td class="text-center"><span class="badge-tech">${c.set}</span></td>
-      <td class="text-center text-muted">${c.qty}</td>
-      <td class="text-end text-muted small">${BRL.format(c.unitPrice)}</td>
-      <td class="text-end fw-bold text-white pe-4">${BRL.format(c.totalPrice)}</td>
-    </tr>`
-  })
-  document.getElementById('inventoryCount').innerText = `Mostrando ${displayList.length} de ${filtered.length} cartas.`
+      tbody.innerHTML += `<tr>
+        <td class="text-center ps-4">${imgBtn}</td>
+        <td><div class="col-card-name fw-bold text-main">${c.name}</div>${badge}</td>
+        <td class="text-center small text-muted">${c.typeLine ? c.typeLine.split('—')[0].trim() : ''} <br/> <span class="fs-6">${formatManaCost(c.manaCost)}</span></td>
+        <td class="text-center"><span class="badge-tech">${c.set}</span></td>
+        <td class="text-center text-muted">${c.qty}</td>
+        <td class="text-end text-muted small">${BRL.format(c.unitPrice)}</td>
+        <td class="text-end fw-bold text-main pe-4">${BRL.format(c.totalPrice)}</td>
+      </tr>`
+    })
+    safeSetText('inventoryCount', `Mostrando ${displayList.length} de ${filtered.length} cartas.`)
+  }
 }
 
 function filterFromChart(setName) {
   const select = document.getElementById('filterSet')
-  if (setName === 'Outros') select.value = 'all'
-  else {
+  if (!select) return
+  if (setName === 'Outros') select.value = 'all'; else {
     const exists = [...select.options].some(o => o.value === setName)
     if (exists) select.value = setName
   }
   applyInventoryFilters()
-  document.getElementById('tableInventory').scrollIntoView({ behavior: 'smooth' })
+  const invTable = document.getElementById('tableInventory')
+  if (invTable) invTable.scrollIntoView({ behavior: 'smooth' })
 }
 
 async function initDashboard() {
   try {
-    const req = await fetch('/api/dashboard')
+    const req = await apiFetch('/api/dashboard')
     globalData = await req.json()
     const data = globalData
     if (!data || data.empty) return
 
-    document.getElementById('kpiTotal').innerText = BRL.format(data.kpis.totalValue)
-    document.getElementById('kpiQty').innerText = data.kpis.totalCards
-    document.getElementById('kpiTicket').innerText = BRL.format(data.kpis.avgTicket)
-    document.getElementById('lastUpdate').innerText = data.kpis.lastUpdate.split('-').reverse().slice(0, 2).join('/')
+    safeSetText('kpiTotal', BRL.format(data.kpis.totalValue))
+    safeSetText('kpiQty', data.kpis.totalCards)
+    safeSetText('kpiTicket', BRL.format(data.kpis.avgTicket))
+
+    if (data.kpis.lastUpdate) safeSetText('lastUpdate', data.kpis.lastUpdate.split('-').reverse().slice(0, 2).join('/'))
 
     if (data.pareto) {
-      document.getElementById('paretoRow').style.display = 'flex'
-      document.getElementById('paretoText').innerHTML = `A <strong>Regra de Pareto</strong> em ação: apenas <strong class="text-white">${data.pareto.percentCards}%</strong> das suas cartas físicas (${data.pareto.totalCardsIncluded} un.) correspondem a <strong>80%</strong> de todo o seu patrimônio.`
-      document.getElementById('paretoValue').innerText = BRL.format(data.pareto.accWealth)
+      const row = document.getElementById('paretoRow')
+      if (row) row.style.display = 'flex'
+      safeSetHTML('paretoText', `A <strong>Regra de Pareto</strong> em ação: apenas <strong class="text-main">${data.pareto.percentCards}%</strong> das suas cartas físicas (${data.pareto.totalCardsIncluded} un.) correspondem a <strong>80%</strong> de todo o seu patrimônio.`)
+      safeSetText('paretoValue', BRL.format(data.pareto.accWealth))
     }
 
     const setKpi = (id, val) => {
       const el = document.getElementById(id)
-      el.innerText = (val > 0 ? '+' : '') + BRL.format(val)
-      el.className = 'big-number mt-2 ' + (val >= 0 ? 'var-up' : 'var-down')
+      if (el) {
+        el.innerText = (val > 0 ? '+' : '') + BRL.format(val)
+        el.className = 'big-number mt-2 ' + (val >= 0 ? 'var-up' : 'var-down')
+      }
     }
     setKpi('kpiVar', data.kpis.dayVar)
     setKpi('kpiMonth', data.kpis.monthVar)
 
-    const ctxMain = document.getElementById('mainChart').getContext('2d')
-    const gradMain = ctxMain.createLinearGradient(0, 0, 0, 300)
-    gradMain.addColorStop(0, 'rgba(20, 184, 166, 0.3)')
-    gradMain.addColorStop(1, 'rgba(20, 184, 166, 0)')
-
-    mainChartInstance = new Chart(ctxMain, {
-      type: 'line',
-      data: {
-        labels: data.chart.labels,
-        datasets: [{ label: 'Total', data: data.chart.values, borderColor: '#14b8a6', borderWidth: 2, backgroundColor: gradMain, fill: true, tension: 0.3, pointRadius: 0, pointHitRadius: 20 }]
-      },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: true, grid: { display: false }, ticks: { maxTicksLimit: 7, callback: function (v) { return this.getLabelForValue(v).split('-').slice(1).reverse().join('/') } } }, y: { display: true, position: 'right', grid: { color: 'rgba(54, 49, 45, 0.7)', borderDash: [5, 5] }, ticks: { callback: v => new Intl.NumberFormat('pt-BR', { notation: 'compact', style: 'currency', currency: 'BRL' }).format(v) } } } }
-    })
-
-    const ctxOrg = document.getElementById('organicChart').getContext('2d')
-    const gradOrg = ctxOrg.createLinearGradient(0, 0, 0, 300)
-    gradOrg.addColorStop(0, 'rgba(16, 185, 129, 0.3)')
-    gradOrg.addColorStop(1, 'rgba(16, 185, 129, 0)')
-
-    organicChartInstance = new Chart(ctxOrg, {
-      type: 'line',
-      data: {
-        labels: data.organicChart.labels,
-        datasets: [{ label: 'Lucro de Mercado Acumulado', data: data.organicChart.values, borderColor: '#10b981', borderWidth: 2, backgroundColor: gradOrg, fill: true, tension: 0.3, pointRadius: 0, pointHitRadius: 20 }]
-      },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: true, grid: { display: false }, ticks: { maxTicksLimit: 7, callback: function (v) { return this.getLabelForValue(v).split('-').slice(1).reverse().join('/') } } }, y: { display: true, position: 'right', grid: { color: 'rgba(54, 49, 45, 0.7)', borderDash: [5, 5] }, ticks: { callback: v => new Intl.NumberFormat('pt-BR', { notation: 'compact', style: 'currency', currency: 'BRL' }).format(v) } } } }
-    })
-
-    if (data.dailyChart.labels.length)
-      new Chart(document.getElementById('dailyChart'), {
-        type: 'bar',
-        data: { labels: data.dailyChart.labels, datasets: [{ data: data.dailyChart.values, backgroundColor: data.dailyChart.values.map(v => v >= 0 ? '#10b981' : '#ef4444'), borderRadius: 4 }] },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { grid: { color: 'rgba(54, 49, 45, 0.7)' } } } }
-      })
-
-    if (data.setChart)
-      new Chart(document.getElementById('setChart'), {
-        type: 'doughnut',
-        data: { labels: data.setChart.labels, datasets: [{ data: data.setChart.values, backgroundColor: ['#14b8a6', '#0d9488', '#0f766e', '#115e59', '#134e4a', '#042f2e'], borderWidth: 0 }] },
-        options: { responsive: true, maintainAspectRatio: false, cutout: '70%', onClick: (evt, activeElements) => { if (activeElements.length > 0) filterFromChart(data.setChart.labels[activeElements[0].index]) }, plugins: { legend: { position: 'right', labels: { color: '#9e978e', boxWidth: 10, font: { size: 10 } } }, tooltip: { callbacks: { label: c => ` ${c.label}: ${BRL.format(c.raw)}` } } } }
-      })
-
-    if (data.colorDist) {
-      new Chart(document.getElementById('colorChart'), {
-        type: 'doughnut',
-        data: { labels: ['Branco', 'Azul', 'Preto', 'Vermelho', 'Verde', 'Multicolor', 'Incolor'], datasets: [{ data: [data.colorDist.W, data.colorDist.U, data.colorDist.B, data.colorDist.R, data.colorDist.G, data.colorDist.M, data.colorDist.C], backgroundColor: ['#FFFDE7', '#3B82F6', '#52525B', '#EF4444', '#10B981', '#F59E0B', '#A8A29E'], borderWidth: 1, borderColor: '#1a1816' }] },
-        options: { responsive: true, maintainAspectRatio: false, cutout: '70%', plugins: { legend: { position: 'right', labels: { color: '#9e978e', boxWidth: 10, font: { size: 10 } } } } }
+    const mainCtxEl = document.getElementById('mainChart')
+    if (mainCtxEl) {
+      const ctxMain = mainCtxEl.getContext('2d')
+      const gradMain = ctxMain.createLinearGradient(0, 0, 0, 300)
+      gradMain.addColorStop(0, 'rgba(0, 122, 255, 0.3)'); gradMain.addColorStop(1, 'rgba(0, 122, 255, 0)')
+      mainChartInstance = new Chart(ctxMain, {
+        type: 'line',
+        data: { labels: data.chart.labels, datasets: [{ label: 'Total', data: data.chart.values, borderColor: '#007AFF', borderWidth: 2, backgroundColor: gradMain, fill: true, tension: 0.3, pointRadius: 0, pointHitRadius: 20 }] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: true, grid: { display: false }, ticks: { maxTicksLimit: 7, callback: function (v) { return this.getLabelForValue(v).split('-').slice(1).reverse().join('/') } } }, y: { display: true, position: 'right', grid: { color: 'rgba(60, 60, 67, 0.18)', borderDash: [5, 5] }, ticks: { callback: v => new Intl.NumberFormat('pt-BR', { notation: 'compact', style: 'currency', currency: 'BRL' }).format(v) } } } }
       })
     }
 
-    if (data.typeDist) {
-      new Chart(document.getElementById('typeChart'), {
-        type: 'bar',
-        data: {
-          labels: ['Criaturas', 'Mágicas', 'Terrenos', 'Artefatos', 'Encantamentos', 'Planeswalkers'],
-          datasets: [{
-            data: [data.typeDist.creature, data.typeDist.instant + data.typeDist.sorcery, data.typeDist.land, data.typeDist.artifact, data.typeDist.enchantment, data.typeDist.planeswalker],
-            backgroundColor: '#14b8a6', 
-            borderRadius: 4
-          }]
-        },
-        options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { grid: { display: false } } } }
+    const orgCtxEl = document.getElementById('organicChart')
+    if (orgCtxEl) {
+      const ctxOrg = orgCtxEl.getContext('2d')
+      const gradOrg = ctxOrg.createLinearGradient(0, 0, 0, 300)
+      gradOrg.addColorStop(0, 'rgba(52, 199, 89, 0.3)'); gradOrg.addColorStop(1, 'rgba(52, 199, 89, 0)')
+      organicChartInstance = new Chart(ctxOrg, {
+        type: 'line',
+        data: { labels: data.organicChart.labels, datasets: [{ label: 'Lucro de Mercado Acumulado', data: data.organicChart.values, borderColor: '#34C759', borderWidth: 2, backgroundColor: gradOrg, fill: true, tension: 0.3, pointRadius: 0, pointHitRadius: 20 }] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: true, grid: { display: false }, ticks: { maxTicksLimit: 7, callback: function (v) { return this.getLabelForValue(v).split('-').slice(1).reverse().join('/') } } }, y: { display: true, position: 'right', grid: { color: 'rgba(60, 60, 67, 0.18)', borderDash: [5, 5] }, ticks: { callback: v => new Intl.NumberFormat('pt-BR', { notation: 'compact', style: 'currency', currency: 'BRL' }).format(v) } } } }
       })
     }
 
-    if (data.rarityDist) {
-      new Chart(document.getElementById('rarityChart'), {
-        type: 'doughnut',
-        data: { labels: ['Comum', 'Incomum', 'Rara', 'Mítica'], datasets: [{ data: [data.rarityDist.common, data.rarityDist.uncommon, data.rarityDist.rare, data.rarityDist.mythic], backgroundColor: ['#52525B', '#9CA3AF', '#F59E0B', '#EA580C'], borderWidth: 1, borderColor: '#1a1816' }] },
-        options: { responsive: true, maintainAspectRatio: false, cutout: '70%', plugins: { legend: { position: 'right', labels: { color: '#9e978e', boxWidth: 10, font: { size: 10 } } } } }
-      })
+    const dailyEl = document.getElementById('dailyChart')
+    if (dailyEl && data.dailyChart.labels.length) {
+      new Chart(dailyEl, { type: 'bar', data: { labels: data.dailyChart.labels, datasets: [{ data: data.dailyChart.values, backgroundColor: data.dailyChart.values.map(v => v >= 0 ? '#34C759' : '#FF3B30'), borderRadius: 4 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { grid: { color: 'rgba(60, 60, 67, 0.18)' } } } } })
     }
 
-    if (data.tiers)
-      new Chart(document.getElementById('tierChart'), {
-        type: 'bar',
-        data: { labels: ['Bulk (< R$ 2)', 'Low (R$ 2-10)', 'Mid (R$ 10-50)', 'High (> R$ 50)'], datasets: [{ data: [data.tiers.bulk.qty, data.tiers.low.qty, data.tiers.mid.qty, data.tiers.high.qty], backgroundColor: ['#52525B', '#9CA3AF', '#14b8a6', '#EA580C'], borderRadius: 4 }] },
-        options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { grid: { display: false } } } }
-      })
+    const setEl = document.getElementById('setChart')
+    if (setEl && data.setChart) {
+      new Chart(setEl, { type: 'doughnut', data: { labels: data.setChart.labels, datasets: [{ data: data.setChart.values, backgroundColor: ['#007AFF', '#5AC8FA', '#34C759', '#FFCC00', '#FF9500', '#FF3B30'], borderWidth: 0 }] }, options: { responsive: true, maintainAspectRatio: false, cutout: '70%', onClick: (evt, activeElements) => { if (activeElements.length > 0) filterFromChart(data.setChart.labels[activeElements[0].index]) }, plugins: { legend: { position: 'right', labels: { boxWidth: 10, font: { size: 10 } } }, tooltip: { callbacks: { label: c => ` ${c.label}: ${BRL.format(c.raw)}` } } } } })
+    }
+
+    const colorEl = document.getElementById('colorChart')
+    if (colorEl && data.colorDist) {
+      new Chart(colorEl, { type: 'doughnut', data: { labels: ['Branco', 'Azul', 'Preto', 'Vermelho', 'Verde', 'Multicolor', 'Incolor'], datasets: [{ data: [data.colorDist.W, data.colorDist.U, data.colorDist.B, data.colorDist.R, data.colorDist.G, data.colorDist.M, data.colorDist.C], backgroundColor: ['#F0E6D2', '#4A90E2', '#2C2C2E', '#FF3B30', '#34C759', '#FFCC00', '#8E8E93'], borderWidth: 1, borderColor: 'rgba(60, 60, 67, 0.18)' }] }, options: { responsive: true, maintainAspectRatio: false, cutout: '70%', plugins: { legend: { position: 'right', labels: { boxWidth: 10, font: { size: 10 } } } } } })
+    }
+
+    const typeEl = document.getElementById('typeChart')
+    if (typeEl && data.typeDist) {
+      new Chart(typeEl, { type: 'bar', data: { labels: ['Criaturas', 'Mágicas', 'Terrenos', 'Artefatos', 'Encantamentos', 'Planeswalkers'], datasets: [{ data: [data.typeDist.creature, data.typeDist.instant + data.typeDist.sorcery, data.typeDist.land, data.typeDist.artifact, data.typeDist.enchantment, data.typeDist.planeswalker], backgroundColor: '#007AFF', borderRadius: 4 }] }, options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { grid: { display: false } } } } })
+    }
+
+    const rarityEl = document.getElementById('rarityChart')
+    if (rarityEl && data.rarityDist) {
+      new Chart(rarityEl, { type: 'doughnut', data: { labels: ['Comum', 'Incomum', 'Rara', 'Mítica'], datasets: [{ data: [data.rarityDist.common, data.rarityDist.uncommon, data.rarityDist.rare, data.rarityDist.mythic], backgroundColor: ['#8E8E93', '#5AC8FA', '#007AFF', '#FF9500'], borderWidth: 1, borderColor: 'rgba(60, 60, 67, 0.18)' }] }, options: { responsive: true, maintainAspectRatio: false, cutout: '70%', plugins: { legend: { position: 'right', labels: { boxWidth: 10, font: { size: 10 } } } } } })
+    }
+
+    const tierEl = document.getElementById('tierChart')
+    if (tierEl && data.tiers) {
+      new Chart(tierEl, { type: 'bar', data: { labels: ['Bulk (< R$ 2)', 'Low (R$ 2-10)', 'Mid (R$ 10-50)', 'High (> R$ 50)'], datasets: [{ data: [data.tiers.bulk.qty, data.tiers.low.qty, data.tiers.mid.qty, data.tiers.high.qty], backgroundColor: ['#8E8E93', '#5AC8FA', '#007AFF', '#FF9500'], borderRadius: 4 }] }, options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { grid: { display: false } } } } })
+    }
 
     const fillTable = (id, list, colorCheck = false) => {
       const tb = document.getElementById(id)
+      if (!tb) return
       if (!list.length) { tb.innerHTML = '<tr><td class="text-center text-muted">Vazio</td></tr>'; return }
       list.forEach(x => {
-        let val = BRL.format(x.diff), cls = colorCheck ? (x.diff > 0 ? 'var-up' : 'var-down') : 'text-white', prefix = colorCheck ? (x.diff > 0 ? '+' : '') : ''
+        let val = BRL.format(x.diff), cls = colorCheck ? (x.diff > 0 ? 'var-up' : 'var-down') : 'text-main', prefix = colorCheck ? (x.diff > 0 ? '+' : '') : ''
         const enc = btoa(encodeURIComponent(JSON.stringify(x)))
         const imgBtn = x.imageUri ? `<button class="btn btn-sm btn-link p-0 text-muted me-2" onclick="showCardDetails('${enc}')"><i class="bi bi-image"></i></button>` : ''
 
@@ -408,7 +387,7 @@ async function initDashboard() {
           <td class="ps-3 d-flex align-items-center">
             ${imgBtn}
             <div>
-              <div class="col-card-name fw-bold text-white">${x.name} <span class="ms-2 fs-6">${formatManaCost(x.manaCost)}</span></div>
+              <div class="col-card-name fw-bold text-main">${x.name} <span class="ms-2 fs-6">${formatManaCost(x.manaCost)}</span></div>
               ${x.set ? '<div class="small text-muted">' + x.set + '</div>' : ''}
             </div>
           </td>
@@ -419,6 +398,7 @@ async function initDashboard() {
 
     const fillTopCardsTable = (id, list) => {
       const tb = document.getElementById(id)
+      if (!tb) return
       if (!list.length) { tb.innerHTML = '<tr><td class="text-center text-muted">Vazio</td></tr>'; return }
       list.forEach((x, i) => {
         const enc = btoa(encodeURIComponent(JSON.stringify(x)))
@@ -429,7 +409,7 @@ async function initDashboard() {
           <td class="ps-2 d-flex align-items-center">
             ${imgBtn}
             <div>
-              <div class="col-card-name fw-bold text-white">${x.name} <span class="ms-2 fs-6">${formatManaCost(x.manaCost)}</span></div>
+              <div class="col-card-name fw-bold text-main">${x.name} <span class="ms-2 fs-6">${formatManaCost(x.manaCost)}</span></div>
               ${x.set ? '<div class="small text-muted">' + x.set + '</div>' : ''}
             </div>
           </td>
@@ -446,4 +426,7 @@ async function initDashboard() {
     loadInventory()
   } catch (e) { console.error(e) }
 }
-initDashboard()
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (document.getElementById('kpiTotal')) initDashboard()
+})
