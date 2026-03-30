@@ -28,7 +28,7 @@ export const initDB = async () => {
     `)
     console.log('📦 Tabela historico_cartas verificada/criada com sucesso no PostgreSQL.')
   } catch (err) {
-    console.error('Caralho, erro ao inicializar o banco de dados:', err)
+    console.error('Erro ao inicializar o banco de dados:', err)
   } finally {
     client.release()
   }

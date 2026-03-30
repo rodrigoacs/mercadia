@@ -97,7 +97,6 @@
     </div>
 
     <script>
-      // Se já tiver token, pula o login e vai pro dashboard
       if (localStorage.getItem('mercadia_token')) window.location.href = 'index.html'
 
       async function doLogin(e) {
@@ -125,14 +124,14 @@
           } else {
             err.innerText = data.error || 'Erro ao logar.'
             err.classList.remove('d-none')
-            btn.innerHTML = 'Desbloquear Cofre'
+            btn.innerHTML = 'Acessar'
             btn.disabled = false
             document.getElementById('passInput').value = ''
           }
         } catch (error) {
           err.innerText = 'Servidor fora do ar.'
           err.classList.remove('d-none')
-          btn.innerHTML = 'Desbloquear Cofre'
+          btn.innerHTML = 'Acessar'
           btn.disabled = false
         }
       }

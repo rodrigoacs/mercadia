@@ -2,8 +2,41 @@
 <html lang="pt-br" data-bs-theme="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mercadia - Enterprise Edition</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Mercadia</title>
+
+    <meta name="title" content="Mercadia" />
+    <meta
+      name="description"
+      content="Terminal financeiro e gestor definitivo para coleções e decks de Magic: The Gathering."
+    />
+    <meta name="theme-color" content="#000000" />
+    <meta name="author" content="rodrigoacs" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Mercadia" />
+    <meta
+      property="og:description"
+      content="Auditoria de ativos e gestão de portfólio de Magic: The Gathering."
+    />
+    <meta property="og:image" content="/apple-touch-icon.png" />
+
+    <meta property="og:image" content="https://mercadia.biblioplexo.com/public/banner.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Mercadia" />
+
+    <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+    <link rel="manifest" href="site.webmanifest" />
 
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
@@ -22,7 +55,7 @@
     <nav class="navbar sticky-top">
       <div class="container px-3">
         <div class="d-flex align-items-center w-100 justify-content-between">
-          <span class="navbar-brand">MERCADIA</span>
+          <span class="navbar-brand"> <i class="bi bi-gem"></i> MERCADIA </span>
           <div class="ms-auto d-flex gap-3 align-items-center">
             <div class="search-wrapper d-none d-md-block" style="width: 250px">
               <svg
@@ -89,8 +122,7 @@
           </div>
           <div class="modal-body p-4">
             <div class="alert alert-dark border-glass mb-4 text-muted small">
-              <i class="bi bi-shield-lock text-success me-2"></i> Vá na
-              página de
+              <i class="bi bi-shield-lock text-success me-2"></i> Vá na página de
               <a
                 href="https://www.ligamagic.com.br/colecao/print.php?id=350393&tcg=1"
                 target="_blank"
@@ -368,7 +400,7 @@
         <div class="col-12 col-lg-6">
           <div class="ui-panel">
             <div class="panel-header">
-              <span class="panel-title text-success">Crescimento Orgânico (Mercado)</span>
+              <span class="panel-title text-success">Crescimento Orgânico (Lucro)</span>
               <div class="btn-group-filter">
                 <button
                   class="btn-filter btn-filter-org"
@@ -453,7 +485,7 @@
         <div class="col-12 col-md-6">
           <div class="ui-panel h-100">
             <div class="panel-header">
-              <span class="panel-title text-success">🚀 Top Valorização Diária (R$)</span>
+              <span class="panel-title text-success">Top Valorização Diária (R$)</span>
             </div>
             <div class="table-responsive flex-grow-1">
               <table class="table table-sm align-middle mb-0">
@@ -465,7 +497,7 @@
         <div class="col-12 col-md-6">
           <div class="ui-panel h-100">
             <div class="panel-header">
-              <span class="panel-title text-danger">📉 Maiores Quedas Diárias (R$)</span>
+              <span class="panel-title text-danger">Maiores Quedas Diárias (R$)</span>
             </div>
             <div class="table-responsive flex-grow-1">
               <table class="table table-sm align-middle mb-0">
@@ -480,7 +512,7 @@
         <div class="col-12 col-md-6">
           <div class="ui-panel h-100">
             <div class="panel-header">
-              <span class="panel-title text-warning">👑 As Joias da Coroa (Top 5 Mais Caras)</span>
+              <span class="panel-title text-warning">Top 5 Mais Caras</span>
             </div>
             <div class="table-responsive flex-grow-1">
               <table class="table table-sm align-middle mb-0">
@@ -492,7 +524,7 @@
         <div class="col-12 col-md-6">
           <div class="ui-panel h-100">
             <div class="panel-header">
-              <span class="panel-title">Qualidade dos Ativos (Tier List)</span>
+              <span class="panel-title">Qualidade dos Ativos</span>
             </div>
             <div class="panel-body">
               <div class="chart-container-sm" style="height: 200px">
@@ -511,7 +543,7 @@
                 <span
                   class="panel-title mb-0 fs-6 text-main fw-bold"
                   style="letter-spacing: -0.02em"
-                  >Explorador de Inventário</span
+                  >Inventário</span
                 >
               </div>
               <div class="ios-filter-grid mt-2">
@@ -566,7 +598,7 @@
                   <tr>
                     <th style="width: 40px" class="ps-4">Img</th>
                     <th>Carta</th>
-                    <th class="text-center">Tipo / Custo</th>
+                    <th class="text-center">Tipo</th>
                     <th class="text-center">Set</th>
                     <th class="text-center">Qtd</th>
                     <th class="text-end">Unit.</th>

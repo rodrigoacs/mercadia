@@ -1,14 +1,12 @@
 import { pool } from './db.js'
 import { getRawData } from './data.js'
 
-// Cache em memória para não precisar traduzir a mesma carta PT-BR duas vezes
 const translationCache = new Map()
 
 const delay = (ms) => new Promise(res => setTimeout(res, ms))
 
 const fetchScryfallData = async (cardName) => {
   try {
-    // 1. Tentativa Local (Otimizada para achar DFCs pela face frontal)
     let localRes = await pool.query(
       `SELECT * FROM scryfall_cards WHERE name ILIKE $1 OR name ILIKE $2 LIMIT 1`,
       [cardName, `${cardName} // %`]
@@ -26,7 +24,6 @@ const fetchScryfallData = async (cardName) => {
       }
     }
 
-    // 2. Se não achou, traduz no Scryfall
     let enName = cardName
     if (translationCache.has(cardName)) {
       enName = translationCache.get(cardName)
@@ -40,7 +37,6 @@ const fetchScryfallData = async (cardName) => {
       }
     }
 
-    // 3. Tenta de novo com o nome traduzido
     localRes = await pool.query(
       `SELECT * FROM scryfall_cards WHERE name ILIKE $1 OR name ILIKE $2 LIMIT 1`,
       [enName, `${enName} // %`]
@@ -174,7 +170,6 @@ export const getDeckDetails = async (deckId) => {
 
   const basicLands = ['plains', 'island', 'swamp', 'mountain', 'forest', 'wastes', 'snow-covered plains', 'snow-covered island', 'snow-covered swamp', 'snow-covered mountain', 'snow-covered forest']
 
-  // A MÁGICA PRA DFCs: Pega só a parte antes do "//" pra comparar
   const getFrontFace = (name) => name.split('//')[0].trim().toLowerCase()
 
   const processedCards = deckCards.map(deckCard => {
@@ -190,7 +185,6 @@ export const getDeckDetails = async (deckId) => {
       totalOwnedQty = 9999
       avgPrice = 0
     } else {
-      // Cruza ignorando a face traseira se ela existir
       const userCards = currentInventory.filter(c => getFrontFace(c.name) === deckCardFront)
       totalOwnedQty = userCards.reduce((acc, c) => acc + c.qty, 0)
       avgPrice = userCards.length > 0 ? userCards[0].unitPrice : 0

@@ -373,7 +373,7 @@ function openSyncModal() {
 
 async function runSync() {
   const htmlContent = document.getElementById('syncHtmlInput').value.trim()
-  if (!htmlContent) return alert("Cole o código fonte primeiro, cacete.")
+  if (!htmlContent) return alert("Por favor, cole o código fonte primeiro.")
 
   document.getElementById('btnRunSync').classList.add('d-none')
   document.getElementById('syncLoading').classList.remove('d-none')
@@ -391,10 +391,9 @@ async function runSync() {
 
     bootstrap.Modal.getInstance(document.getElementById('syncModal')).hide()
 
-    // Atualiza a tela toda com os dados novos!
     window.location.reload()
   } catch (error) {
-    alert("Erro brutal ao ler o HTML. Confirme se colou o código inteiro (Ctrl+U).")
+    alert("Erro crítico ao ler o HTML. Confirme se colou o código inteiro (Ctrl+U).")
     document.getElementById('btnRunSync').classList.remove('d-none')
     document.getElementById('syncLoading').classList.add('d-none')
   }

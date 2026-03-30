@@ -21,14 +21,14 @@ const port = process.env.PORT || 3000
 // ==========================================
 app.use(helmet({ contentSecurityPolicy: false }))
 
-// Permite payloads de até 10MB (O código fonte da LigaMagic pode ser grande)
-app.use(express.json({ limit: '10mb' }))
+// Permite payloads de até 50MB (O código fonte da LigaMagic pode ser grande)
+app.use(express.json({ limit: '50mb' }))
 app.use(express.static(path.join(__dirname, 'public')))
 
 const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 5,
-  message: { error: 'Muitas tentativas de login. Tá tentando hackear, caralho? Volta daqui a 15 minutos.' },
+  message: { error: 'Muitas tentativas de login. Por favor, aguarde 15 minutos.' },
   standardHeaders: true,
   legacyHeaders: false,
 })
@@ -43,7 +43,7 @@ app.post('/api/login', loginLimiter, (req, res) => {
     const token = jwt.sign({ role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '30d' })
     res.json({ success: true, token })
   } else {
-    res.status(401).json({ error: 'Senha incorreta, invasor.' })
+    res.status(401).json({ error: 'Senha incorreta.' })
   }
 })
 
@@ -57,7 +57,7 @@ app.use('/api', verifyToken)
 // ==========================================
 app.post('/api/sync-liga', async (req, res) => {
   try {
-    if (!req.body.html) return res.status(400).json({ error: 'HTML vazio caralho.' })
+    if (!req.body.html) return res.status(400).json({ error: 'O conteúdo HTML é obrigatório.' })
     const result = await syncLigaMagic(req.body.html)
     res.json(result)
   } catch (error) {

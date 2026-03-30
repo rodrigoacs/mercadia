@@ -42,7 +42,6 @@ export async function syncLigaMagic(html) {
 
     await client.query('BEGIN')
 
-    // 1. Limpa e Atualiza o Histórico de Preços
     await client.query('DELETE FROM historico_cartas WHERE date = $1', [dataHoje])
 
     const insertQuery = `
@@ -56,7 +55,6 @@ export async function syncLigaMagic(html) {
       ])
     }
 
-    // 2. Atualiza o Metadata Local (Instantâneo)
     const missingCardsQuery = await client.query(`
       SELECT DISTINCT h.name, h.set_code, h.num, h.extras
       FROM historico_cartas h

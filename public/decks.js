@@ -37,7 +37,7 @@ function openCardModal(imgUrl) {
 }
 
 async function setAsCover() {
-  if (!activeDeckId || !currentPreviewImage) return alert("Clique numa carta com imagem válida primeiro.")
+  if (!activeDeckId || !currentPreviewImage) return alert("Por favor, selecione uma carta com imagem válida primeiro.")
 
   const artCropUri = currentPreviewImage.replace(/\/(normal|large|small|png)\//, '/art_crop/')
   const btn = document.getElementById('btnSetCover')
@@ -61,7 +61,7 @@ async function setAsCover() {
 }
 
 async function setAsCommander() {
-  if (!activeDeckId || !currentPreviewName) return alert("Clique numa carta primeiro.")
+  if (!activeDeckId || !currentPreviewName) return alert("Por favor, selecione uma carta primeiro.")
 
   const btn = document.getElementById('btnSetCommander')
   const originalText = btn.innerHTML
@@ -85,7 +85,7 @@ async function setAsCommander() {
 // MUDAR A ARTE DA CARTA (PRINT SELECTOR)
 // ==========================================
 async function openPrintSelector() {
-  if (!currentPreviewName) return alert("Clique numa carta primeiro.")
+  if (!currentPreviewName) return alert("Por favor, selecione uma carta primeiro.")
 
   document.getElementById('printSelectorTitle').innerText = currentPreviewName
   const grid = document.getElementById('printSelectorGrid')
@@ -294,7 +294,7 @@ async function submitNewDeck() {
   const format = document.getElementById('newDeckFormat').value
   const list = document.getElementById('newDeckList').value.trim()
 
-  if (!name || !list) return alert("Preencha o nome e cole a lista de cartas, cacete.")
+  if (!name || !list) return alert("Por favor, preencha o nome do deck e cole a lista de cartas.")
 
   document.getElementById('btnSaveDeck').classList.add('d-none')
   document.getElementById('newDeckLoading').classList.remove('d-none')

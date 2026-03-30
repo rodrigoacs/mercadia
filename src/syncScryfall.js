@@ -36,7 +36,6 @@ async function processAndUpsertCards() {
   const client = await pool.connect()
 
   try {
-    // Apaga a tabela antiga e cria a nova com suporte a JSONB
     await client.query(`DROP TABLE IF EXISTS scryfall_cards CASCADE;`)
     await client.query(`
       CREATE TABLE scryfall_cards (
@@ -76,7 +75,7 @@ async function processAndUpsertCards() {
         batch.push([
           card.id, card.name, card.lang, card.set, card.collector_number,
           imageNormal, imageArtCrop, card.mana_cost || '', card.type_line || '', colors,
-          JSON.stringify(card) // A MÁGICA: Salva a carta inteirinha pro Scoring funcionar!
+          JSON.stringify(card)
         ])
 
         if (batch.length >= 1000) {
