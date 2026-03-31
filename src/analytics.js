@@ -1,4 +1,5 @@
 import { getRawData } from './data.js'
+import { pool } from './db.js'
 
 const buildTimeline = (data) => {
   const timeline = {}
@@ -219,9 +220,26 @@ export const searchCardData = async (query) => {
 export const getInventoryData = async () => {
   const data = await getRawData()
   if (data.length === 0) return []
+
   const uniqueDates = [...new Set(data.map(d => d.date))].sort()
   const lastDate = uniqueDates[uniqueDates.length - 1]
-  return data.filter(d => d.date === lastDate)
+  const inventory = data.filter(d => d.date === lastDate)
+
+  let usageMap = new Map()
+  const client = await pool.connect()
+  try {
+    const usageRes = await client.query('SELECT name, SUM(qty) as used_qty FROM deck_cards GROUP BY name')
+    usageRes.rows.forEach(r => usageMap.set(r.name, parseInt(r.used_qty)))
+  } catch (e) {
+    console.error('Tabela deck_cards ainda não existe, assumindo zero usos.')
+  } finally {
+    client.release()
+  }
+
+  return inventory.map(c => ({
+    ...c,
+    usedInDecks: usageMap.get(c.name) || 0
+  }))
 }
 
 export const getCommanderPoolData = async (commanderColors) => {

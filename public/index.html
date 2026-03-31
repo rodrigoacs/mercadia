@@ -18,10 +18,7 @@
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Mercadia" />
-    <meta
-      property="og:description"
-      content="Gestão de coleções e decks de Magic: The Gathering."
-    />
+    <meta property="og:description" content="Gestão de coleções e decks de Magic: The Gathering." />
     <meta property="og:image" content="https://mercadia.biblioplexo.com/banner.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -545,6 +542,11 @@
                 >
               </div>
               <div class="ios-filter-grid mt-2">
+                <select id="filterUsage" class="ios-select" onchange="applyInventoryFilters()">
+                  <option value="all">Uso em Decks</option>
+                  <option value="free">Apenas Cópias Livres</option>
+                  <option value="used">Em Uso (Nos Decks)</option>
+                </select>
                 <select id="filterSet" class="ios-select" onchange="applyInventoryFilters()">
                   <option value="all">Todas Edições</option>
                 </select>

@@ -238,3 +238,12 @@ Sun Mar 29 10:40:40 -03 2026
 ✅ Sucesso! Total Coleção: R$ 12626.99
 📊 102 cartas tiveram alteração de preço.
 ✅ Concluído!
+---------------------------------
+Tue Mar 31 10:32:56 -03 2026
+🔍 Iniciando coleta e envio direto para o PostgreSQL da VPS...
+[3/31/2026, 10:32:57 AM] 🔍 Iniciando análise rigorosa...
+🧹 Limpando dados antigos do dia 2026-03-31 para evitar duplicação...
+📝 Dados salvos no PostgreSQL da VPS com sucesso!
+✅ Sucesso! Total Coleção: R$ 12617.71
+📊 256 cartas tiveram alteração de preço.
+✅ Concluído!
