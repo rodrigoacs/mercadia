@@ -8,7 +8,12 @@ const delay = (ms) => new Promise(res => setTimeout(res, ms))
 const fetchScryfallData = async (cardName) => {
   try {
     let localRes = await pool.query(
-      `SELECT * FROM scryfall_cards WHERE name ILIKE $1 OR name ILIKE $2 LIMIT 1`,
+      `SELECT * FROM scryfall_cards 
+       WHERE (name ILIKE $1 OR name ILIKE $2)
+         AND card_data->>'layout' != 'art_series'
+         AND card_data->>'layout' NOT LIKE '%token%'
+         AND card_data->>'set_type' != 'memorabilia'
+       LIMIT 1`,
       [cardName, `${cardName} // %`]
     )
 
@@ -38,7 +43,12 @@ const fetchScryfallData = async (cardName) => {
     }
 
     localRes = await pool.query(
-      `SELECT * FROM scryfall_cards WHERE name ILIKE $1 OR name ILIKE $2 LIMIT 1`,
+      `SELECT * FROM scryfall_cards 
+       WHERE (name ILIKE $1 OR name ILIKE $2)
+         AND card_data->>'layout' != 'art_series'
+         AND card_data->>'layout' NOT LIKE '%token%'
+         AND card_data->>'set_type' != 'memorabilia'
+       LIMIT 1`,
       [enName, `${enName} // %`]
     )
 
@@ -258,13 +268,18 @@ export const setCommander = async (deckId, cardName) => {
 }
 
 export const getCardPrints = async (cardName) => {
+  const cleanName = cardName.split('//')[0].trim()
   try {
     const result = await pool.query(
       `SELECT id, set_code, collector_number, image_normal
        FROM scryfall_cards
-       WHERE name ILIKE $1 AND image_normal IS NOT NULL
+       WHERE (name ILIKE $1 OR name ILIKE $2) 
+         AND image_normal IS NOT NULL
+         AND card_data->>'layout' != 'art_series'
+         AND card_data->>'layout' NOT LIKE '%token%'
+         AND card_data->>'set_type' != 'memorabilia'
        ORDER BY set_code ASC, collector_number ASC`,
-      [cardName]
+      [cleanName, `${cleanName} // %`]
     )
 
     return result.rows.map(card => ({
