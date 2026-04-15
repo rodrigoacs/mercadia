@@ -8,7 +8,7 @@ import rateLimit from 'express-rate-limit'
 import { verifyToken } from './src/auth.js'
 import { getDashboardData, searchCardData, getInventoryData } from './src/analytics.js'
 import { createDeck, getDecks, getDeckDetails, deleteDeck, updateDeckCover, setCommander, getCardPrints, updateDeckCardPrint } from './src/deckManager.js'
-import { syncLigaMagic } from './src/ligaParser.js' // A Rota Ninja
+import { syncLigaMagic } from './src/ligaParser.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -16,12 +16,7 @@ const __dirname = path.dirname(__filename)
 const app = express()
 const port = process.env.PORT || 3000
 
-// ==========================================
-// BLINDAGEM DE PRODUÇÃO (MIDDLEWARES)
-// ==========================================
 app.use(helmet({ contentSecurityPolicy: false }))
-
-// Permite payloads de até 50MB (O código fonte da LigaMagic pode ser grande)
 app.use(express.json({ limit: '50mb' }))
 app.use(express.static(path.join(__dirname, 'public')))
 
@@ -33,9 +28,8 @@ const loginLimiter = rateLimit({
   legacyHeaders: false,
 })
 
-// ==========================================
-// ROTA PÚBLICA (LOGIN)
-// ==========================================
+app.get('/api/ping', (req, res) => res.json({ status: 'pong' }))
+
 app.post('/api/login', loginLimiter, (req, res) => {
   const { password } = req.body
   if (!process.env.ADMIN_PASSWORD) return res.status(500).json({ error: 'Erro: ADMIN_PASSWORD não configurada' })
@@ -47,14 +41,8 @@ app.post('/api/login', loginLimiter, (req, res) => {
   }
 })
 
-// ==========================================
-// O LEÃO DE CHÁCARA (Tranca tudo abaixo)
-// ==========================================
 app.use('/api', verifyToken)
 
-// ==========================================
-// ROTA DE SINCRONIZAÇÃO MANUAL
-// ==========================================
 app.post('/api/sync-liga', async (req, res) => {
   try {
     if (!req.body.html) return res.status(400).json({ error: 'O conteúdo HTML é obrigatório.' })
@@ -65,9 +53,6 @@ app.post('/api/sync-liga', async (req, res) => {
   }
 })
 
-// ==========================================
-// ROTAS DO INVENTÁRIO E DASHBOARD
-// ==========================================
 app.get('/api/dashboard', async (req, res) => {
   try { res.json(await getDashboardData()) } catch (error) { res.status(500).json({ error: 'Erro no dashboard.' }) }
 })
@@ -80,9 +65,6 @@ app.get('/api/inventory', async (req, res) => {
   try { res.json(await getInventoryData()) } catch (error) { res.status(500).json({ error: 'Erro no inventário.' }) }
 })
 
-// ==========================================
-// ROTAS DO GESTOR DE DECKS
-// ==========================================
 app.post('/api/decks', async (req, res) => {
   try {
     const { name, format, deckText } = req.body
