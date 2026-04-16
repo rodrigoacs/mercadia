@@ -1,33 +1,19 @@
 import { pool } from './db.js'
 
-let cache = null
-let lastFetch = 0
-const CACHE_TTL = 5 * 60 * 1000 // 5 minutos
-
-export const getRawData = async () => {
-  const now = Date.now()
-
-  if (cache && (now - lastFetch < CACHE_TTL)) {
-    console.log('📦 Usando cache (válido por mais', Math.round((CACHE_TTL - (now - lastFetch)) / 1000), 's)')
-    return cache
-  }
-
-  console.log('⏳ Carregando dados do banco de dados...')
+export const fetchRawDataFromDB = async () => {
+  console.log(`⏳ Carregando dados massivos do banco de dados... (${new Date().toLocaleTimeString()})`)
   const client = await pool.connect()
   try {
-    console.log('📇 Criando índices...')
-    await client.query(`
-      CREATE INDEX IF NOT EXISTS idx_historico_data ON historico_cartas (date);
-      CREATE INDEX IF NOT EXISTS idx_historico_nome_set ON historico_cartas (name, set_code);
-    `)
-
-    console.log('🔍 Consultando histórico e metadata...')
     const [histResult, metaResult] = await Promise.all([
-      client.query('SELECT date, name, set_code, num, extras, qty, unit_price, total_price FROM historico_cartas ORDER BY date ASC'),
+      client.query(`
+        SELECT 
+          TO_CHAR(date, 'YYYY-MM-DD') as date_str, 
+          name, set_code, num, extras, qty, unit_price, total_price 
+        FROM historico_cartas 
+        ORDER BY date ASC
+      `),
       client.query('SELECT name, set_code, num, extras, color_identity, mana_cost, cmc, type_line, rarity, oracle_text, legalities, image_uri FROM metadata_cartas')
     ])
-
-    console.log(`📊 Processando ${histResult.rows.length} cartas e ${metaResult.rows.length} metadados...`)
 
     const metaDict = new Map()
     for (const m of metaResult.rows) {
@@ -43,34 +29,37 @@ export const getRawData = async () => {
       })
     }
 
-    const emptyMeta = {
-      colorIdentity: 'C', manaCost: '', cmc: 0, typeLine: '', rarity: '', oracleText: '', legalities: {}, imageUri: ''
-    }
+    const emptyMeta = { colorIdentity: 'C', manaCost: '', cmc: 0, typeLine: '', rarity: '', oracleText: '', legalities: {}, imageUri: '' }
 
-    cache = histResult.rows.map(row => {
-      const metaKey = `${row.name}|${row.set_code}|${row.num || ''}|${row.extras || ''}`
-      const meta = metaDict.get(metaKey) || emptyMeta
+    // Descobre a última data pegando o último registro ordenado
+    const lastRow = histResult.rows[histResult.rows.length - 1]
+    const lastDate = lastRow ? lastRow.date_str : null
 
-      return {
-        date: row.date.toISOString().split('T')[0],
+    const data = histResult.rows.map(row => {
+      const baseObj = {
+        date: row.date_str,
         name: row.name,
         set: row.set_code,
         num: row.num,
         extras: row.extras || '',
         qty: row.qty,
         unitPrice: parseFloat(row.unit_price),
-        totalPrice: parseFloat(row.total_price),
-        ...meta
+        totalPrice: parseFloat(row.total_price)
       }
+
+      // Anexa metadados pesados APENAS nas cartas de hoje para evitar memory bloat
+      if (row.date_str === lastDate) {
+        const metaKey = `${row.name}|${row.set_code}|${row.num || ''}|${row.extras || ''}`
+        Object.assign(baseObj, metaDict.get(metaKey) || emptyMeta)
+      }
+
+      return baseObj
     })
 
-    lastFetch = now
-    console.log(`✅ Cache atualizado! ${cache.length} cartas em memória`)
-
-    return cache
+    return data
   } catch (error) {
     console.error('❌ Erro ao buscar dados:', error.message)
-    return cache || []
+    return []
   } finally {
     client.release()
   }

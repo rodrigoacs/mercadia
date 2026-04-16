@@ -1,5 +1,11 @@
-import { getRawData } from './data.js'
+import { fetchRawDataFromDB } from './data.js'
 import { pool } from './db.js'
+
+let dashboardCache = null
+let inventoryCache = null
+let searchDataCache = null
+let lastFetch = 0
+const CACHE_TTL = 5 * 60 * 1000 // 5 minutos
 
 const buildTimeline = (data) => {
   const timeline = {}
@@ -182,9 +188,14 @@ const calculatePareto = (todayData, totalValue, totalCards) => {
   }
 }
 
-export const getDashboardData = async () => {
-  const data = await getRawData()
-  if (data.length === 0) return { empty: true }
+const buildCaches = async () => {
+  const data = await fetchRawDataFromDB()
+  if (data.length === 0) {
+    dashboardCache = { empty: true }
+    inventoryCache = []
+    searchDataCache = []
+    return
+  }
 
   const { timeline, dates } = buildTimeline(data)
   const lastDate = dates[dates.length - 1]
@@ -194,7 +205,7 @@ export const getDashboardData = async () => {
   const totalValue = timeline[lastDate]
   const totalCards = todayData.reduce((acc, c) => acc + c.qty, 0)
 
-  return {
+  dashboardCache = {
     empty: false,
     kpis: calculateKPIs(timeline, dates, todayData, lastDate, trueVars),
     chart: { labels: dates, values: dates.map(d => timeline[d]) },
@@ -210,35 +221,6 @@ export const getDashboardData = async () => {
     topCards: calculateTopCards(todayData),
     pareto: calculatePareto(todayData, totalValue, totalCards)
   }
-}
-
-export const searchCardData = async (query) => {
-  const data = await getRawData()
-  if (data.length === 0) return []
-  const uniqueDates = [...new Set(data.map(d => d.date))].sort()
-  const lastDate = uniqueDates[uniqueDates.length - 1]
-
-  let results = data.filter(d =>
-    d.date === lastDate &&
-    (d.name.toLowerCase().includes(query) || (d.oracleText && d.oracleText.toLowerCase().includes(query)))
-  )
-
-  return results.map(card => {
-    const history = data
-      .filter(d => d.name === card.name && d.set === card.set && d.num === card.num && d.extras === card.extras)
-      .sort((a, b) => b.date.localeCompare(a.date))
-      .map(h => ({ date: h.date, value: h.unitPrice }))
-    return { ...card, history }
-  }).sort((a, b) => b.totalPrice - a.totalPrice)
-}
-
-export const getInventoryData = async () => {
-  const data = await getRawData()
-  if (data.length === 0) return []
-
-  const uniqueDates = [...new Set(data.map(d => d.date))].sort()
-  const lastDate = uniqueDates[uniqueDates.length - 1]
-  const inventory = data.filter(d => d.date === lastDate)
 
   let usageMap = new Map()
   const client = await pool.connect()
@@ -250,12 +232,12 @@ export const getInventoryData = async () => {
       usageMap.set(baseName, current + parseInt(r.used_qty))
     })
   } catch (e) {
-    console.error('Tabela deck_cards ainda não existe, assumindo zero usos.')
+    console.error('Tabela deck_cards ainda não existe.')
   } finally {
     client.release()
   }
 
-  return inventory.map(c => {
+  inventoryCache = todayData.map(c => {
     const baseName = c.name.split('//')[0].trim()
     let remainingUsed = usageMap.get(baseName) || 0
 
@@ -265,23 +247,56 @@ export const getInventoryData = async () => {
       usageMap.set(baseName, remainingUsed - allocated)
     }
 
-    return {
-      ...c,
-      usedInDecks: allocated
-    }
+    return { ...c, usedInDecks: allocated }
+  })
+
+  // OTIMIZAÇÃO EXTREMA: Dicionário O(N) para evitar O(N*M) - Destrói o loop de 49 segundos
+  const historyDict = new Map()
+  data.forEach(d => {
+    const key = `${d.name}|${d.set}|${d.num}|${d.extras}`
+    if (!historyDict.has(key)) historyDict.set(key, [])
+    // Como os dados já vieram em ORDER BY date ASC do banco, basta anexar no array!
+    historyDict.get(key).push({ date: d.date, value: d.unitPrice })
+  })
+
+  searchDataCache = todayData.map(card => {
+    const key = `${card.name}|${card.set}|${card.num}|${card.extras}`
+    const history = historyDict.get(key) || []
+    return { ...card, history }
   })
 }
 
-export const getCommanderPoolData = async (commanderColors) => {
-  const data = await getRawData()
-  if (data.length === 0) return []
+const ensureData = async () => {
+  if (dashboardCache && (Date.now() - lastFetch < CACHE_TTL)) return;
+  await buildCaches();
+  lastFetch = Date.now();
+  console.log(`✅ Caches atualizados com sucesso e memória raw libertada! (${new Date().toLocaleTimeString()})`);
+}
 
-  const uniqueDates = [...new Set(data.map(d => d.date))].sort()
-  const lastDate = uniqueDates[uniqueDates.length - 1]
-  const inventory = data.filter(d => d.date === lastDate)
+export const getDashboardData = async () => {
+  await ensureData();
+  return dashboardCache;
+}
+
+export const searchCardData = async (query) => {
+  await ensureData();
+  if (!searchDataCache) return [];
+  return searchDataCache.filter(d =>
+    d.name.toLowerCase().includes(query) || (d.oracleText && d.oracleText.toLowerCase().includes(query))
+  ).sort((a, b) => b.totalPrice - a.totalPrice);
+}
+
+export const getInventoryData = async () => {
+  await ensureData();
+  return inventoryCache;
+}
+
+export const getCommanderPoolData = async (commanderColors) => {
+  await ensureData();
+  if (!inventoryCache) return [];
   const allowedColors = commanderColors === 'C' || !commanderColors ? [] : commanderColors.split(',')
 
-  return inventory.filter(card => {
+  return inventoryCache.filter(card => {
     const isLegal = card.legalities && card.legalities.commander === 'legal'
     if (!isLegal) return false
     if (card.colorIdentity === 'C') return true

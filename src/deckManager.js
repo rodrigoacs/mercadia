@@ -1,5 +1,5 @@
 import { pool } from './db.js'
-import { getRawData } from './data.js'
+import { getInventoryData } from './analytics.js'
 
 const translationCache = new Map()
 
@@ -162,10 +162,7 @@ export const getDeckDetails = async (deckId) => {
   const cardsRes = await pool.query(`SELECT * FROM deck_cards WHERE deck_id = $1`, [deckId])
   const deckCards = cardsRes.rows
 
-  const inventory = await getRawData()
-  const uniqueDates = [...new Set(inventory.map(d => d.date))].sort()
-  const lastDate = uniqueDates.length > 0 ? uniqueDates[uniqueDates.length - 1] : null
-  const currentInventory = lastDate ? inventory.filter(d => d.date === lastDate) : []
+  const currentInventory = await getInventoryData() || []
 
   let totalDeckValue = 0
   let ownedValue = 0
