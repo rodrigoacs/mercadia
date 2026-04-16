@@ -542,6 +542,15 @@
                 >
               </div>
               <div class="ios-filter-grid mt-2">
+                <input
+                  type="text"
+                  id="filterText"
+                  class="ios-select"
+                  placeholder="🔍 Buscar no inventário..."
+                  oninput="applyInventoryFilters()"
+                  style="min-width: 220px; background: var(--bg-input); color: #fff"
+                />
+
                 <select id="filterUsage" class="ios-select" onchange="applyInventoryFilters()">
                   <option value="all">Uso em Decks</option>
                   <option value="free">Apenas Cópias Livres</option>
@@ -549,6 +558,9 @@
                 </select>
                 <select id="filterSet" class="ios-select" onchange="applyInventoryFilters()">
                   <option value="all">Todas Edições</option>
+                </select>
+                <select id="filterSetExclude" class="ios-select" onchange="addExcludedSet()">
+                  <option value="none">Excluir Edição...</option>
                 </select>
                 <select id="filterType" class="ios-select" onchange="applyInventoryFilters()">
                   <option value="all">Todos os Tipos</option>
@@ -588,9 +600,10 @@
                   <option value="nameAsc">Nome (A-Z)</option>
                 </select>
               </div>
+              <div id="excludedTags" class="d-flex flex-wrap gap-2 mt-3 px-2"></div>
             </div>
             <div
-              class="table-responsive flex-grow-1 px-2"
+              class="table-responsive flex-grow-1 px-2 mt-2"
               style="max-height: 600px; overflow-y: auto"
             >
               <table class="table table-hover align-middle">

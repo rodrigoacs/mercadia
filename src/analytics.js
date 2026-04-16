@@ -27,6 +27,22 @@ const calculateKPIs = (timeline, dates, todayData, lastDate, trueVars) => {
   }
 }
 
+const consolidateCards = (cardsArray) => {
+  const consolidated = new Map()
+  cardsArray.forEach(c => {
+    const key = `${c.name}|${c.set}|${c.num}|${c.extras}`
+    if (consolidated.has(key)) {
+      const ext = consolidated.get(key)
+      const newQty = ext.qty + c.qty
+      const newUnitPrice = newQty > 0 ? ((ext.unitPrice * ext.qty) + (c.unitPrice * c.qty)) / newQty : 0
+      consolidated.set(key, { ...ext, unitPrice: newUnitPrice, qty: newQty, totalPrice: ext.totalPrice + c.totalPrice })
+    } else {
+      consolidated.set(key, { ...c })
+    }
+  })
+  return consolidated
+}
+
 const calculateTrueVariations = (data, dates, todayData) => {
   let topGainers = [], topLosers = []
   const dailyChartData = { labels: [], values: [] }
@@ -45,17 +61,16 @@ const calculateTrueVariations = (data, dates, todayData) => {
   for (let i = 1; i < dates.length; i++) {
     const prevDate = dates[i - 1]
     const currDate = dates[i]
-    const prevCards = dataByDate[prevDate] || []
-    const currCards = dataByDate[currDate] || []
 
-    const currMap = new Map(currCards.map(c => [`${c.name}|${c.set}|${c.num}|${c.extras}`, { price: c.unitPrice, qty: c.qty }]))
+    const prevMap = consolidateCards(dataByDate[prevDate] || [])
+    const currMap = consolidateCards(dataByDate[currDate] || [])
 
     let dailyDiff = 0
-    prevCards.forEach(prev => {
-      const curr = currMap.get(`${prev.name}|${prev.set}|${prev.num}|${prev.extras}`)
+    prevMap.forEach((prev, key) => {
+      const curr = currMap.get(key)
       if (curr) {
         const heldQty = Math.min(prev.qty, curr.qty)
-        if (heldQty > 0) dailyDiff += (curr.price - prev.unitPrice) * heldQty
+        if (heldQty > 0) dailyDiff += (curr.unitPrice - prev.unitPrice) * heldQty
       }
     })
 
@@ -66,14 +81,14 @@ const calculateTrueVariations = (data, dates, todayData) => {
   }
 
   const prevDateForTop = dates[dates.length - 2]
-  const prevDataForTop = dataByDate[prevDateForTop] || []
-  const prevMap = new Map(prevDataForTop.map(c => [`${c.name}|${c.set}|${c.num}|${c.extras}`, c.unitPrice]))
+  const prevMapForTop = consolidateCards(dataByDate[prevDateForTop] || [])
+  const todayMap = consolidateCards(todayData)
 
   const variations = []
-  todayData.forEach(h => {
-    const oldPrice = prevMap.get(`${h.name}|${h.set}|${h.num}|${h.extras}`)
-    if (oldPrice !== undefined && oldPrice > 0) {
-      const diff = h.unitPrice - oldPrice
+  todayMap.forEach((h, key) => {
+    const oldCard = prevMapForTop.get(key)
+    if (oldCard && oldCard.unitPrice > 0) {
+      const diff = h.unitPrice - oldCard.unitPrice
       if (Math.abs(diff) >= 0.01) variations.push({ ...h, diff: diff })
     }
   })
@@ -229,17 +244,32 @@ export const getInventoryData = async () => {
   const client = await pool.connect()
   try {
     const usageRes = await client.query('SELECT name, SUM(qty) as used_qty FROM deck_cards GROUP BY name')
-    usageRes.rows.forEach(r => usageMap.set(r.name, parseInt(r.used_qty)))
+    usageRes.rows.forEach(r => {
+      const baseName = r.name.split('//')[0].trim()
+      const current = usageMap.get(baseName) || 0
+      usageMap.set(baseName, current + parseInt(r.used_qty))
+    })
   } catch (e) {
     console.error('Tabela deck_cards ainda não existe, assumindo zero usos.')
   } finally {
     client.release()
   }
 
-  return inventory.map(c => ({
-    ...c,
-    usedInDecks: usageMap.get(c.name) || 0
-  }))
+  return inventory.map(c => {
+    const baseName = c.name.split('//')[0].trim()
+    let remainingUsed = usageMap.get(baseName) || 0
+
+    let allocated = 0
+    if (remainingUsed > 0) {
+      allocated = Math.min(c.qty, remainingUsed)
+      usageMap.set(baseName, remainingUsed - allocated)
+    }
+
+    return {
+      ...c,
+      usedInDecks: allocated
+    }
+  })
 }
 
 export const getCommanderPoolData = async (commanderColors) => {
