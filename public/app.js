@@ -2,7 +2,6 @@ import { showCardDetails, openHistory, openSyncModal, runSync } from './ui.js'
 import { initDashboard, updateTimeRange } from './charts.js'
 import { loadInventory, applyInventoryFilters, addExcludedSet, removeExcludedSet } from './inventory.js'
 
-// Exportando as funções para o Window garante que os "onclick" dentro do HTML funcionem perfeitamente
 window.showCardDetails = showCardDetails
 window.openHistory = (i) => openHistory(i, window.currentSearchResults)
 window.updateTimeRange = updateTimeRange
@@ -70,3 +69,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadInventory()
   }
 })
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(err => console.error('SW falhou:', err))
+  })
+}
