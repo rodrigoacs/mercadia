@@ -5,7 +5,8 @@ let dashboardCache = null
 let inventoryCache = null
 let searchDataCache = null
 let lastFetch = 0
-const CACHE_TTL = 5 * 60 * 1000 // 5 minutos
+let cacheBuildPromise = null
+const CACHE_TTL = 5 * 60 * 1000
 
 const buildTimeline = (data) => {
   const timeline = {}
@@ -18,7 +19,7 @@ const buildTimeline = (data) => {
 }
 
 const calculateKPIs = (timeline, dates, todayData, lastDate, trueVars) => {
-  const currentValue = timeline[lastDate]
+  const currentValue = timeline[lastDate] || 0
   const totalCards = todayData.reduce((acc, c) => acc + c.qty, 0)
   const avgTicket = totalCards > 0 ? currentValue / totalCards : 0
 
@@ -205,6 +206,32 @@ const buildCaches = async () => {
   const totalValue = timeline[lastDate]
   const totalCards = todayData.reduce((acc, c) => acc + c.qty, 0)
 
+  let usageMap = new Map()
+  const client = await pool.connect()
+  try {
+    const usageRes = await client.query('SELECT name, SUM(qty) as used_qty FROM deck_cards GROUP BY name')
+    usageRes.rows.forEach(r => {
+      const baseName = r.name.split('//')[0].trim()
+      const current = usageMap.get(baseName) || 0
+      usageMap.set(baseName, current + parseInt(r.used_qty, 10))
+    })
+  } catch (e) {
+    console.error('Tabela deck_cards ainda não existe ou vazia.')
+  } finally {
+    client.release()
+  }
+
+  const wishlist = []
+  usageMap.forEach((requiredQty, baseName) => {
+    const owned = todayData
+      .filter(c => c.name.split('//')[0].trim() === baseName)
+      .reduce((acc, c) => acc + c.qty, 0)
+
+    if (requiredQty > owned) {
+      wishlist.push({ name: baseName, missingQty: requiredQty - owned })
+    }
+  })
+
   dashboardCache = {
     empty: false,
     kpis: calculateKPIs(timeline, dates, todayData, lastDate, trueVars),
@@ -219,22 +246,8 @@ const buildCaches = async () => {
     rarityDist: calculateRarityDistribution(todayData),
     typeDist: calculateTypeDistribution(todayData),
     topCards: calculateTopCards(todayData),
-    pareto: calculatePareto(todayData, totalValue, totalCards)
-  }
-
-  let usageMap = new Map()
-  const client = await pool.connect()
-  try {
-    const usageRes = await client.query('SELECT name, SUM(qty) as used_qty FROM deck_cards GROUP BY name')
-    usageRes.rows.forEach(r => {
-      const baseName = r.name.split('//')[0].trim()
-      const current = usageMap.get(baseName) || 0
-      usageMap.set(baseName, current + parseInt(r.used_qty))
-    })
-  } catch (e) {
-    console.error('Tabela deck_cards ainda não existe.')
-  } finally {
-    client.release()
+    pareto: calculatePareto(todayData, totalValue, totalCards),
+    wishlist: wishlist
   }
 
   inventoryCache = todayData.map(c => {
@@ -250,12 +263,10 @@ const buildCaches = async () => {
     return { ...c, usedInDecks: allocated }
   })
 
-  // OTIMIZAÇÃO EXTREMA: Dicionário O(N) para evitar O(N*M) - Destrói o loop de 49 segundos
   const historyDict = new Map()
   data.forEach(d => {
     const key = `${d.name}|${d.set}|${d.num}|${d.extras}`
     if (!historyDict.has(key)) historyDict.set(key, [])
-    // Como os dados já vieram em ORDER BY date ASC do banco, basta anexar no array!
     historyDict.get(key).push({ date: d.date, value: d.unitPrice })
   })
 
@@ -267,33 +278,46 @@ const buildCaches = async () => {
 }
 
 const ensureData = async () => {
-  if (dashboardCache && (Date.now() - lastFetch < CACHE_TTL)) return;
-  await buildCaches();
-  lastFetch = Date.now();
-  console.log(`✅ Caches atualizados com sucesso e memória raw libertada! (${new Date().toLocaleTimeString()})`);
+  if (dashboardCache && (Date.now() - lastFetch < CACHE_TTL)) return
+
+  if (cacheBuildPromise) {
+    return cacheBuildPromise
+  }
+
+  cacheBuildPromise = (async () => {
+    try {
+      await buildCaches()
+      lastFetch = Date.now()
+      console.log('✅ Caches atualizados com sucesso e memória raw libertada!')
+    } finally {
+      cacheBuildPromise = null
+    }
+  })()
+
+  return cacheBuildPromise
 }
 
 export const getDashboardData = async () => {
-  await ensureData();
-  return dashboardCache;
+  await ensureData()
+  return dashboardCache
 }
 
 export const searchCardData = async (query) => {
-  await ensureData();
-  if (!searchDataCache) return [];
+  await ensureData()
+  if (!searchDataCache) return []
   return searchDataCache.filter(d =>
     d.name.toLowerCase().includes(query) || (d.oracleText && d.oracleText.toLowerCase().includes(query))
-  ).sort((a, b) => b.totalPrice - a.totalPrice);
+  ).sort((a, b) => b.totalPrice - a.totalPrice)
 }
 
 export const getInventoryData = async () => {
-  await ensureData();
-  return inventoryCache;
+  await ensureData()
+  return inventoryCache
 }
 
 export const getCommanderPoolData = async (commanderColors) => {
-  await ensureData();
-  if (!inventoryCache) return [];
+  await ensureData()
+  if (!inventoryCache) return []
   const allowedColors = commanderColors === 'C' || !commanderColors ? [] : commanderColors.split(',')
 
   return inventoryCache.filter(card => {

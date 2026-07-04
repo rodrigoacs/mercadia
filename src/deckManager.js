@@ -1,76 +1,6 @@
 import { pool } from './db.js'
 import { getInventoryData } from './analytics.js'
 
-const translationCache = new Map()
-
-const delay = (ms) => new Promise(res => setTimeout(res, ms))
-
-const fetchScryfallData = async (cardName) => {
-  try {
-    let localRes = await pool.query(
-      `SELECT * FROM scryfall_cards 
-       WHERE (name ILIKE $1 OR name ILIKE $2)
-         AND card_data->>'layout' != 'art_series'
-         AND card_data->>'layout' NOT LIKE '%token%'
-         AND card_data->>'set_type' != 'memorabilia'
-       LIMIT 1`,
-      [cardName, `${cardName} // %`]
-    )
-
-    if (localRes.rows.length > 0) {
-      const card = localRes.rows[0]
-      return {
-        name: card.name,
-        image_uri: card.image_normal,
-        art_crop_uri: card.image_art_crop,
-        mana_cost: card.mana_cost || '',
-        type_line: card.type_line || '',
-        color_identity: card.color_identity || 'C'
-      }
-    }
-
-    let enName = cardName
-    if (translationCache.has(cardName)) {
-      enName = translationCache.get(cardName)
-    } else {
-      await delay(75)
-      const res = await fetch(`https://api.scryfall.com/cards/named?fuzzy=${encodeURIComponent(cardName)}`)
-      if (res.ok) {
-        const data = await res.json()
-        enName = data.name
-        translationCache.set(cardName, enName)
-      }
-    }
-
-    localRes = await pool.query(
-      `SELECT * FROM scryfall_cards 
-       WHERE (name ILIKE $1 OR name ILIKE $2)
-         AND card_data->>'layout' != 'art_series'
-         AND card_data->>'layout' NOT LIKE '%token%'
-         AND card_data->>'set_type' != 'memorabilia'
-       LIMIT 1`,
-      [enName, `${enName} // %`]
-    )
-
-    if (localRes.rows.length > 0) {
-      const card = localRes.rows[0]
-      return {
-        name: card.name,
-        image_uri: card.image_normal,
-        art_crop_uri: card.image_art_crop,
-        mana_cost: card.mana_cost || '',
-        type_line: card.type_line || '',
-        color_identity: card.color_identity || 'C'
-      }
-    }
-
-  } catch (e) {
-    console.error(`Erro ao processar dados da carta: ${cardName}`)
-  }
-
-  return null
-}
-
 export const createDeck = async (name, format, rawText) => {
   const lines = rawText.split('\n').map(l => l.trim()).filter(l => l.length > 0)
   const regex = /^(\d+)\s+(.+?)(?:\s+\[([a-zA-Z0-9_]+)\])?$/
@@ -100,11 +30,36 @@ export const createDeck = async (name, format, rawText) => {
   const client = await pool.connect()
   try {
     await client.query('BEGIN')
+
+    const uniqueNames = [...new Set(parsedCards.map(c => c.originalName))]
+
+    const scryfallRes = await client.query(
+      `SELECT DISTINCT ON (name) name, image_normal, image_art_crop, mana_cost, type_line, color_identity
+       FROM scryfall_cards 
+       WHERE name = ANY($1::text[])
+         AND card_data->>'layout' != 'art_series'
+         AND card_data->>'layout' NOT LIKE '%token%'
+       ORDER BY name, collector_number ASC`,
+      [uniqueNames]
+    )
+
+    const scryfallMap = new Map()
+    scryfallRes.rows.forEach(row => {
+      scryfallMap.set(row.name.toLowerCase(), {
+        name: row.name,
+        image_uri: row.image_normal,
+        art_crop_uri: row.image_art_crop,
+        mana_cost: row.mana_cost || '',
+        type_line: row.type_line || '',
+        color_identity: row.color_identity || 'C'
+      })
+    })
+
     let coverImage = null
     const cardsToInsert = []
 
     for (const card of parsedCards) {
-      const scryfallData = await fetchScryfallData(card.originalName)
+      const scryfallData = scryfallMap.get(card.originalName.toLowerCase())
 
       if (scryfallData) {
         if (!coverImage && scryfallData.art_crop_uri) coverImage = scryfallData.art_crop_uri
