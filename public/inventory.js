@@ -1,12 +1,15 @@
-let fullInventory = []
+import { matchScryfallQuery } from './scryfallParser.js'
+
+export let fullInventory = []
 let excludedSets = []
 let currentRenderLimit = 50
 let observer = null
 let filtered = []
+let searchDebounceTimeout = null
 
 export async function loadInventory() {
   try {
-    const req = await apiFetch('/api/inventory')
+    const req = await window.apiFetch('/api/inventory')
     fullInventory = await req.json()
     const sets = [...new Set(fullInventory.filter(c => c.qty > 0).map(c => c.set))].sort()
 
@@ -26,8 +29,16 @@ export async function loadInventory() {
       })
     }
 
+    const textInput = document.getElementById('filterText')
+    if (textInput) {
+      textInput.addEventListener('input', () => {
+        clearTimeout(searchDebounceTimeout)
+        searchDebounceTimeout = setTimeout(() => applyInventoryFilters(), 150)
+      })
+    }
+
     applyInventoryFilters()
-  } catch (e) { console.error(e) }
+  } catch (e) { console.error('Erro ao carregar inventário:', e) }
 }
 
 export function addExcludedSet() {
@@ -58,7 +69,7 @@ function renderExcludedTags() {
   excludedSets.forEach(s => {
     container.innerHTML += `
       <span class="badge d-flex align-items-center gap-1" style="background: var(--accent-danger); font-size: 0.75rem;">
-        ${s} 
+        ${window.escapeHTML(s)} 
         <i class="bi bi-x-circle" style="cursor: pointer;" onclick="removeExcludedSet('${s}')"></i>
       </span>
     `
@@ -72,10 +83,14 @@ export function applyInventoryFilters() {
   const rarityF = getVal('filterRarity'), tierF = getVal('filterTier'), sortF = getVal('sortOrder')
   const usageF = getVal('filterUsage')
 
-  const textF = document.getElementById('filterText') ? document.getElementById('filterText').value.toLowerCase().trim() : ''
+  const textEl = document.getElementById('filterText')
+  const rawQuery = textEl ? textEl.value.trim() : ''
 
   filtered = fullInventory.filter(c => {
-    if (textF && !c.name.toLowerCase().includes(textF)) return false
+    // 1. Processamento Scryfall AST
+    if (rawQuery !== '' && !matchScryfallQuery(c, rawQuery)) return false
+
+    // 2. Filtros de UI Fixos
     if (setF !== 'all' && c.set !== setF) return false
     if (excludedSets.length > 0 && excludedSets.includes(c.set)) return false
     if (extraF === 'foil' && (!c.extras || c.extras.trim() === '')) return false
@@ -129,7 +144,9 @@ function renderInventoryChunk() {
 
   let htmlChunk = ''
   displayList.forEach((c) => {
-    const badge = c.extras ? `<span class="badge-extra ms-1">${c.extras}</span>` : ''
+    const safeExtras = window.escapeHTML(c.extras)
+    const safeName = window.escapeHTML(c.name)
+    const badge = c.extras ? `<span class="badge-extra ms-1">${safeExtras}</span>` : ''
     const enc = btoa(encodeURIComponent(JSON.stringify(c)))
     const imgBtn = c.imageUri ? `<button class="btn btn-sm btn-link p-0 text-muted" onclick="showCardDetails('${enc}')"><i class="bi bi-image"></i></button>` : ''
 
@@ -140,15 +157,15 @@ function renderInventoryChunk() {
       <td class="text-center ps-4">${imgBtn}</td>
       <td>
         <div class="col-card-name fw-bold text-main d-flex align-items-center flex-wrap gap-2">
-          ${c.name} <span class="fs-6 d-inline-flex align-items-center">${formatManaCost(c.manaCost)}</span>
+          ${safeName} <span class="fs-6 d-inline-flex align-items-center">${window.formatManaCost(c.manaCost)}</span>
         </div>
         ${badge}
       </td>
-      <td class="text-center small text-muted">${c.typeLine ? c.typeLine.split('—')[0].trim() : ''}</td>
-      <td class="text-center"><span class="badge-tech">${c.set}</span></td>
+      <td class="text-center small text-muted">${c.typeLine ? window.escapeHTML(c.typeLine.split('—')[0].trim()) : ''}</td>
+      <td class="text-center"><span class="badge-tech">${window.escapeHTML(c.set)}</span></td>
       <td class="text-center text-muted">${availableQty}${inDeckIcon}</td>
-      <td class="text-end text-muted small">${BRL.format(c.unitPrice)}</td>
-      <td class="text-end fw-bold text-main pe-4">${BRL.format(c.unitPrice * availableQty)}</td>
+      <td class="text-end text-muted small">${window.BRL.format(c.unitPrice)}</td>
+      <td class="text-end fw-bold text-main pe-4">${window.BRL.format(c.unitPrice * availableQty)}</td>
     </tr>`
   })
 
@@ -157,14 +174,13 @@ function renderInventoryChunk() {
 
   tbody.insertAdjacentHTML('beforeend', htmlChunk)
 
-  // NOVA LÓGICA DE CONTAGEM: Conta as linhas renderizadas e calcula o volume físico real das cartas filtradas
   const visibleRows = Math.min(currentRenderLimit, filtered.length)
   const physicalVolume = filtered.reduce((acc, c) => {
     const qtyToCount = usageF === 'free' ? (c.qty - c.usedInDecks) : c.qty
     return acc + qtyToCount
   }, 0)
 
-  safeSetText('inventoryCount', `Mostrando ${visibleRows} de ${filtered.length} registros (Volume: ${physicalVolume} cartas físicas)`)
+  window.safeSetText('inventoryCount', `Mostrando ${visibleRows} de ${filtered.length} registros (Volume: ${physicalVolume} cartas físicas)`)
 
   setupIntersectionObserver()
 }
