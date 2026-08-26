@@ -1,44 +1,29 @@
-/* ==========================================================================
-   MERCADIA ENTERPRISE - APPLE HIG "LIQUID Glass" STYLESHEET
-   ========================================================================== */
-
 :root {
-  /* Paleta de Cores Nativas iOS (Dark Mode) */
   --bg-base: #000000;
-  --bg-glass: rgba(28, 28, 30, 0.45);
-  --bg-glass-hover: rgba(44, 44, 46, 0.65);
-  --bg-input: rgba(255, 255, 255, 0.08);
-
-  --border-glass: rgba(255, 255, 255, 0.05);
-  --border-glass-top: rgba(255, 255, 255, 0.15);
-  /* Reflexo de luz na quina */
-
+  --bg-surface: rgba(28, 28, 30, 0.65);
+  --bg-surface-elevated: rgba(44, 44, 46, 0.7);
+  --bg-input: rgba(255, 255, 255, 0.06);
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --border-highlight: rgba(255, 255, 255, 0.14);
   --text-main: #FFFFFF;
   --text-muted: rgba(235, 235, 245, 0.6);
-  /* iOS Secondary Label */
-
+  --text-tertiary: rgba(235, 235, 245, 0.38);
   --accent-primary: #0A84FF;
-  --accent-success: #32D74B;
+  --accent-success: #30D158;
   --accent-danger: #FF453A;
   --accent-warning: #FFD60A;
   --accent-purple: #BF5AF2;
-
-  /* Raios de Borda Suaves (Squircle) */
-  --radius-xl: 32px;
-  --radius-lg: 24px;
-  --radius-md: 16px;
-  --radius-sm: 10px;
-
-  /* Animações de Mola (Spring Physics) */
-  --spring: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-  --spring-fast: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --radius-xl: 24px;
+  --radius-lg: 18px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --transition-smooth: all 0.2s ease-in-out;
 }
 
-/* 1. MESH GRADIENT & BASE */
 body {
   background-color: var(--bg-base);
   color: var(--text-main);
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
@@ -50,39 +35,26 @@ body::before,
 body::after {
   content: '';
   position: fixed;
-  width: 60vw;
-  height: 60vh;
+  width: 50vw;
+  height: 50vh;
   border-radius: 50%;
-  filter: blur(140px);
+  filter: blur(160px);
   z-index: -1;
-  animation: ambientLight 25s infinite alternate ease-in-out;
   pointer-events: none;
 }
 
 body::before {
-  background: rgba(10, 132, 255, 0.15);
-  top: -10%;
-  left: -10%;
+  background: rgba(10, 132, 255, 0.04);
+  top: -5%;
+  left: -5%;
 }
 
 body::after {
-  background: rgba(191, 90, 242, 0.12);
-  bottom: -20%;
-  right: -10%;
-  animation-delay: -12s;
+  background: rgba(191, 90, 242, 0.03);
+  bottom: -10%;
+  right: -5%;
 }
 
-@keyframes ambientLight {
-  0% {
-    transform: translate(0, 0) scale(1);
-  }
-
-  100% {
-    transform: translate(80px, 60px) scale(1.1);
-  }
-}
-
-/* 2. TIPOGRAFIA APPLE HIG */
 h1,
 h2,
 h3,
@@ -91,68 +63,68 @@ h5,
 h6,
 .navbar-brand,
 .big-number {
-  letter-spacing: -0.04em;
-  font-weight: 800;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
 }
 
-/* 3. NAVEGAÇÃO LIQUID GLASS */
 .navbar {
-  background: rgba(18, 18, 18, 0.6);
-  backdrop-filter: blur(40px) saturate(200%);
-  -webkit-backdrop-filter: blur(40px) saturate(200%);
-  border-bottom: 1px solid var(--border-glass);
-  padding: 16px 0;
+  background: rgba(18, 18, 18, 0.75);
+  backdrop-filter: blur(25px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 14px 0;
   z-index: 1030;
 }
 
 .navbar-brand {
-  font-size: 1.4rem;
+  font-size: 1.35rem;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   color: var(--text-main);
-  background: linear-gradient(135deg, #fff 0%, #a5a5a5 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
-/* 4. PAINÉIS (O CORAÇÃO DO LIQUID GLASS) */
 .ui-panel {
-  background: var(--bg-glass);
-  backdrop-filter: blur(30px) saturate(180%);
-  -webkit-backdrop-filter: blur(30px) saturate(180%);
-  border: 1px solid var(--border-glass);
-  border-top: 1px solid var(--border-glass-top);
+  background: var(--bg-surface);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid var(--border-subtle);
+  border-top: 1px solid var(--border-highlight);
   border-radius: var(--radius-lg);
-  padding: 24px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  padding: 22px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
-  transition: var(--spring);
+  transition: var(--transition-smooth);
   height: 100%;
 }
 
 .ui-panel:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
 }
 
 .panel-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-  border-bottom: 1px solid var(--border-glass);
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--border-subtle);
   padding-bottom: 12px;
   flex-wrap: wrap;
-  /* Ajuda no mobile caso fique apertado */
   gap: 10px;
 }
 
 .panel-title {
-  font-size: 0.9rem;
-  font-weight: 700;
+  font-size: 0.82rem;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
   color: var(--text-muted);
+  margin: 0;
 }
 
 .panel-body {
@@ -160,197 +132,179 @@ h6,
 }
 
 .big-number {
-  font-size: 1.8rem;
+  font-size: 1.65rem;
   color: var(--text-main);
   line-height: 1.1;
 }
 
-/* 5. BOTÕES E CONTROLES (SQUIRCLES) */
 .btn-filter,
 .form-control-dark {
   background: var(--bg-input);
   color: var(--text-main);
-  border: 1px solid var(--border-glass);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
-  padding: 8px 16px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  transition: var(--spring-fast);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  padding: 7px 14px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: var(--transition-smooth);
 }
 
 .btn-filter:hover,
 .form-control-dark:focus {
-  background: rgba(255, 255, 255, 0.15);
-  transform: scale(1.02);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
   outline: none;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .btn-action-icon {
-  background: var(--bg-input);
-  border: 1px solid var(--border-glass);
-  color: var(--text-main);
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-sm);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: var(--spring-fast);
+  transition: var(--transition-smooth);
   cursor: pointer;
 }
 
 .btn-action-icon:hover {
-  background: var(--accent-primary);
-  color: #fff;
-  border-color: var(--accent-primary);
-  transform: scale(1.1);
+  background: var(--bg-input);
+  color: var(--text-main);
+  border-color: var(--border-highlight);
 }
 
-/* CORREÇÃO DO IOS SELECT: Mata a seta horrorosa nativa e o fundo branco */
 .ios-select {
   background-color: var(--bg-input);
   color: var(--text-main);
-  border: 1px solid var(--border-glass);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
-  padding: 8px 16px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  transition: var(--spring-fast);
-
+  padding: 7px 14px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: var(--transition-smooth);
   appearance: none;
   -webkit-appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(235,235,245,0.6)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
   background-repeat: no-repeat;
-  background-position: right 12px center;
+  background-position: right 10px center;
   background-size: 14px;
-  padding-right: 36px !important;
-  /* Espaço para a seta customizada */
+  padding-right: 32px !important;
+}
+
+.ios-select:focus {
+  border-color: var(--accent-primary);
+  outline: none;
 }
 
 .ios-select option {
   background-color: #1C1C1E;
-  /* Cinza iOS escuro */
   color: #FFFFFF;
 }
 
-/* CORREÇÃO DO SEGMENTED CONTROL (7D, 30D, MAX) */
 .btn-group-filter {
   display: inline-flex;
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid var(--border-glass);
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
-  padding: 4px;
-  gap: 4px;
+  padding: 3px;
+  gap: 2px;
 }
 
 .btn-group-filter .btn-filter {
   background: transparent;
   border: none;
-  box-shadow: none;
-  padding: 4px 14px;
-  font-size: 0.8rem;
-  margin: 0;
+  padding: 4px 12px;
+  font-size: 0.78rem;
   border-radius: 6px;
-  /* Borda leve pro botão deslizar dentro */
 }
 
 .btn-group-filter .btn-filter.active {
-  background: var(--text-main);
-  color: #000;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+  font-weight: 600;
 }
 
-/* CORREÇÃO DO GRID DE FILTROS DO INVENTÁRIO */
 .ios-filter-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
   width: 100%;
 }
 
 .ios-filter-grid>select {
-  flex: 1 1 150px;
-  /* Cresce e encolhe, mas tenta manter 150px min */
+  flex: 1 1 140px;
   min-width: 0;
 }
 
-/* 6. TABELAS E LISTAS (REFINADAS) */
 .table {
   color: var(--text-main);
   border-collapse: separate;
-  border-spacing: 0 4px;
+  border-spacing: 0;
+  width: 100%;
 }
 
 .table th {
-  border-bottom: 1px solid var(--border-glass);
+  border-bottom: 1px solid var(--border-subtle);
   color: var(--text-muted);
   font-weight: 600;
   font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding-bottom: 12px;
+  letter-spacing: 0.04em;
+  padding: 10px 8px;
 }
 
 .table td {
   background: transparent;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-  padding: 12px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  padding: 10px 8px;
   vertical-align: middle;
+  font-size: 0.88rem;
 }
 
 .table tbody tr {
-  transition: background 0.2s ease;
-  border-radius: var(--radius-sm);
+  transition: background 0.15s ease;
 }
 
 .table tbody tr:hover td {
-  background: var(--bg-input);
+  background: rgba(255, 255, 255, 0.03);
 }
 
-/* A Mágica de Tabela Fluida no Apple HIG */
 .table-responsive {
   -webkit-overflow-scrolling: touch;
-  /* Scroll suave de momentum no iOS */
   scrollbar-width: none;
-  /* Esconde barra de rolagem grossa no Firefox */
 }
 
 .table-responsive::-webkit-scrollbar {
   display: none;
-  /* Esconde barra no Chrome Safari para ficar Apple Clean */
 }
 
-/* 7. BADGES E TAGS */
 .badge-tech {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 4px 8px;
-  border-radius: 8px;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-subtle);
+  padding: 3px 7px;
+  border-radius: 6px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--text-main);
-  backdrop-filter: blur(10px);
 }
 
 .badge-extra {
-  background: linear-gradient(135deg, rgba(191, 90, 242, 0.2), rgba(10, 132, 255, 0.2));
-  border: 1px solid rgba(191, 90, 242, 0.3);
-  color: #E5B3FF;
+  background: rgba(191, 90, 242, 0.15);
+  border: 1px solid rgba(191, 90, 242, 0.25);
+  color: #DDA6FF;
   padding: 2px 6px;
-  border-radius: 6px;
+  border-radius: 5px;
   font-size: 0.65rem;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
 }
 
-/* 8. CORES SEMÂNTICAS E CONTROLES DE ALINHAMENTO */
 .text-main {
   color: var(--text-main) !important;
 }
@@ -375,10 +329,10 @@ h6,
   color: var(--accent-primary) !important;
 }
 
-/* CORREÇÃO: + e - Saindo do Lugar */
 .var-up,
 .var-down {
   white-space: nowrap !important;
+  font-weight: 600;
 }
 
 .var-up {
@@ -389,7 +343,6 @@ h6,
   color: var(--accent-danger) !important;
 }
 
-/* 9. SCROLLBAR INVISÍVEL (ESTILO MAC) */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -400,116 +353,99 @@ h6,
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.3);
 }
 
-/* 10. ANIMAÇÃO GERAL (FADE IN) */
-.fade-in {
-  animation: fadeInSpring 0.8s var(--spring) forwards;
-}
-
-@keyframes fadeInSpring {
-  0% {
-    opacity: 0;
-    transform: translateY(20px) scale(0.98);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-/* 11. MODAIS (LIQUID GLASS SUPREMO) */
 .modal-content {
-  background: rgba(28, 28, 30, 0.65);
-  backdrop-filter: blur(60px) saturate(200%);
-  -webkit-backdrop-filter: blur(60px) saturate(200%);
-  border: 1px solid var(--border-glass-top);
+  background: rgba(28, 28, 30, 0.85);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border: 1px solid var(--border-highlight);
   border-radius: var(--radius-xl);
-  box-shadow: 0 32px 64px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6);
   color: var(--text-main);
 }
 
 .modal-header {
-  border-bottom: 1px solid var(--border-glass);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 16px 22px;
 }
 
 .modal-footer {
-  border-top: 1px solid var(--border-glass);
+  border-top: 1px solid var(--border-subtle);
+  padding: 14px 22px;
 }
 
 .btn-close {
   filter: invert(1) grayscale(100%) brightness(200%);
   opacity: 0.5;
-  transition: var(--spring-fast);
+  transition: var(--transition-smooth);
 }
 
 .btn-close:hover {
-  opacity: 1;
-  transform: rotate(90deg);
+  opacity: 0.85;
 }
 
-/* 12. FILTROS DO COMMANDER (SQUIRCLES COLORIDOS) */
 .color-btn {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 0.75rem;
-  font-weight: 800;
+  font-size: 0.72rem;
+  font-weight: 700;
   cursor: pointer;
   color: #000;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  transition: var(--spring-fast);
+  transition: var(--transition-smooth);
   border: 2px solid transparent;
+  opacity: 0.75;
 }
 
 .color-btn:hover {
-  transform: scale(1.15);
+  opacity: 1;
 }
 
 .color-btn.active {
-  border-color: #fff;
-  transform: scale(1.1) translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.4);
+  opacity: 1;
+  border-color: #FFFFFF;
+  transform: scale(1.08);
 }
 
 .c-w {
-  background: linear-gradient(135deg, #F9F8F6, #D4D1C9);
+  background: #E5E5E0;
 }
 
 .c-u {
-  background: linear-gradient(135deg, #A4D0F8, #2E79B9);
+  background: #3B82F6;
+  color: #FFF;
 }
 
 .c-b {
-  background: linear-gradient(135deg, #7A7A7A, #1C1C1C);
-  color: #fff;
+  background: #27272A;
+  color: #FFF;
+  border: 1px solid #52525B;
 }
 
 .c-r {
-  background: linear-gradient(135deg, #FA9C8A, #D33620);
+  background: #EF4444;
+  color: #FFF;
 }
 
 .c-g {
-  background: linear-gradient(135deg, #9BD3A9, #348E4A);
+  background: #10B981;
+  color: #FFF;
 }
 
 .c-c {
-  background: linear-gradient(135deg, #C2C8CB, #8E969A);
+  background: #A1A1AA;
 }
 
-/* ==========================================================================
-   13. BARRA DE PESQUISA (SEARCH WRAPPER)
-   ========================================================================== */
 .search-wrapper {
   position: relative;
   display: flex;
@@ -520,7 +456,6 @@ h6,
 .search-wrapper form {
   width: 100%;
   margin: 0;
-  display: block;
 }
 
 .search-icon {
@@ -528,105 +463,234 @@ h6,
   left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   color: var(--text-muted);
   pointer-events: none;
-  z-index: 5;
 }
 
 .search-wrapper input {
   width: 100%;
-  padding-left: 38px !important;
+  padding-left: 36px !important;
   border-radius: var(--radius-sm);
 }
 
-/* ==========================================================================
-   14. RESPONSIVIDADE E DYNAMIC TYPE (MOBILE)
-   ========================================================================== */
 @media (max-width: 768px) {
-
   .big-number {
-    font-size: 1.35rem;
+    font-size: 1.4rem;
   }
 
   h1#activeDeckName {
-    font-size: 1.5rem !important;
+    font-size: 1.35rem !important;
   }
 
   .ui-panel {
     padding: 16px;
   }
 
-  .bottom-bar {
-    padding: 10px 12px;
-  }
-
-  .bottom-bar .fs-6 {
-    font-size: 0.85rem !important;
-  }
-
   .navbar-brand {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
   }
 
-  .back-button {
-    font-size: 0.95rem;
-  }
-
-  .preview-sidebar {
-    position: relative;
-    top: 0;
-    margin-bottom: 16px;
-  }
-
-  /* CORREÇÃO DAS TABELAS NO MOBILE: Evita o esmagamento horrendo */
   .table td,
   .table th {
     white-space: nowrap;
-    /* Impede as colunas de quebrarem e esmagarem o texto */
-    font-size: 0.85rem;
-    padding: 8px 4px;
+    font-size: 0.82rem;
+    padding: 8px 6px;
   }
 
-  /* Apenas o nome da carta tem direito de quebrar de linha no mobile para não gerar scroll infinito */
   .col-card-name {
     white-space: normal;
-    min-width: 130px;
-  }
-
-  .btn-filter,
-  .ios-select {
-    font-size: 0.8rem;
-    padding: 6px 12px;
-  }
-
-  /* Grid de Filtros ajusta pra 2 colunas cravadas se tiver muito apertado */
-  .ios-filter-grid {
-    gap: 8px;
+    min-width: 140px;
   }
 
   .ios-filter-grid>select {
-    flex: 1 1 calc(50% - 8px);
-  }
-
-  .login-panel {
-    padding: 30px 20px;
-    margin: 0 15px;
+    flex: 1 1 calc(50% - 6px);
   }
 }
 
-.navbar-brand {
-  font-size: 1.5rem;
-  letter-spacing: -0.05em;
-  font-weight: 900;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  /* Gradiente misturando o Roxo, Azul e Branco da marca */
-  background: linear-gradient(135deg, var(--text-main) 20%, var(--accent-purple) 70%, var(--accent-primary) 100%);
+.card-grid-item {
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  user-select: none;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+}
+
+.card-grid-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.6);
+}
+
+.card-grid-item img {
+  transition: transform 0.3s ease;
+  display: block;
+}
+
+.card-grid-item:hover img {
+  transform: scale(1.02);
+}
+
+.card-grid-overlay {
+  background: rgba(18, 18, 20, 0.82);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.3);
+}
+
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+}
+
+.big-number,
+.highlight-value,
+.table td.text-end,
+#kpiDeckValue,
+#kpiDeckMissingValue {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+.highlight-value {
+  font-size: 2.1rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.82) 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0px 4px 24px rgba(191, 90, 242, 0.3);
-  /* Brilho de fundo Roxo */
+  text-shadow: 0 0 28px rgba(10, 132, 255, 0.18);
+}
+
+@media (max-width: 768px) {
+  .highlight-value {
+    font-size: 1.7rem;
+  }
+}
+
+@keyframes valueFlashUp {
+  0% {
+    background-color: rgba(48, 209, 88, 0.28);
+    border-radius: 6px;
+  }
+
+  100% {
+    background-color: transparent;
+  }
+}
+
+@keyframes valueFlashDown {
+  0% {
+    background-color: rgba(255, 69, 58, 0.28);
+    border-radius: 6px;
+  }
+
+  100% {
+    background-color: transparent;
+  }
+}
+
+.value-flash-up {
+  animation: valueFlashUp 0.9s ease-out;
+}
+
+.value-flash-down {
+  animation: valueFlashDown 0.9s ease-out;
+}
+
+.mercadia-toast {
+  background: rgba(28, 28, 30, 0.92);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--border-highlight);
+  border-radius: var(--radius-md);
+  color: var(--text-main);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  min-width: 280px;
+}
+
+@keyframes skeletonPulse {
+
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.skeleton-block {
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  animation: skeletonPulse 1.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .skeleton-block,
+  .value-flash-up,
+  .value-flash-down {
+    animation: none;
+  }
+}
+
+.catalog-tag {
+  font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
+  padding: 3px 8px;
+  border: 1px solid var(--border-highlight);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.03);
+  white-space: nowrap;
+}
+
+.catalog-note {
+  padding: 12px 14px;
+  border-left: 2px solid var(--border-highlight);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.catalog-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.catalog-table td {
+  padding: 8px 2px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.catalog-table tr:last-child td {
+  border-bottom: none;
+}
+
+.catalog-table td:first-child {
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  width: 50%;
+}
+
+.catalog-table td:last-child {
+  text-align: right;
+  font-weight: 700;
+  color: var(--text-main);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
 }

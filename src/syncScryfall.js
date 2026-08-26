@@ -68,6 +68,16 @@ async function processAndUpsertCards() {
         totalProcessed++
         if (card.lang !== 'en' || card.digital) return
 
+        if (
+          card.layout === 'art_series' ||
+          card.layout === 'token' ||
+          card.layout === 'double_faced_token' ||
+          card.layout === 'emblem' ||
+          card.set_type === 'memorabilia'
+        ) {
+          return
+        }
+
         const imageNormal = card.image_uris ? card.image_uris.normal : (card.card_faces && card.card_faces[0].image_uris ? card.card_faces[0].image_uris.normal : null)
         const imageArtCrop = card.image_uris ? card.image_uris.art_crop : (card.card_faces && card.card_faces[0].image_uris ? card.card_faces[0].image_uris.art_crop : null)
         const colors = card.color_identity ? card.color_identity.join(',') : 'C'
@@ -82,7 +92,7 @@ async function processAndUpsertCards() {
           parser.pause()
           insertBatch(client, batch).then(() => {
             totalInserted += batch.length; batch = []
-            process.stdout.write(`\r💾 Salvas no banco: ${totalInserted} impressões...`)
+            process.stdout.write(`\r💾 Salvas no banco: ${totalInserted} impressões jogáveis...`)
             parser.resume()
           }).catch(reject)
         }
@@ -93,7 +103,7 @@ async function processAndUpsertCards() {
           try { await insertBatch(client, batch); totalInserted += batch.length }
           catch (err) { return reject(err) }
         }
-        console.log(`\n🎉 Finalizado! Banco reestruturado com JSONB.`)
+        console.log(`\n🎉 Finalizado! Banco reestruturado sem lixo de Art Series ou Tokens.`)
         resolve()
       })
 

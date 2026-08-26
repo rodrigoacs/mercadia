@@ -24,6 +24,7 @@
     <meta property="og:image:height" content="630" />
 
     <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Mercadia" />
 
@@ -108,6 +109,7 @@
       </div>
     </nav>
 
+    <!-- MODAL DE SINCRONIZAÇÃO -->
     <div class="modal fade" id="syncModal" tabindex="-1">
       <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
@@ -156,6 +158,7 @@
       </div>
     </div>
 
+    <!-- MODAL DE BUSCA RÁPIDA -->
     <div class="modal fade" id="searchModal" tabindex="-1">
       <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -169,7 +172,6 @@
                 <thead>
                   <tr>
                     <th class="ps-4">Carta</th>
-                    <th class="text-center">Ações</th>
                     <th class="text-center">Set</th>
                     <th class="text-center">Qtd</th>
                     <th class="text-end pe-4">Total</th>
@@ -183,26 +185,8 @@
         </div>
       </div>
     </div>
-    <div class="modal fade" id="historyDetailModal" tabindex="-1">
-      <div class="modal-dialog modal-sm modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header py-2">
-            <div class="d-flex flex-column">
-              <span class="text-uppercase" style="font-size: 0.65rem; color: var(--text-muted)"
-                >Histórico</span
-              ><span class="fw-bold text-white" id="histTitle">...</span>
-            </div>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-          </div>
-          <div class="modal-body p-0">
-            <table class="table table-sm table-striped mb-0">
-              <tbody id="historyTableBody"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
 
+    <!-- MODAL DE DETALHES DA CARTA -->
     <div class="modal fade" id="imagePreviewModal" tabindex="-1">
       <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
@@ -211,69 +195,85 @@
           </div>
           <div class="modal-body p-4 pt-0">
             <div class="row g-4">
-              <div class="col-12 col-md-5 text-center">
-                <img
-                  id="detailImage"
-                  src=""
-                  alt="Card Preview"
-                  class="img-fluid rounded-4 shadow-lg"
-                  style="max-height: 60vh"
-                />
+              <div class="col-12 col-md-5">
+                <div class="position-relative">
+                  <img
+                    id="detailImage"
+                    src=""
+                    alt="Card Preview"
+                    class="img-fluid rounded-4 shadow-lg w-100"
+                    style="max-height: 60vh; object-fit: contain; background: var(--bg-input);"
+                    onerror="this.onerror=null; this.src=window.CARD_PLACEHOLDER_SVG"
+                  />
+                  <span
+                    id="detailUnit"
+                    class="position-absolute badge-tech"
+                    style="top: 12px; left: 12px; background: rgba(0,0,0,0.72); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); font-size: 0.8rem; padding: 5px 10px;"
+                  ></span>
+                </div>
               </div>
               <div class="col-12 col-md-7">
-                <div class="d-flex justify-content-between align-items-start mb-1">
-                  <h4 id="detailName" class="text-white fw-bold mb-0"></h4>
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <div>
+                    <h4 id="detailName" class="text-white fw-bold mb-1"></h4>
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                      <span id="detailCatalogTag" class="catalog-tag"></span>
+                      <span class="d-flex align-items-center gap-1">
+                        <span id="detailRarityDot" style="width: 7px; height: 7px; border-radius: 50%; display: inline-block;"></span>
+                        <span id="detailRarity" class="text-muted small text-capitalize"></span>
+                      </span>
+                    </div>
+                  </div>
                   <span id="detailMana" class="fs-5 text-nowrap"></span>
                 </div>
-                <div
-                  id="detailType"
-                  class="text-muted small mb-3 border-bottom border-color pb-2"
-                ></div>
-                <div
-                  class="p-3 mb-3 rounded"
-                  style="background: var(--bg-input); border: 1px solid var(--border-color)"
-                >
+                <div id="detailType" class="text-muted small mb-3"></div>
+
+                <div id="detailHistorySection" class="mb-3 d-none">
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <div class="text-muted" style="font-size: 0.65rem; text-transform: uppercase">
+                      Histórico de Preço
+                    </div>
+                    <button
+                      type="button"
+                      class="btn-action-icon"
+                      style="width: auto; height: auto; padding: 2px 8px; font-size: 0.65rem;"
+                      onclick="toggleDetailHistoryTable()"
+                    >
+                      Ver tabela
+                    </button>
+                  </div>
+                  <div style="height: 56px;">
+                    <canvas id="detailSparkline"></canvas>
+                  </div>
+                  <div id="detailHistoryTable" class="d-none mt-2" style="max-height: 160px; overflow-y: auto;">
+                    <table class="table table-sm mb-0">
+                      <tbody id="detailHistoryTableBody"></tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div class="catalog-note mb-3">
                   <div
                     id="detailOracle"
                     class="text-white small"
                     style="white-space: pre-wrap; font-family: var(--font-main); line-height: 1.5"
                   ></div>
                 </div>
-                <div class="row g-2 mb-3">
-                  <div class="col-6">
-                    <div class="text-muted" style="font-size: 0.65rem; text-transform: uppercase">
-                      Coleção
-                    </div>
-                    <div id="detailSet" class="text-white fw-bold small"></div>
-                  </div>
-                  <div class="col-6">
-                    <div class="text-muted" style="font-size: 0.65rem; text-transform: uppercase">
-                      Raridade
-                    </div>
-                    <div id="detailRarity" class="text-white fw-bold small text-capitalize"></div>
-                  </div>
-                </div>
-                <div class="row g-2 mb-3">
-                  <div class="col-4">
-                    <div class="text-muted" style="font-size: 0.65rem; text-transform: uppercase">
-                      Em Estoque
-                    </div>
-                    <div id="detailQty" class="text-white fw-bold fs-5"></div>
-                  </div>
-                  <div class="col-4">
-                    <div class="text-muted" style="font-size: 0.65rem; text-transform: uppercase">
-                      Preço Unit.
-                    </div>
-                    <div id="detailUnit" class="text-warning fw-bold fs-5"></div>
-                  </div>
-                  <div class="col-4">
-                    <div class="text-muted" style="font-size: 0.65rem; text-transform: uppercase">
-                      Valor Total
-                    </div>
-                    <div id="detailTotal" class="text-success fw-bold fs-5"></div>
-                  </div>
-                </div>
-                <div class="mt-3">
+
+                <table class="catalog-table mb-3">
+                  <tbody>
+                    <tr>
+                      <td>Em estoque</td>
+                      <td id="detailQty"></td>
+                    </tr>
+                    <tr>
+                      <td>Valor total</td>
+                      <td id="detailTotal" class="text-success"></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="mb-3">
                   <div
                     class="text-muted mb-2"
                     style="font-size: 0.65rem; text-transform: uppercase"
@@ -282,8 +282,33 @@
                   </div>
                   <div id="detailLegalities" class="d-flex flex-wrap gap-2"></div>
                 </div>
+
+                <div id="detailActions"></div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL DE SELEÇÃO DE ARTES (PRINT SELECTOR) - ADICIONADO AQUI -->
+    <div class="modal fade" id="printSelectorModal" tabindex="-1" style="z-index: 1080">
+      <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title fs-6 text-uppercase text-muted fw-bold" id="printSelectorTitle">
+              Escolha a Versão Exata
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body p-4">
+            <div id="printSelectorLoading" class="text-center py-5">
+              <div class="spinner-border text-primary mb-2" role="status"></div>
+              <div class="text-muted small">
+                Buscando todas as impressões disponíveis no Scryfall...
+              </div>
+            </div>
+            <div id="printSelectorGrid" class="row g-3"></div>
           </div>
         </div>
       </div>
@@ -530,6 +555,7 @@
         </div>
       </div>
 
+      <!-- SEÇÃO DO INVENTÁRIO -->
       <div class="row g-3">
         <div class="col-12">
           <div class="ui-panel h-100 p-0">
@@ -538,15 +564,33 @@
                 <span
                   class="panel-title mb-0 fs-6 text-main fw-bold"
                   style="letter-spacing: -0.02em"
-                  >Inventário</span
+                  >Cofre de Cartas</span
                 >
+                <div class="btn-group-filter">
+                  <button
+                    id="btnViewGrid"
+                    class="btn-filter active"
+                    onclick="switchInventoryView('grid')"
+                    title="Grade Visual (Scryfall)"
+                  >
+                    <i class="bi bi-grid-fill"></i> Grade
+                  </button>
+                  <button
+                    id="btnViewTable"
+                    class="btn-filter"
+                    onclick="switchInventoryView('table')"
+                    title="Tabela Financeira"
+                  >
+                    <i class="bi bi-list-ul"></i> Tabela
+                  </button>
+                </div>
               </div>
               <div class="ios-filter-grid mt-2">
                 <input
                   type="text"
                   id="filterText"
                   class="ios-select"
-                  placeholder="🔍 Buscar no inventário..."
+                  placeholder="🔍 Sintaxe Scryfall (ex: id<=uw t:instant mv>2)..."
                   oninput="applyInventoryFilters()"
                   style="min-width: 220px; background: var(--bg-input); color: #fff"
                 />
@@ -602,8 +646,12 @@
               </div>
               <div id="excludedTags" class="d-flex flex-wrap gap-2 mt-3 px-2"></div>
             </div>
+
+            <div id="gridInventory" class="row g-3 p-4 mb-2"></div>
+
             <div
-              class="table-responsive flex-grow-1 px-2 mt-2"
+              id="tableWrapperInventory"
+              class="table-responsive flex-grow-1 px-2 mt-2 d-none"
               style="max-height: 600px; overflow-y: auto"
             >
               <table class="table table-hover align-middle">
@@ -621,6 +669,7 @@
                 <tbody id="tableInventory"></tbody>
               </table>
             </div>
+
             <div
               class="p-3 text-end text-muted small border-top border-color"
               style="background: var(--bg-glass)"

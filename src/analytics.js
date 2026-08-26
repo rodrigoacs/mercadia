@@ -288,7 +288,7 @@ const ensureData = async () => {
     try {
       await buildCaches()
       lastFetch = Date.now()
-      console.log('✅ Caches atualizados com sucesso e memória raw libertada!')
+      console.log('✅ Caches atualizados com sucesso!')
     } finally {
       cacheBuildPromise = null
     }
@@ -300,6 +300,17 @@ const ensureData = async () => {
 export const getDashboardData = async () => {
   await ensureData()
   return dashboardCache
+}
+
+export const getCardHistory = async (name, setCode, num, extras) => {
+  const result = await pool.query(`
+    SELECT TO_CHAR(date, 'YYYY-MM-DD') as date_str, unit_price
+    FROM historico_cartas
+    WHERE name = $1 AND set_code = $2 AND COALESCE(num, '') = $3 AND COALESCE(extras, '') = $4
+    ORDER BY date DESC
+  `, [name, setCode, num || '', extras || ''])
+
+  return result.rows.map(r => ({ date: r.date_str, value: parseFloat(r.unit_price) }))
 }
 
 export const searchCardData = async (query) => {
@@ -327,4 +338,45 @@ export const getCommanderPoolData = async (commanderColors) => {
     const cardColors = card.colorIdentity.split(',')
     return cardColors.every(c => allowedColors.includes(c))
   }).sort((a, b) => b.totalPrice - a.totalPrice)
+}
+
+export const overrideInventoryCardPrint = async (name, setCode, num, extras, newScryfallSet, newImageUri) => {
+  const client = await pool.connect()
+  try {
+    await client.query(`ALTER TABLE metadata_cartas ADD COLUMN IF NOT EXISTS is_manual_override BOOLEAN DEFAULT FALSE;`).catch(() => { })
+
+    await client.query(`
+      UPDATE metadata_cartas
+      SET scryfall_set = $1, image_uri = $2, is_manual_override = TRUE
+      WHERE name = $3 AND set_code = $4 AND COALESCE(num, '') = $5 AND COALESCE(extras, '') = $6
+    `, [newScryfallSet, newImageUri, name, setCode, num || '', extras || ''])
+
+    const isExactMatch = (c) =>
+      c.name === name &&
+      c.set === setCode &&
+      (c.num || '') === (num || '') &&
+      (c.extras || '') === (extras || '')
+
+    if (inventoryCache) {
+      inventoryCache.forEach(c => {
+        if (isExactMatch(c)) {
+          c.imageUri = newImageUri
+          c.scryfallSet = newScryfallSet
+        }
+      })
+    }
+
+    if (searchDataCache) {
+      searchDataCache.forEach(c => {
+        if (isExactMatch(c)) {
+          c.imageUri = newImageUri
+          c.scryfallSet = newScryfallSet
+        }
+      })
+    }
+
+    return { success: true }
+  } finally {
+    client.release()
+  }
 }

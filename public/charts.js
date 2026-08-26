@@ -40,7 +40,7 @@ export async function initDashboard() {
     const data = globalData
     if (!data || data.empty) return
 
-    safeSetText('kpiTotal', BRL.format(data.kpis.totalValue))
+    setNumericText('kpiTotal', BRL.format(data.kpis.totalValue), data.kpis.totalValue)
     safeSetText('kpiQty', data.kpis.totalCards)
     safeSetText('kpiTicket', BRL.format(data.kpis.avgTicket))
 
@@ -50,13 +50,13 @@ export async function initDashboard() {
       const row = document.getElementById('paretoRow')
       if (row) row.style.display = 'flex'
       safeSetHTML('paretoText', `<strong>Princípio de Pareto</strong>: apenas <strong class="text-main">${data.pareto.percentCards}%</strong> das suas cartas físicas (${data.pareto.totalCardsIncluded} un.) correspondem a <strong>80%</strong> de todo o seu patrimônio.`)
-      safeSetText('paretoValue', BRL.format(data.pareto.accWealth))
+      setNumericText('paretoValue', BRL.format(data.pareto.accWealth), data.pareto.accWealth)
     }
 
     const setKpi = (id, val) => {
       const el = document.getElementById(id)
       if (el) {
-        el.innerText = (val > 0 ? '+' : '') + BRL.format(val)
+        setNumericText(id, (val > 0 ? '+' : '') + BRL.format(val), val)
         el.className = 'big-number mt-2 ' + (val >= 0 ? 'var-up' : 'var-down')
       }
     }

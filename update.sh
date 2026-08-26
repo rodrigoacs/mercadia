@@ -19,3 +19,13 @@ echo "🔍 Iniciando coleta e envio direto para o PostgreSQL da VPS..." >> "$PRO
 node --env-file=.env index.js >> "$PROJETO_DIR/log_execucao.txt" 2>&1
 
 echo "✅ Concluído!" >> "$PROJETO_DIR/log_execucao.txt"
+# --- Heartbeat opcional (adicionado pelo fix_mercadia.sh) ---
+# Defina HEALTHCHECK_URL no seu .env (ex: uma URL do healthchecks.io ou
+# cronitor.io) para receber um alerta se esse cron parar de rodar.
+# Sem essa var configurada, esse bloco não faz nada.
+if [ -f "$PROJETO_DIR/.env" ]; then
+  HEALTHCHECK_URL=$(grep -E '^HEALTHCHECK_URL=' "$PROJETO_DIR/.env" | cut -d '=' -f2-)
+fi
+if [ -n "${HEALTHCHECK_URL:-}" ]; then
+  curl -fsS -m 10 --retry 2 "$HEALTHCHECK_URL" >> "$PROJETO_DIR/log_execucao.txt" 2>&1
+fi

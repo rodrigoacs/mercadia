@@ -6,6 +6,7 @@ let currentRenderLimit = 50
 let observer = null
 let filtered = []
 let searchDebounceTimeout = null
+export let currentViewMode = 'grid'
 
 export async function loadInventory() {
   try {
@@ -39,6 +40,38 @@ export async function loadInventory() {
 
     applyInventoryFilters()
   } catch (e) { console.error('Erro ao carregar inventário:', e) }
+}
+
+export function switchInventoryView(mode) {
+  currentViewMode = mode
+
+  const btnGrid = document.getElementById('btnViewGrid')
+  const btnTable = document.getElementById('btnViewTable')
+
+  if (btnGrid && btnTable) {
+    btnGrid.classList.toggle('active', mode === 'grid')
+    btnTable.classList.toggle('active', mode === 'table')
+  }
+
+  const gridContainer = document.getElementById('gridInventory')
+  const tableContainer = document.getElementById('tableWrapperInventory')
+
+  if (gridContainer && tableContainer) {
+    if (mode === 'grid') {
+      gridContainer.classList.remove('d-none')
+      tableContainer.classList.add('d-none')
+    } else {
+      gridContainer.classList.add('d-none')
+      tableContainer.classList.remove('d-none')
+    }
+  }
+
+  currentRenderLimit = 50
+  const tbody = document.getElementById('tableInventory')
+  if (tbody) tbody.innerHTML = ''
+  if (gridContainer) gridContainer.innerHTML = ''
+
+  renderInventoryChunk()
 }
 
 export function addExcludedSet() {
@@ -87,10 +120,7 @@ export function applyInventoryFilters() {
   const rawQuery = textEl ? textEl.value.trim() : ''
 
   filtered = fullInventory.filter(c => {
-    // 1. Processamento Scryfall AST
     if (rawQuery !== '' && !matchScryfallQuery(c, rawQuery)) return false
-
-    // 2. Filtros de UI Fixos
     if (setF !== 'all' && c.set !== setF) return false
     if (excludedSets.length > 0 && excludedSets.includes(c.set)) return false
     if (extraF === 'foil' && (!c.extras || c.extras.trim() === '')) return false
@@ -130,17 +160,69 @@ export function applyInventoryFilters() {
   })
 
   const tbody = document.getElementById('tableInventory')
+  const gridContainer = document.getElementById('gridInventory')
   if (tbody) tbody.innerHTML = ''
+  if (gridContainer) gridContainer.innerHTML = ''
 
   renderInventoryChunk()
 }
 
 function renderInventoryChunk() {
-  const tbody = document.getElementById('tableInventory')
-  if (!tbody) return
-
   const displayList = filtered.slice(currentRenderLimit - 50, currentRenderLimit)
   const usageF = document.getElementById('filterUsage') ? document.getElementById('filterUsage').value : 'all'
+
+  const oldSentinel = document.getElementById('scroll-sentinel')
+  if (oldSentinel) oldSentinel.remove()
+
+  if (currentViewMode === 'grid') {
+    renderGridChunk(displayList)
+  } else {
+    renderTableChunk(displayList, usageF)
+  }
+
+  const visibleRows = Math.min(currentRenderLimit, filtered.length)
+  const physicalVolume = filtered.reduce((acc, c) => {
+    const qtyToCount = usageF === 'free' ? (c.qty - c.usedInDecks) : c.qty
+    return acc + qtyToCount
+  }, 0)
+
+  window.safeSetText('inventoryCount', `Mostrando ${visibleRows} de ${filtered.length} cartas (Volume: ${physicalVolume} físicas)`)
+
+  setupIntersectionObserver()
+}
+
+function renderGridChunk(displayList) {
+  const gridContainer = document.getElementById('gridInventory')
+  if (!gridContainer) return
+
+  let htmlChunk = ''
+  displayList.forEach(c => {
+    const safeName = window.escapeHTML(c.name)
+    const enc = btoa(encodeURIComponent(JSON.stringify(c)))
+    const imgUrl = c.imageUri || 'https://cards.scryfall.io/large/front/1/7/17b3a9bb-8152-474d-bbbb-cc748dae321b.jpg'
+
+    htmlChunk += `
+      <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+        <div class="card-grid-item position-relative" onclick="showCardDetails('${enc}')" title="${safeName}">
+          <img src="${imgUrl}" class="img-fluid rounded-3 w-100 shadow-sm" alt="${safeName}" loading="lazy" onerror="this.onerror=null;this.src=window.CARD_PLACEHOLDER_SVG;this.style.objectFit='contain';">
+          
+          <!-- Etiqueta de Preço Minimalista (Apple Glass) -->
+          <div class="position-absolute bottom-0 end-0 m-2">
+            <span class="badge bg-dark bg-opacity-75 text-success border border-secondary border-opacity-25 shadow-sm" style="backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); font-size: 0.75rem;">
+              ${window.BRL.format(c.unitPrice || 0)}
+            </span>
+          </div>
+        </div>
+      </div>
+    `
+  })
+
+  gridContainer.insertAdjacentHTML('beforeend', htmlChunk)
+}
+
+function renderTableChunk(displayList, usageF) {
+  const tbody = document.getElementById('tableInventory')
+  if (!tbody) return
 
   let htmlChunk = ''
   displayList.forEach((c) => {
@@ -169,40 +251,35 @@ function renderInventoryChunk() {
     </tr>`
   })
 
-  const oldSentinel = document.getElementById('scroll-sentinel')
-  if (oldSentinel) oldSentinel.remove()
-
   tbody.insertAdjacentHTML('beforeend', htmlChunk)
-
-  const visibleRows = Math.min(currentRenderLimit, filtered.length)
-  const physicalVolume = filtered.reduce((acc, c) => {
-    const qtyToCount = usageF === 'free' ? (c.qty - c.usedInDecks) : c.qty
-    return acc + qtyToCount
-  }, 0)
-
-  window.safeSetText('inventoryCount', `Mostrando ${visibleRows} de ${filtered.length} registros (Volume: ${physicalVolume} cartas físicas)`)
-
-  setupIntersectionObserver()
 }
 
 function setupIntersectionObserver() {
   if (observer) observer.disconnect()
 
   if (currentRenderLimit < filtered.length) {
-    const tbody = document.getElementById('tableInventory')
-    const sentinelHtml = `<tr id="scroll-sentinel"><td colspan="7" class="text-center text-muted py-3 small"><div class="spinner-border spinner-border-sm text-purple me-2" style="width: 1rem; height: 1rem; border-width: 0.15em;"></div> Carregando...</td></tr>`
-    tbody.insertAdjacentHTML('beforeend', sentinelHtml)
+    const isGrid = currentViewMode === 'grid'
+    const container = isGrid ? document.getElementById('gridInventory') : document.getElementById('tableInventory')
+    if (!container) return
+
+    const sentinelHtml = isGrid
+      ? `<div id="scroll-sentinel" class="col-12 text-center text-muted py-4 small"><div class="spinner-border spinner-border-sm text-primary me-2" style="width: 1rem; height: 1rem;"></div> Carregando mais cartas...</div>`
+      : `<tr id="scroll-sentinel"><td colspan="7" class="text-center text-muted py-3 small"><div class="spinner-border spinner-border-sm text-primary me-2" style="width: 1rem; height: 1rem;"></div> Carregando...</div></td></tr>`
+
+    container.insertAdjacentHTML('beforeend', sentinelHtml)
 
     const sentinel = document.getElementById('scroll-sentinel')
-    const scrollRoot = tbody.closest('.table-responsive')
+    const scrollRoot = isGrid ? null : container.closest('.table-responsive')
 
     observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
         currentRenderLimit += 50
         renderInventoryChunk()
       }
-    }, { root: scrollRoot, rootMargin: '100px' })
+    }, { root: scrollRoot, rootMargin: '200px' })
 
     observer.observe(sentinel)
   }
 }
+
+window.switchInventoryView = switchInventoryView

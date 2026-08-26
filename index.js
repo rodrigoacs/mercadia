@@ -2,14 +2,12 @@ import fs from 'fs'
 import * as cheerio from 'cheerio'
 import path from 'path'
 import { fileURLToPath } from 'url'
-import pg from 'pg'
-
-const { Pool } = pg
+import { pool, initDB } from './src/db.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const URL_COLECAO = 'https://www.ligamagic.com.br/colecao/print.php?id=350393&tcg=1'
+const URL_COLECAO = process.env.LIGAMAGIC_URL || 'https://www.ligamagic.com.br/colecao/print.php?id=350393&tcg=1'
 
 const DATA_DIR = path.join(__dirname, 'data')
 if (!fs.existsSync(DATA_DIR)) {
@@ -18,34 +16,13 @@ if (!fs.existsSync(DATA_DIR)) {
 
 const ARQ_MEMORIA = path.join(DATA_DIR, 'ultimo_estado.json')
 
-const pool = new Pool({
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  database: process.env.DB_NAME,
-})
-
 async function monitorarIndividualmente() {
   console.log(`[${new Date().toLocaleString()}] 🔍 Iniciando análise rigorosa...`)
 
+  await initDB()
   const client = await pool.connect()
 
   try {
-    await client.query(`
-      CREATE TABLE IF NOT EXISTS historico_cartas (
-        id SERIAL PRIMARY KEY,
-        date DATE NOT NULL,
-        name VARCHAR(255) NOT NULL,
-        set_code VARCHAR(100) NOT NULL,
-        num VARCHAR(50),
-        extras VARCHAR(100),
-        qty INTEGER NOT NULL,
-        unit_price DECIMAL(10, 2) NOT NULL,
-        total_price DECIMAL(10, 2) NOT NULL
-      );
-    `)
-
     const response = await fetch(URL_COLECAO, { headers: { 'User-Agent': 'Node.js Monitor' } })
     if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`)
 
@@ -140,7 +117,7 @@ async function monitorarIndividualmente() {
     }
 
   } catch (erro) {
-    await client.query('ROLLBACK')
+    await client.query('ROLLBACK').catch(() => { })
     console.error('❌ Erro durante execução do scraper:', erro.message)
   } finally {
     client.release()

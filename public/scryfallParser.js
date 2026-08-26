@@ -193,8 +193,24 @@ function evaluateCondition(card, kw, op, val) {
 
   if (['name', 'n'].includes(kw)) return compareString(card.name, op, val)
   if (['type', 't'].includes(kw)) return compareString(card.typeLine, op, val)
-  if (['oracle', 'o'].includes(kw)) return compareString(card.oracleText, op, val)
-  if (['set', 's', 'e', 'edition'].includes(kw)) return compareString(card.set, op, val)
+  if (['oracle', 'o', 'fo', 'fulloracle'].includes(kw)) {
+    let targetText = val
+    if (targetText.includes('~')) {
+      const baseCardName = (card.name || '').split('//')[0].split(',')[0].trim().toLowerCase()
+      targetText = targetText.replace(/~/g, baseCardName)
+    }
+    return compareString(card.oracleText, op, targetText)
+  }
+  if (['kw', 'keyword'].includes(kw)) return compareString(card.oracleText, op, val)
+
+  if (['set', 's', 'e', 'edition', 'b', 'block', 'in', 'g', 'group'].includes(kw)) {
+    return compareSet(card.set, card.scryfallSet, op, val)
+  }
+
+  if (['cn', 'number'].includes(kw)) return compareCollectorNumber(card.num, op, val)
+
+  if (['st', 'settype'].includes(kw)) return compareSetType(card.set, card.extras, op, val)
+
   if (['rarity', 'r'].includes(kw)) return compareRarity(card.rarity, op, val)
 
   if (['id', 'identity'].includes(kw)) return compareColorIdentity(card.colorIdentity, op, val)
@@ -207,23 +223,74 @@ function evaluateCondition(card, kw, op, val) {
   }
   if (['m', 'mana'].includes(kw)) return compareString(card.manaCost, op, val.toUpperCase())
 
-  if (['usd', 'price', 'brl'].includes(kw)) return compareNumber(card.unitPrice || 0, op, parseFloat(val))
+  if (['usd', 'eur', 'tix', 'price', 'brl'].includes(kw)) return compareNumber(card.unitPrice || 0, op, parseFloat(val))
 
   if (['is', 'has'].includes(kw)) {
-    if (val === 'foil') return Boolean(card.extras && card.extras.trim() !== '')
+    const tLine = (card.typeLine || '').toLowerCase()
+    if (val === 'foil' || val === 'etched') return Boolean(card.extras && card.extras.trim() !== '')
     if (val === 'nonfoil') return !card.extras || card.extras.trim() === ''
-    if (val === 'commander') return (card.typeLine || '').toLowerCase().includes('legendary') && (card.typeLine || '').toLowerCase().includes('creature')
+    if (val === 'commander') return tLine.includes('legendary') && tLine.includes('creature')
+    if (val === 'permanent') return tLine.includes('creature') || tLine.includes('artifact') || tLine.includes('enchantment') || tLine.includes('land') || tLine.includes('planeswalker')
+    if (val === 'spell') return !tLine.includes('land')
+    if (val === 'historic') return tLine.includes('legendary') || tLine.includes('artifact') || tLine.includes('saga')
     if (val === 'reserved') return Boolean(card.legalities && card.legalities.reserved === 'legal')
+    if (val === 'reprint' || val === 'promo') return Boolean(card.extras && card.extras.toLowerCase().includes(val))
+    if (val === 'dfc' || val === 'mdfc' || val === 'split' || val === 'transform') return (card.name || '').includes('//')
   }
 
-  if (['f', 'format'].includes(kw)) {
-    return card.legalities && card.legalities[val] === 'legal'
-  }
-  if (['banned'].includes(kw)) {
-    return card.legalities && card.legalities[val] === 'banned'
-  }
+  if (['f', 'format'].includes(kw)) return card.legalities && card.legalities[val] === 'legal'
+  if (['banned'].includes(kw)) return card.legalities && card.legalities[val] === 'banned'
 
   return false
+}
+
+function compareSet(cardSet, scryfallSet, op, targetVal) {
+  const str = (cardSet || '').toLowerCase().trim()
+  const scry = (scryfallSet || '').toLowerCase().trim()
+  const target = targetVal.toLowerCase().trim()
+
+  if (target.startsWith('/') && target.endsWith('/') && target.length > 2) {
+    try {
+      const res = new RegExp(target.slice(1, -1), 'i').test(str) || new RegExp(target.slice(1, -1), 'i').test(scry)
+      return op === '!=' ? !res : res
+    } catch (e) { return false }
+  }
+
+  const parensMatch = str.match(/\(([a-z0-9]+)\)/)
+  const codeInParens = parensMatch ? parensMatch[1] : ''
+
+  const isMatch = scry === target ||
+    codeInParens === target ||
+    str === target ||
+    str.split(' ').includes(target) ||
+    str.includes(target)
+
+  return op === '!=' ? !isMatch : isMatch
+}
+
+function compareCollectorNumber(cardNum, op, targetVal) {
+  const numStr = (cardNum || '').toString().trim().toLowerCase()
+  const numInt = parseInt(numStr, 10)
+  const targetInt = parseInt(targetVal, 10)
+
+  if (!isNaN(numInt) && !isNaN(targetInt)) {
+    return compareNumber(numInt, op, targetInt)
+  }
+  return compareString(numStr, op, targetVal.toLowerCase())
+}
+
+function compareSetType(cardSet, cardExtras, op, targetVal) {
+  const combined = `${cardSet || ''} ${cardExtras || ''}`.toLowerCase()
+  const t = targetVal.toLowerCase()
+
+  let isMatch = false
+  if (t === 'commander') isMatch = combined.includes('commander') || combined.includes('cmdr')
+  else if (t === 'masters') isMatch = combined.includes('masters')
+  else if (t === 'promo') isMatch = combined.includes('promo') || combined.includes('prerelease') || combined.includes('fnm')
+  else if (t === 'core') isMatch = combined.includes('core') || combined.includes('magic 20')
+  else isMatch = combined.includes(t)
+
+  return op === '!=' ? !isMatch : isMatch
 }
 
 function compareNumber(cardVal, op, targetVal) {

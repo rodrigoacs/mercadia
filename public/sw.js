@@ -7,7 +7,6 @@ const ASSETS = [
   '/ui.js',
   '/charts.js',
   '/inventory.js',
-  '/features.js',
   '/utils.js',
   '/site.webmanifest',
   '/favicon.svg'

@@ -149,7 +149,9 @@ export const getDeckDetails = async (deckId) => {
     } else {
       const userCards = currentInventory.filter(c => getFrontFace(c.name) === deckCardFront)
       totalOwnedQty = userCards.reduce((acc, c) => acc + c.qty, 0)
-      avgPrice = userCards.length > 0 ? userCards[0].unitPrice : 0
+      avgPrice = totalOwnedQty > 0
+        ? userCards.reduce((acc, c) => acc + (c.unitPrice * c.qty), 0) / totalOwnedQty
+        : 0
     }
 
     const cardValue = deckCard.qty * avgPrice

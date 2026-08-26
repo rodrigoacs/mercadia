@@ -5,8 +5,9 @@ import jwt from 'jsonwebtoken'
 import helmet from 'helmet'
 import rateLimit from 'express-rate-limit'
 
+import { initDB } from './src/db.js'
 import { verifyToken } from './src/auth.js'
-import { getDashboardData, searchCardData, getInventoryData } from './src/analytics.js'
+import { getDashboardData, searchCardData, getInventoryData, overrideInventoryCardPrint, getCardHistory } from './src/analytics.js'
 import { createDeck, getDecks, getDeckDetails, deleteDeck, updateDeckCover, setCommander, getCardPrints, updateDeckCardPrint } from './src/deckManager.js'
 import { syncLigaMagic } from './src/ligaParser.js'
 
@@ -14,9 +15,24 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3003
 
-app.use(helmet({ contentSecurityPolicy: false }))
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", 'https://cdn.jsdelivr.net'],
+      scriptSrcAttr: ["'unsafe-inline'"],
+      styleSrc: ["'self'", "'unsafe-inline'", 'https://cdn.jsdelivr.net'],
+      fontSrc: ["'self'", 'https://cdn.jsdelivr.net', 'data:'],
+      imgSrc: ["'self'", 'data:', 'https://cards.scryfall.io', 'https://svgs.scryfall.io'],
+      connectSrc: ["'self'", 'https://cdn.jsdelivr.net', 'https://cards.scryfall.io', 'https://svgs.scryfall.io'],
+      objectSrc: ["'none'"],
+      frameAncestors: ["'none'"],
+      baseUri: ["'self'"],
+    },
+  },
+}))
 app.use(express.json({ limit: '50mb' }))
 app.use(express.static(path.join(__dirname, 'public')))
 
@@ -97,6 +113,16 @@ app.put('/api/decks/:id/commander', async (req, res) => {
   } catch (error) { res.status(500).json({ error: 'Erro no comandante.' }) }
 })
 
+app.get('/api/cards/history', async (req, res) => {
+  try {
+    const { name, set, num, extras } = req.query
+    if (!name || !set) return res.status(400).json({ error: 'Nome e edição são obrigatórios.' })
+    res.json(await getCardHistory(name, set, num, extras))
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao buscar histórico.' })
+  }
+})
+
 app.get('/api/cards/prints', async (req, res) => {
   try {
     if (!req.query.name) return res.status(400).json({ error: 'Nome obrigatório.' })
@@ -110,11 +136,27 @@ app.put('/api/decks/:id/card-print', async (req, res) => {
     if (!cardName || !imageUri) return res.status(400).json({ error: 'Dados incompletos.' })
     await updateDeckCardPrint(req.params.id, cardName, setCode, imageUri)
     res.json({ success: true })
-  } catch (error) { res.status(500).json({ error: 'Erro na arte.' }) }
+  } catch (error) {
+    console.error('Erro no override:', error)
+    res.status(500).json({ error: 'Erro ao salvar override da carta.' })
+  }
 })
 
 app.delete('/api/decks/:id', async (req, res) => {
   try { await deleteDeck(req.params.id); res.json({ success: true }) } catch (error) { res.status(500).json({ error: 'Erro ao deletar.' }) }
 })
 
+app.put('/api/inventory/override', async (req, res) => {
+  try {
+    const { name, setCode, num, extras, newScryfallSet, newImageUri } = req.body
+    if (!name || !newImageUri) return res.status(400).json({ error: 'Dados incompletos para o override.' })
+    await overrideInventoryCardPrint(name, setCode, num, extras, newScryfallSet, newImageUri)
+    res.json({ success: true })
+  } catch (error) {
+    console.error('Erro no override:', error)
+    res.status(500).json({ error: 'Erro ao salvar override da carta.' })
+  }
+})
+
+await initDB()
 app.listen(port, () => console.log(`Mercadia rodando em http://localhost:${port}`))

@@ -37,7 +37,7 @@ function openCardModal(imgUrl) {
 }
 
 async function setAsCover() {
-  if (!activeDeckId || !currentPreviewImage) return alert("Por favor, selecione uma carta com imagem válida primeiro.")
+  if (!activeDeckId || !currentPreviewImage) return mercadiaToast("Selecione uma carta com imagem válida primeiro.", 'info')
 
   const artCropUri = currentPreviewImage.replace(/\/(normal|large|small|png)\//, '/art_crop/')
   const btn = document.getElementById('btnSetCover')
@@ -56,12 +56,12 @@ async function setAsCover() {
     setTimeout(() => btn.innerHTML = originalText, 2000)
   } catch (e) {
     btn.innerHTML = originalText
-    alert("Erro ao alterar a capa do deck.")
+    mercadiaToast("Erro ao alterar a capa do deck.", 'error')
   }
 }
 
 async function setAsCommander() {
-  if (!activeDeckId || !currentPreviewName) return alert("Por favor, selecione uma carta primeiro.")
+  if (!activeDeckId || !currentPreviewName) return mercadiaToast("Selecione uma carta primeiro.", 'info')
 
   const btn = document.getElementById('btnSetCommander')
   const originalText = btn.innerHTML
@@ -77,7 +77,7 @@ async function setAsCommander() {
     setTimeout(() => { btn.innerHTML = originalText; loadDeckData(activeDeckId) }, 1000)
   } catch (e) {
     btn.innerHTML = originalText
-    alert("Erro ao definir o comandante.")
+    mercadiaToast("Erro ao definir o comandante.", 'error')
   }
 }
 
@@ -85,7 +85,7 @@ async function setAsCommander() {
 // MUDAR A ARTE DA CARTA (PRINT SELECTOR)
 // ==========================================
 async function openPrintSelector() {
-  if (!currentPreviewName) return alert("Por favor, selecione uma carta primeiro.")
+  if (!currentPreviewName) return mercadiaToast("Selecione uma carta primeiro.", 'info')
 
   document.getElementById('printSelectorTitle').innerText = currentPreviewName
   const grid = document.getElementById('printSelectorGrid')
@@ -136,18 +136,32 @@ async function selectPrint(setCode, imageUri) {
     setPreviewCard(imageUri, currentPreviewName)
     loadDeckData(activeDeckId)
   } catch (e) {
-    alert("Erro ao aplicar a nova versão da carta.")
+    mercadiaToast("Erro ao aplicar a nova versão da carta.", 'error')
   }
 }
 
 // ==========================================
 // CRUD DA BIBLIOTECA
 // ==========================================
+function decksSkeletonGrid(count = 8) {
+  return Array.from({ length: count }).map(() => `
+    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+      <div class="ui-panel p-0 h-100" style="min-height: 220px;">
+        <div class="skeleton-block" style="height: 140px; border-radius: var(--radius-lg) var(--radius-lg) 0 0; border: none;"></div>
+        <div class="p-3">
+          <div class="skeleton-block" style="height: 14px; width: 70%; margin-bottom: 8px;"></div>
+          <div class="skeleton-block" style="height: 10px; width: 40%;"></div>
+        </div>
+      </div>
+    </div>
+  `).join('')
+}
+
 async function loadDecks() {
   const grid = document.getElementById('decksGrid')
   if (!grid) return
 
-  grid.innerHTML = '<div class="col-12 text-center py-5"><div class="spinner-border text-primary" role="status"></div></div>'
+  grid.innerHTML = decksSkeletonGrid()
 
   try {
     const req = await apiFetch('/api/decks')
@@ -169,10 +183,10 @@ async function loadDecks() {
             <div class="deck-cover" style="background-image: url('${cover}'); background-position: center; border-bottom: none;"></div>
             <div class="deck-info" style="border-top: 1px solid var(--border-color);">
               <div class="d-flex justify-content-between align-items-center mb-1">
-                <span class="badge-tech">${deck.format}</span>
+                <span class="badge-tech">${window.escapeHTML(deck.format)}</span>
                 <span class="text-muted" style="font-size: 0.65rem;">${date}</span>
               </div>
-              <h5 class="fw-bold text-main mb-0 text-truncate">${deck.name}</h5>
+              <h5 class="fw-bold text-main mb-0 text-truncate">${window.escapeHTML(deck.name)}</h5>
             </div>
           </div>
         </div>
@@ -187,6 +201,12 @@ async function loadDecks() {
 // ==========================================
 // RENDERIZAÇÃO MOXFIELD (MASONRY)
 // ==========================================
+function deckItemsSkeleton(count = 6) {
+  return Array.from({ length: count }).map(() => `
+    <div class="skeleton-block" style="height: 34px; margin-bottom: 6px;"></div>
+  `).join('')
+}
+
 async function loadDeckData(id) {
   activeDeckId = id
   showDeckDetail()
@@ -194,7 +214,7 @@ async function loadDeckData(id) {
   const container = document.getElementById('deckMasonryContainer')
   if (!container) return
 
-  container.innerHTML = '<div class="text-center py-5"><div class="spinner-border text-primary"></div></div>'
+  container.innerHTML = deckItemsSkeleton()
 
   try {
     const req = await apiFetch(`/api/decks/${id}`)
@@ -216,8 +236,13 @@ async function loadDeckData(id) {
     document.getElementById('activeDeckFormat').innerText = data.deck.format
 
     document.getElementById('kpiDeckOwnedCards').innerText = `${data.summary.ownedCards} / ${data.summary.totalCards}`
-    document.getElementById('kpiDeckValue').innerText = BRL.format(data.summary.totalValue)
-    document.getElementById('kpiDeckMissingValue').innerText = BRL.format(data.summary.missingValue)
+    // setNumericText (em vez de innerText direto): esse valor é
+    // recalculado toda vez que você troca a capa, o comandante ou o print
+    // de uma carta — é o único ponto do app que re-renderiza um valor
+    // financeiro sem reload de página, então é onde o flash de mudança
+    // (verde subiu / vermelho desceu) realmente aparece.
+    setNumericText('kpiDeckValue', BRL.format(data.summary.totalValue), data.summary.totalValue)
+    setNumericText('kpiDeckMissingValue', BRL.format(data.summary.missingValue), data.summary.missingValue)
 
     container.innerHTML = ''
 
@@ -252,7 +277,7 @@ async function loadDeckData(id) {
           htmlBlock += `
             <div class="deck-item ${cssClass}" onclick="setPreviewCard('${safeUrl}', '${safeName}')" ondblclick="openCardModal('${safeUrl}')">
               <span class="fw-bold" style="width: 20px; text-align: right;">${c.qty}</span>
-              <span class="text-truncate flex-grow-1">${c.name}</span>
+              <span class="text-truncate flex-grow-1">${window.escapeHTML(c.name)}</span>
               ${manaCostSvg ? `<span class="ms-1 d-flex align-items-center">${manaCostSvg}</span>` : ''}
               <span class="fw-bold ms-2" style="font-size: 0.75rem; opacity: 0.7; text-align: right; min-width: 60px;">${priceDisplay}</span>
             </div>
@@ -265,18 +290,18 @@ async function loadDeckData(id) {
 
   } catch (e) {
     console.error(e)
-    alert("Erro ao carregar os dados detalhados deste deck.")
+    mercadiaToast("Erro ao carregar os dados detalhados deste deck.", 'error')
     showLibrary()
   }
 }
 
 async function confirmDeleteDeck() {
-  if (confirm("Quer deletar esse deck?")) {
+  if (await mercadiaConfirm("Quer deletar esse deck?")) {
     try {
       await apiFetch(`/api/decks/${activeDeckId}`, { method: 'DELETE' })
       showLibrary()
     } catch (e) {
-      alert("Erro ao apagar o deck.")
+      mercadiaToast("Erro ao apagar o deck.", 'error')
     }
   }
 }
@@ -294,7 +319,7 @@ async function submitNewDeck() {
   const format = document.getElementById('newDeckFormat').value
   const list = document.getElementById('newDeckList').value.trim()
 
-  if (!name || !list) return alert("Por favor, preencha o nome do deck e cole a lista de cartas.")
+  if (!name || !list) return mercadiaToast("Preencha o nome do deck e cole a lista de cartas.", 'info')
 
   document.getElementById('btnSaveDeck').classList.add('d-none')
   document.getElementById('newDeckLoading').classList.remove('d-none')
@@ -310,7 +335,7 @@ async function submitNewDeck() {
     loadDeckData(res.deckId)
   } catch (e) {
     console.error(e)
-    alert("Erro ao salvar. Verifique se o formato das linhas está correto (1 Nome [Edição]).")
+    mercadiaToast("Erro ao salvar. Verifique se o formato das linhas está correto (1 Nome [Edição]).", 'error')
     document.getElementById('btnSaveDeck').classList.remove('d-none')
     document.getElementById('newDeckLoading').classList.add('d-none')
   }
