@@ -6,6 +6,7 @@ let currentRenderLimit = 50
 let observer = null
 let filtered = []
 let searchDebounceTimeout = null
+let filterTextListenerAttached = false
 export let currentViewMode = 'grid'
 
 export async function loadInventory() {
@@ -16,10 +17,14 @@ export async function loadInventory() {
 
     const setSelect = document.getElementById('filterSet')
     if (setSelect) {
+      const previousSetValue = setSelect.value
       setSelect.innerHTML = '<option value="all">Todas Edições</option>'
       sets.forEach(s => {
         const opt = document.createElement('option'); opt.value = s; opt.innerText = s; setSelect.appendChild(opt)
       })
+      if (previousSetValue !== 'all' && sets.includes(previousSetValue)) {
+        setSelect.value = previousSetValue
+      }
     }
 
     const setExcludeSelect = document.getElementById('filterSetExclude')
@@ -30,12 +35,15 @@ export async function loadInventory() {
       })
     }
 
-    const textInput = document.getElementById('filterText')
-    if (textInput) {
-      textInput.addEventListener('input', () => {
-        clearTimeout(searchDebounceTimeout)
-        searchDebounceTimeout = setTimeout(() => applyInventoryFilters(), 150)
-      })
+    if (!filterTextListenerAttached) {
+      const textInput = document.getElementById('filterText')
+      if (textInput) {
+        textInput.addEventListener('input', () => {
+          clearTimeout(searchDebounceTimeout)
+          searchDebounceTimeout = setTimeout(() => applyInventoryFilters(), 150)
+        })
+        filterTextListenerAttached = true
+      }
     }
 
     applyInventoryFilters()

@@ -1,26 +1,46 @@
 import fs from 'fs'
 import path from 'path'
+import zlib from 'zlib'
+import readline from 'readline'
 import { pipeline } from 'stream/promises'
 import { fileURLToPath } from 'url'
 import { pool } from './db.js'
-import JSONStream from 'JSONStream'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 const BULK_DATA_URL = 'https://api.scryfall.com/bulk-data'
-const TEMP_FILE = path.join(__dirname, '../data/default_cards_temp.json')
+const TEMP_FILE = path.join(__dirname, '../data/default_cards_temp.jsonl.gz')
+const SCRYFALL_HEADERS = {
+  'User-Agent': 'Mercadia/1.0',
+  'Accept': 'application/json'
+}
 
 async function downloadBulkData() {
   console.log('🔍 Consultando a API do Scryfall...')
-  const res = await fetch(BULK_DATA_URL)
+  const res = await fetch(BULK_DATA_URL, { headers: SCRYFALL_HEADERS })
+
+  if (!res.ok) {
+    const errorBody = await res.text().catch(() => '(sem corpo)')
+    throw new Error(`Scryfall recusou a consulta ao bulk-data (HTTP ${res.status}): ${errorBody.slice(0, 300)}`)
+  }
+
   const data = await res.json()
+
+  if (!data.data || !Array.isArray(data.data)) {
+    throw new Error(`Resposta da Scryfall veio sem a lista 'data': ${JSON.stringify(data).slice(0, 300)}`)
+  }
+
   const defaultCards = data.data.find(d => d.type === 'default_cards')
 
   if (!defaultCards) throw new Error('Não achou o endpoint default_cards')
+  if (!defaultCards.jsonl_download_uri) throw new Error('Campo jsonl_download_uri ausente na resposta da Scryfall — API pode ter mudado de novo.')
 
-  console.log(`📥 Baixando ${defaultCards.name} (${Math.round(defaultCards.size / 1024 / 1024)} MB)...`)
-  const response = await fetch(defaultCards.download_uri)
+  const sizeSource = defaultCards.compressed_size ?? defaultCards.size
+  const sizeLabel = sizeSource ? `${Math.round(sizeSource / 1024 / 1024)} MB comprimidos` : 'tamanho desconhecido'
+  console.log(`📥 Baixando ${defaultCards.name} (${sizeLabel})...`)
+
+  const response = await fetch(defaultCards.jsonl_download_uri, { headers: SCRYFALL_HEADERS })
   if (!response.ok) throw new Error(`Erro ao baixar: ${response.statusText}`)
 
   const dataDir = path.dirname(TEMP_FILE)
@@ -28,7 +48,7 @@ async function downloadBulkData() {
 
   const fileStream = fs.createWriteStream(TEMP_FILE)
   await pipeline(response.body, fileStream)
-  console.log('✅ Arquivo JSON gigante salvo no disco.')
+  console.log('✅ Arquivo .jsonl.gz salvo no disco.')
 }
 
 async function processAndUpsertCards() {
@@ -57,58 +77,66 @@ async function processAndUpsertCards() {
     let batch = []
     let totalProcessed = 0
     let totalInserted = 0
+    let malformedLines = 0
 
-    const parser = JSONStream.parse('*')
+    const gunzip = zlib.createGunzip()
     const fileStream = fs.createReadStream(TEMP_FILE)
+    fileStream.pipe(gunzip)
 
-    fileStream.pipe(parser)
+    const rl = readline.createInterface({ input: gunzip, crlfDelay: Infinity })
 
-    await new Promise((resolve, reject) => {
-      parser.on('data', (card) => {
-        totalProcessed++
-        if (card.lang !== 'en' || card.digital) return
+    for await (const rawLine of rl) {
+      const line = rawLine.trim().replace(/,$/, '')
+      if (!line || line === '[' || line === ']') continue
 
-        if (
-          card.layout === 'art_series' ||
-          card.layout === 'token' ||
-          card.layout === 'double_faced_token' ||
-          card.layout === 'emblem' ||
-          card.set_type === 'memorabilia'
-        ) {
-          return
-        }
+      let card
+      try {
+        card = JSON.parse(line)
+      } catch {
+        malformedLines++
+        continue
+      }
 
-        const imageNormal = card.image_uris ? card.image_uris.normal : (card.card_faces && card.card_faces[0].image_uris ? card.card_faces[0].image_uris.normal : null)
-        const imageArtCrop = card.image_uris ? card.image_uris.art_crop : (card.card_faces && card.card_faces[0].image_uris ? card.card_faces[0].image_uris.art_crop : null)
-        const colors = card.color_identity ? card.color_identity.join(',') : 'C'
+      totalProcessed++
+      if (card.lang !== 'en' || card.digital) continue
 
-        batch.push([
-          card.id, card.name, card.lang, card.set, card.collector_number,
-          imageNormal, imageArtCrop, card.mana_cost || '', card.type_line || '', colors,
-          JSON.stringify(card)
-        ])
+      if (
+        card.layout === 'art_series' ||
+        card.layout === 'token' ||
+        card.layout === 'double_faced_token' ||
+        card.layout === 'emblem' ||
+        card.set_type === 'memorabilia'
+      ) {
+        continue
+      }
 
-        if (batch.length >= 1000) {
-          parser.pause()
-          insertBatch(client, batch).then(() => {
-            totalInserted += batch.length; batch = []
-            process.stdout.write(`\r💾 Salvas no banco: ${totalInserted} impressões jogáveis...`)
-            parser.resume()
-          }).catch(reject)
-        }
-      })
+      const imageNormal = card.image_uris ? card.image_uris.normal : (card.card_faces && card.card_faces[0].image_uris ? card.card_faces[0].image_uris.normal : null)
+      const imageArtCrop = card.image_uris ? card.image_uris.art_crop : (card.card_faces && card.card_faces[0].image_uris ? card.card_faces[0].image_uris.art_crop : null)
+      const colors = card.color_identity ? card.color_identity.join(',') : 'C'
 
-      parser.on('end', async () => {
-        if (batch.length > 0) {
-          try { await insertBatch(client, batch); totalInserted += batch.length }
-          catch (err) { return reject(err) }
-        }
-        console.log(`\n🎉 Finalizado! Banco reestruturado sem lixo de Art Series ou Tokens.`)
-        resolve()
-      })
+      batch.push([
+        card.id, card.name, card.lang, card.set, card.collector_number,
+        imageNormal, imageArtCrop, card.mana_cost || '', card.type_line || '', colors,
+        JSON.stringify(card)
+      ])
 
-      parser.on('error', reject); fileStream.on('error', reject)
-    })
+      if (batch.length >= 1000) {
+        await insertBatch(client, batch)
+        totalInserted += batch.length
+        batch = []
+        process.stdout.write(`\r💾 Salvas no banco: ${totalInserted} impressões jogáveis...`)
+      }
+    }
+
+    if (batch.length > 0) {
+      await insertBatch(client, batch)
+      totalInserted += batch.length
+    }
+
+    if (malformedLines > 0) {
+      console.log(`\n⚠️ ${malformedLines} linhas malformadas foram ignoradas.`)
+    }
+    console.log(`\n🎉 Finalizado! Banco reestruturado sem lixo de Art Series ou Tokens.`)
   } finally {
     client.release()
     if (fs.existsSync(TEMP_FILE)) fs.unlinkSync(TEMP_FILE)

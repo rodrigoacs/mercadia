@@ -1570,3 +1570,83 @@ Wed Aug 26 09:38:20 -03 2026
 ✅ Sucesso! Total Coleção: R$ 18372.88
 📊 353 cartas tiveram alteração de preço.
 ✅ Concluído!
+---------------------------------
+Thu Aug 27 09:26:28 -03 2026
+🔍 Iniciando coleta e envio direto para o PostgreSQL da VPS...
+[8/27/2026, 9:26:28 AM] 🔍 Iniciando análise rigorosa...
+📦 Schema completo verificado/criado com sucesso no PostgreSQL.
+🧹 Limpando dados antigos do dia 2026-08-27 para evitar duplicação...
+📝 Dados salvos no PostgreSQL da VPS com sucesso!
+✅ Sucesso! Total Coleção: R$ 18468.43
+📊 245 cartas tiveram alteração de preço.
+✅ Concluído!
+---------------------------------
+Fri Aug 28 09:04:22 -03 2026
+🔍 Iniciando coleta e envio direto para o PostgreSQL da VPS...
+[8/28/2026, 9:04:23 AM] 🔍 Iniciando análise rigorosa...
+📦 Schema completo verificado/criado com sucesso no PostgreSQL.
+🧹 Limpando dados antigos do dia 2026-08-28 para evitar duplicação...
+📝 Dados salvos no PostgreSQL da VPS com sucesso!
+✅ Sucesso! Total Coleção: R$ 18503.36
+📊 225 cartas tiveram alteração de preço.
+✅ Concluído!
+---------------------------------
+Sat Aug 29 10:56:41 -03 2026
+🔍 Iniciando coleta e envio direto para o PostgreSQL da VPS...
+[8/29/2026, 10:56:42 AM] 🔍 Iniciando análise rigorosa...
+📦 Schema completo verificado/criado com sucesso no PostgreSQL.
+🧹 Limpando dados antigos do dia 2026-08-29 para evitar duplicação...
+📝 Dados salvos no PostgreSQL da VPS com sucesso!
+✅ Sucesso! Total Coleção: R$ 18480.33
+📊 366 cartas tiveram alteração de preço.
+✅ Concluído!
+---------------------------------
+Sun Aug 30 10:48:06 -03 2026
+🔍 Iniciando coleta e envio direto para o PostgreSQL da VPS...
+[8/30/2026, 10:48:07 AM] 🔍 Iniciando análise rigorosa...
+📦 Schema completo verificado/criado com sucesso no PostgreSQL.
+🧹 Limpando dados antigos do dia 2026-08-30 para evitar duplicação...
+📝 Dados salvos no PostgreSQL da VPS com sucesso!
+✅ Sucesso! Total Coleção: R$ 18416.93
+📊 342 cartas tiveram alteração de preço.
+✅ Concluído!
+---------------------------------
+Mon Aug 31 09:48:41 -03 2026
+🔍 Iniciando coleta e envio direto para o PostgreSQL da VPS...
+[8/31/2026, 9:48:41 AM] 🔍 Iniciando análise rigorosa...
+📦 Schema completo verificado/criado com sucesso no PostgreSQL.
+🧹 Limpando dados antigos do dia 2026-08-31 para evitar duplicação...
+📝 Dados salvos no PostgreSQL da VPS com sucesso!
+✅ Sucesso! Total Coleção: R$ 18423.73
+📊 138 cartas tiveram alteração de preço.
+✅ Concluído!
+---------------------------------
+Tue Sep  1 08:12:58 -03 2026
+🔍 Iniciando coleta e envio direto para o PostgreSQL da VPS...
+[9/1/2026, 8:12:58 AM] 🔍 Iniciando análise rigorosa...
+📦 Schema completo verificado/criado com sucesso no PostgreSQL.
+🧹 Limpando dados antigos do dia 2026-09-01 para evitar duplicação...
+📝 Dados salvos no PostgreSQL da VPS com sucesso!
+✅ Sucesso! Total Coleção: R$ 18560.18
+📊 369 cartas tiveram alteração de preço.
+✅ Concluído!
+---------------------------------
+Wed Sep  2 09:32:12 -03 2026
+🔍 Iniciando coleta e envio direto para o PostgreSQL da VPS...
+[9/2/2026, 9:32:12 AM] 🔍 Iniciando análise rigorosa...
+📦 Schema completo verificado/criado com sucesso no PostgreSQL.
+🧹 Limpando dados antigos do dia 2026-09-02 para evitar duplicação...
+📝 Dados salvos no PostgreSQL da VPS com sucesso!
+✅ Sucesso! Total Coleção: R$ 18514.55
+📊 177 cartas tiveram alteração de preço.
+✅ Concluído!
+---------------------------------
+Thu Sep  3 09:27:25 -03 2026
+🔍 Iniciando coleta e envio direto para o PostgreSQL da VPS...
+[9/3/2026, 9:27:26 AM] 🔍 Iniciando análise rigorosa...
+📦 Schema completo verificado/criado com sucesso no PostgreSQL.
+🧹 Limpando dados antigos do dia 2026-09-03 para evitar duplicação...
+📝 Dados salvos no PostgreSQL da VPS com sucesso!
+✅ Sucesso! Total Coleção: R$ 18583.43
+📊 309 cartas tiveram alteração de preço.
+✅ Concluído!

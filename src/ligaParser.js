@@ -1,12 +1,11 @@
 import * as cheerio from 'cheerio'
 import { pool } from './db.js'
+import { loadTranslations, resolveAndUpsertCard } from './metadataResolver.js'
 
 export async function syncLigaMagic(html) {
   const client = await pool.connect()
 
   try {
-    await client.query(`ALTER TABLE metadata_cartas ADD COLUMN IF NOT EXISTS scryfall_set VARCHAR(50);`).catch(() => { })
-
     const $ = cheerio.load(html)
     const dataHoje = new Date().toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' }).split('/').reverse().join('-')
 
@@ -61,107 +60,19 @@ export async function syncLigaMagic(html) {
         AND h.set_code = m.set_code 
         AND COALESCE(h.num, '') = m.num 
         AND COALESCE(h.extras, '') = m.extras
-      WHERE m.name IS NULL OR COALESCE(m.is_manual_override, FALSE) = FALSE;
-    `, [dataHoje])
+      WHERE m.name IS NULL
+        OR (
+          COALESCE(m.is_manual_override, FALSE) = FALSE
+          AND m.rarity = 'UNKNOWN'
+        );
+    `)
 
     const missingCards = missingCardsQuery.rows
 
     if (missingCards.length > 0) {
-      const transRes = await client.query('SELECT * FROM set_translations').catch(() => ({ rows: [] }))
-      const translations = {}
-      transRes.rows.forEach(r => translations[r.liga_name] = r.scryfall_code.toLowerCase())
-
+      const translations = await loadTranslations(client)
       for (const card of missingCards) {
-        const cleanName = card.name.split('//')[0].trim().replace(/"/g, '')
-        const safeNum = card.num || ''
-        const safeExtras = card.extras || ''
-        const targetSetCode = translations[card.set_code] || card.set_code.toLowerCase()
-
-        const match = card.set_code.match(/\((.*?)\)/)
-        const inParens = match ? match[1].toLowerCase() : ''
-        const hints = `${inParens} ${safeExtras}`.toLowerCase()
-
-        const isBorderless = hints.includes('borderless') || hints.includes('sem borda') || hints.includes('profile')
-        const isShowcase = hints.includes('showcase') || hints.includes('variante') || hints.includes('variant')
-        const isExtended = hints.includes('extended') || hints.includes('estendida')
-        const isRetro = hints.includes('retro') || hints.includes('antiga') || hints.includes('moldura')
-
-        let specialHint = ''
-        if (inParens) {
-          let cleaned = inParens.replace(/borderless|sem borda|showcase|variantes|variants|extended|estendida|retro|antiga|moldura|art|frame|lands|cards/g, '').trim()
-          const words = cleaned.split(/[\s\-]+/).filter(w => w.length > 3)
-          if (words.length > 0) specialHint = words[0]
-        }
-
-        const searchSql = `
-          SELECT card_data 
-          FROM scryfall_cards 
-          WHERE (name ILIKE $1 OR name ILIKE $2) 
-            AND set_code = $3
-            AND card_data->>'layout' != 'art_series'
-            AND card_data->>'layout' NOT LIKE '%token%'
-            AND card_data->>'set_type' != 'memorabilia'
-          ORDER BY 
-            CASE WHEN $8::text != '' AND (card_data->>'promo_types' ILIKE '%' || $8::text || '%' OR card_data->>'frame_effects' ILIKE '%' || $8::text || '%') THEN 0 ELSE 1 END ASC,
-            CASE WHEN $4::boolean AND (card_data->>'promo_types' ILIKE '%borderless%' OR card_data->>'border_color' = 'borderless' OR card_data->>'full_art' = 'true') THEN 0 ELSE 1 END ASC,
-            CASE WHEN $5::boolean AND (card_data->>'frame_effects' ILIKE '%showcase%' OR card_data->>'promo_types' ILIKE '%showcase%') THEN 0 ELSE 1 END ASC,
-            CASE WHEN $6::boolean AND (card_data->>'frame_effects' ILIKE '%extendedart%' OR card_data->>'promo_types' ILIKE '%extendedart%') THEN 0 ELSE 1 END ASC,
-            CASE WHEN $7::boolean AND (card_data->>'frame' = '1997' OR card_data->>'promo_types' ILIKE '%retro%') THEN 0 ELSE 1 END ASC,
-            CASE WHEN NOT ($4::boolean OR $5::boolean OR $6::boolean OR $7::boolean OR $8::text != '') AND (card_data->>'promo_types' IS NOT NULL OR card_data->>'frame_effects' IS NOT NULL) THEN 1 ELSE 0 END ASC,
-            length(collector_number) ASC, collector_number ASC
-          LIMIT 1
-        `
-
-        let localSearch = await client.query(searchSql, [
-          cleanName, `${cleanName} // %`, targetSetCode, isBorderless, isShowcase, isExtended, isRetro, specialHint
-        ])
-
-        if (localSearch.rows.length === 0) {
-          const fallbackSql = `
-            SELECT card_data 
-            FROM scryfall_cards 
-            WHERE (name ILIKE $1 OR name ILIKE $2)
-              AND card_data->>'layout' != 'art_series'
-              AND card_data->>'layout' NOT LIKE '%token%'
-              AND card_data->>'set_type' != 'memorabilia'
-            ORDER BY 
-              CASE WHEN $7::text != '' AND (card_data->>'promo_types' ILIKE '%' || $7::text || '%' OR card_data->>'frame_effects' ILIKE '%' || $7::text || '%') THEN 0 ELSE 1 END ASC,
-              CASE WHEN $3::boolean AND (card_data->>'promo_types' ILIKE '%borderless%' OR card_data->>'border_color' = 'borderless' OR card_data->>'full_art' = 'true') THEN 0 ELSE 1 END ASC,
-              CASE WHEN $4::boolean AND (card_data->>'frame_effects' ILIKE '%showcase%' OR card_data->>'promo_types' ILIKE '%showcase%') THEN 0 ELSE 1 END ASC,
-              CASE WHEN $5::boolean AND (card_data->>'frame_effects' ILIKE '%extendedart%' OR card_data->>'promo_types' ILIKE '%extendedart%') THEN 0 ELSE 1 END ASC,
-              CASE WHEN $6::boolean AND (card_data->>'frame' = '1997' OR card_data->>'promo_types' ILIKE '%retro%') THEN 0 ELSE 1 END ASC,
-              length(collector_number) ASC, collector_number ASC
-            LIMIT 1
-          `
-          localSearch = await client.query(fallbackSql, [
-            cleanName, `${cleanName} // %`, isBorderless, isShowcase, isExtended, isRetro, specialHint
-          ])
-        }
-
-        if (localSearch.rows.length > 0) {
-          const cardData = localSearch.rows[0].card_data
-          const colorIdentity = cardData.color_identity && cardData.color_identity.length > 0 ? cardData.color_identity.join(',') : 'C'
-          const manaCost = cardData.mana_cost || (cardData.card_faces && cardData.card_faces[0].mana_cost ? cardData.card_faces[0].mana_cost : '')
-          const cmc = cardData.cmc || 0
-          const typeLine = cardData.type_line || ''
-          const rarity = cardData.rarity || ''
-          const oracleText = cardData.oracle_text || (cardData.card_faces && cardData.card_faces[0].oracle_text ? cardData.card_faces[0].oracle_text : '')
-          const legalities = JSON.stringify(cardData.legalities || {})
-          const imageUri = cardData.image_uris ? cardData.image_uris.normal : (cardData.card_faces && cardData.card_faces[0].image_uris ? cardData.card_faces[0].image_uris.normal : '')
-          const scryfallSet = cardData.set || targetSetCode
-
-          await client.query(`
-            INSERT INTO metadata_cartas (name, set_code, num, extras, color_identity, mana_cost, cmc, type_line, rarity, oracle_text, legalities, image_uri, scryfall_set)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
-            ON CONFLICT (name, set_code, num, extras) DO NOTHING
-          `, [card.name, card.set_code, safeNum, safeExtras, colorIdentity, manaCost, cmc, typeLine, rarity, oracleText, legalities, imageUri, scryfallSet])
-        } else {
-          await client.query(`
-            INSERT INTO metadata_cartas (name, set_code, num, extras, color_identity, mana_cost, cmc, type_line, rarity, oracle_text, legalities, image_uri, scryfall_set)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
-            ON CONFLICT (name, set_code, num, extras) DO NOTHING
-          `, [card.name, card.set_code, safeNum, safeExtras, 'UNKNOWN', '', 0, 'UNKNOWN', 'UNKNOWN', '', '{}', '', targetSetCode])
-        }
+        await resolveAndUpsertCard(client, card, translations)
       }
     }
 

@@ -1,5 +1,6 @@
 import express from 'express'
 import path from 'path'
+import crypto from 'crypto'
 import { fileURLToPath } from 'url'
 import jwt from 'jsonwebtoken'
 import helmet from 'helmet'
@@ -49,7 +50,13 @@ app.get('/api/ping', (req, res) => res.json({ status: 'pong' }))
 app.post('/api/login', loginLimiter, (req, res) => {
   const { password } = req.body
   if (!process.env.ADMIN_PASSWORD) return res.status(500).json({ error: 'Erro: ADMIN_PASSWORD não configurada' })
-  if (password === process.env.ADMIN_PASSWORD) {
+
+  // Comparação constant-time (via hash) pra evitar timing attack no login.
+  const providedHash = crypto.createHash('sha256').update(String(password || '')).digest()
+  const expectedHash = crypto.createHash('sha256').update(process.env.ADMIN_PASSWORD).digest()
+  const isValid = crypto.timingSafeEqual(providedHash, expectedHash)
+
+  if (isValid) {
     const token = jwt.sign({ role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '30d' })
     res.json({ success: true, token })
   } else {

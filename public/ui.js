@@ -1,3 +1,6 @@
+import { loadInventory } from './inventory.js'
+import { initDashboard } from './charts.js'
+
 let sparklineChart = null
 let cameFromSearchModal = false
 
@@ -228,7 +231,7 @@ export async function saveInventoryOverride(encStr, newScryfallSet, newImageUri)
 
     bootstrap.Modal.getInstance(document.getElementById('printSelectorModal'))?.hide()
     mercadiaToast('Edição alterada com sucesso!', 'success')
-    setTimeout(() => window.location.reload(), 1500)
+    await loadInventory()
   } catch (e) {
     mercadiaToast('Erro ao salvar override manual.', 'error')
   }
@@ -266,9 +269,11 @@ export async function runSync() {
     const data = await res.json()
     mercadiaToast(`Sucesso! ${data.count} cartas sincronizadas no valor de ${BRL.format(data.total)}.`, 'success')
     bootstrap.Modal.getInstance(document.getElementById('syncModal'))?.hide()
-    setTimeout(() => window.location.reload(), 1800)
+    await initDashboard()
+    await loadInventory()
   } catch (error) {
     mercadiaToast("Erro crítico ao ler o HTML. Confirme se colou o código inteiro (Ctrl+U).", 'error')
+  } finally {
     if (btn) btn.classList.remove('d-none')
     if (loading) loading.classList.add('d-none')
   }

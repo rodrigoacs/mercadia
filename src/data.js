@@ -4,8 +4,6 @@ export const fetchRawDataFromDB = async () => {
   console.log(`⏳ Carregando dados massivos do banco de dados... (${new Date().toLocaleTimeString()})`)
   const client = await pool.connect()
   try {
-    await client.query(`ALTER TABLE metadata_cartas ADD COLUMN IF NOT EXISTS scryfall_set VARCHAR(50);`).catch(() => { })
-
     const [histResult, metaResult, transResult] = await Promise.all([
       client.query(`
         SELECT 

@@ -8,8 +8,10 @@ RUN npm install --production
 
 COPY . .
 
-RUN mkdir -p /app/data && chown -R node:node /app/data
+RUN mkdir -p /app/data && chown -R node:node /app
 
-EXPOSE 3000
+USER node
+
+EXPOSE 3003
 
 CMD ["node", "server.js"]

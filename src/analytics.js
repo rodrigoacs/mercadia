@@ -343,8 +343,6 @@ export const getCommanderPoolData = async (commanderColors) => {
 export const overrideInventoryCardPrint = async (name, setCode, num, extras, newScryfallSet, newImageUri) => {
   const client = await pool.connect()
   try {
-    await client.query(`ALTER TABLE metadata_cartas ADD COLUMN IF NOT EXISTS is_manual_override BOOLEAN DEFAULT FALSE;`).catch(() => { })
-
     await client.query(`
       UPDATE metadata_cartas
       SET scryfall_set = $1, image_uri = $2, is_manual_override = TRUE
