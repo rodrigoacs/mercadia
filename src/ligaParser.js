@@ -2,6 +2,10 @@ import * as cheerio from 'cheerio'
 import { pool } from './db.js'
 import { loadTranslations, resolveAndUpsertCard } from './metadataResolver.js'
 
+function limparNomeCarta(nome) {
+  return nome.replace(/\s*\(#\d+\)\s*$/, '').trim()
+}
+
 export async function syncLigaMagic(html) {
   const client = await pool.connect()
 
@@ -25,7 +29,7 @@ export async function syncLigaMagic(html) {
 
       if (!precoStr) return
 
-      const nomeCarta = nomeEn
+      const nomeCarta = limparNomeCarta(nomeEn)
       const qtd = parseInt(qtdStr, 10) || 0
       const preco = parseFloat(precoStr.replace(/\./g, '').replace(',', '.'))
 

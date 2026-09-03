@@ -16,6 +16,10 @@ if (!fs.existsSync(DATA_DIR)) {
 
 const ARQ_MEMORIA = path.join(DATA_DIR, 'ultimo_estado.json')
 
+function limparNomeCarta(nome) {
+  return nome.replace(/\s*\(#\d+\)\s*$/, '').trim()
+}
+
 async function monitorarIndividualmente() {
   console.log(`[${new Date().toLocaleString()}] 🔍 Iniciando análise rigorosa...`)
 
@@ -57,7 +61,7 @@ async function monitorarIndividualmente() {
 
       if (!precoStr) return
 
-      const nomeCarta = nomeEn
+      const nomeCarta = limparNomeCarta(nomeEn)
       const qtd = parseInt(qtdStr) || 0
       const preco = parseFloat(precoStr.replace(/\./g, '').replace(',', '.'))
 
